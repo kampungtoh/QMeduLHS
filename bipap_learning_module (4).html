@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇美品質學院 - 學習管理系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #2d3748;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMDAgMjBMMTgwIDYwVjE0MEwxMDAgMTgwTDIwIDE0MFY2MEwxMDAgMjBaIiBmaWxsPSIjRkJCRjI0IiBzdHJva2U9IiMxRTQwQUYiIHN0cm9rZS13aWR0aD0iNCIvPgo8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjMwIiBmaWxsPSIjMUU0MEFGIi8+CjxwYXRoIGQ9Ik0xMDAgODBMMTIwIDEwMEwxMDAgMTIwTDgwIDEwMEwxMDAgODBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 8px;
+        }
+
+        .brand-info h1 {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .brand-values {
+            font-size: 0.9em;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .nav-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .nav-tab:hover {
+            background: #e2e8f0;
+            color: #1e40af;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .card h2 {
+            color: #1e40af;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+
+        /* Year Tabs */
+        .year-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .year-tab {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .year-tab:hover {
+            background: #e5e7eb;
+        }
+
+        .year-tab.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+        }
+
+        /* Course Cards */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .course-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .course-card.disabled:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .course-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .course-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .course-icon.download {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        }
+
+        .course-icon.building {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .course-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .course-meta {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        .course-description {
+            color: #374151;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .course-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .status-available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-download {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-interactive {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-building {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: #d1d5db;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: #f9fafb;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .footer-section p {
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #60a5fa;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.9em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .nav-content {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                text-align: center;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .year-tabs {
+                flex-wrap: wrap;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .course-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .course-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .course-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <div class="brand-info">
+                    <h1>奇美品質學院</h1>
+                    <div class="brand-values">人本 • 創新 • 卓越</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <div class="nav-content">
+            <div class="nav-tab active" onclick="showTab('courses')">📚 學習案例</div>
+            <div class="nav-tab" onclick="showTab('resources')">📖 學習資源</div>
+            <div class="nav-tab" onclick="showTab('progress')">📊 個人學習歷程</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Courses Tab -->
+        <div id="coursesTab" class="tab-content" style="display: block;">
+            <div class="card">
+                <h2>📚 學習案例</h2>
+                <p style="margin-bottom: 30px;">
+                    歡迎來到奇美品質學院！請選擇您想要學習的案例，我們將透過互動式情境模擬，來協助您完成學習。
+                </p>
+                
+                <!-- Year Tabs -->
+                <div class="year-tabs">
+                    <div class="year-tab active" onclick="showYearContent('2025')">2025年</div>
+                    <div class="year-tab" onclick="showYearContent('2026')">2026年</div>
+                </div>
+
+                <!-- 2025年課程 -->
+                <div id="year2025" class="year-content">
+                    <div class="course-grid">
+                        <!-- 第一個案例：動脈導管置放及照護安全 -->
+                        <div class="course-card" onclick="downloadResource('https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf')">
+                            <div class="course-header">
+                                <div class="course-icon download">📄</div>
+                                <div>
+                                    <div class="course-title">動脈導管置放及照護安全</div>
+                                    <div class="course-meta">管路事件 • 病人安全 • PDF教材</div>
+                                </div>
+                            </div>
+                            <div class="course-description">
+                                學習動脈導管的置放和照護重點以及安全相關議題。透過詳細的圖文說明，掌握動脈導管的適應症及併發症預防等關鍵知識。
+                            </div>
+                            <div class="course-status">
+                                <div class="status-badge status-download">點擊下載</div>
+                                <div style="font-size: 0.9em; color: #6b7280;">PDF教材</div>
+                            </div>
+                        </div>
+
+                        <!-- 第二個案例：NIV學習 -->
+                        <div class="course-card" onclick="openNIVCourse()">
+                            <div class="course-header">
+                                <div class="course-icon">🫁</div>
+                                <div>
+                                    <div class="course-title">非侵襲性呼吸器 (NIV) 醫療團隊照護學習</div>
+                                    <div class="course-meta">團隊照護 • 病人安全 • 8題測驗 • 及格分數：80分</div>
+                                </div>
+                            </div>
+                            <div class="course-description">
+                                透過一位呼吸困難病人的照護情境，學習BiPAP的團隊照護、TRM工具應用、安全議題處理等核心技能。
+                            </div>
+                            <div class="course-status">
+                                <div class="status-badge status-interactive">互動學習</div>
+                                <div style="font-size: 0.9em; color: #6b7280;">約需 20 分鐘</div>
+                            </div>
+                        </div>
+
+                        <!-- 第三個案例：建置中 -->
+                        <div class="course-card disabled">
+                            <div class="course-header">
+                                <div class="course-icon building">🔧</div>
+                                <div>
+                                    <div class="course-title">學習案例建置中</div>
+                                    <div class="course-meta">敬請期待 • 即將推出</div>
+                                </div>
+                            </div>
+                            <div class="course-description">
+                                新的學習案例正在精心設計中，將為您帶來更豐富的學習體驗。請持續關注我們的更新。
+                            </div>
+                            <div class="course-status">
+                                <div class="status-badge status-building">建置中</div>
+                                <div style="font-size: 0.9em; color: #6b7280;">開發中</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2026年課程 -->
+                <div id="year2026" class="year-content" style="display: none;">
+                    <div style="text-align: center; padding: 60px 20px; color: #6b7280;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🚀</div>
+                        <h3 style="color: #374151; margin-bottom: 15px;">2026年學習案例</h3>
+                        <p>我們正在規劃2026年的精彩學習內容，敬請期待！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Tab -->
+        <div id="resourcesTab" class="tab-content" style="display: none;">
+            <div class="card">
+                <h2>📖 學習資源</h2>
+                
+                <div class="course-grid">
+                    <div class="course-card" onclick="openResourcePage('guidelines')">
+                        <div class="course-header">
+                            <div class="course-icon">📋</div>
+                            <div>
+                                <div class="course-title">臨床指引與程序書</div>
+                                <div class="course-meta">標準作業程序 • 最佳實務指引</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            提供最新的臨床照護指引、標準作業程序書及最佳實務範例，協助醫療團隊標準化照護流程。
+                        </div>
+                        <div class="course-status">
+                            <div class="status-badge status-available">立即瀏覽</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">持續更新</div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" onclick="openResourcePage('videos')">
+                        <div class="course-header">
+                            <div class="course-icon">🎬</div>
+                            <div>
+                                <div class="course-title">教學影片庫</div>
+                                <div class="course-meta">操作示範 • 技能訓練</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            豐富的教學影片資源，包含各項醫療技術操作示範、設備使用教學及安全管理重點說明。
+                        </div>
+                        <div class="course-status">
+                            <div class="status-badge status-available">立即觀看</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">高畫質影片</div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" onclick="openResourcePage('documents')">
+                        <div class="course-header">
+                            <div class="course-icon">📚</div>
+                            <div>
+                                <div class="course-title">參考資料庫</div>
+                                <div class="course-meta">學術資源 • 研究文獻</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            收錄相關學術論文、研究報告、白皮書等參考資料，提供深度學習與研究支援。
+                        </div>
+                        <div class="course-status">
+                            <div class="status-badge status-available">立即下載</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">定期更新</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div id="progressTab" class="tab-content" style="display: none;">
+            <div class="card">
+                <h2>📊 個人學習歷程</h2>
+                
+                <div style="background: #f8fafc; padding: 25px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔐</div>
+                    <h3 style="color: #374151; margin-bottom: 15px;">登入以查看學習歷程</h3>
+                    <p style="color: #6b7280; margin-bottom: 25px;">請輸入您的人事號碼以查看個人學習記錄</p>
+                    
+                    <div style="max-width: 300px; margin: 0 auto;">
+                        <input type="text" id="employeeIdInput" placeholder="請輸入人事號碼" 
+                               style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+                        <button onclick="loadUserProgress()" 
+                                style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            查看學習歷程
+                        </button>
+                    </div>
+                </div>
+
+                <div id="progressResults" style="display: none;">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-header">
+                                <div class="course-icon" style="background: #16a34a;">📊</div>
+                                <div>
+                                    <div class="course-title">學習統計</div>
+                                    <div class="course-meta">完成率 • 成績分析</div>
+                                </div>
+                            </div>
+                            <div class="course-description">
+                                <div id="statsContent">
+                                    <!-- 統計資料將在這裡顯示 -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-header">
+                                <div class="course-icon" style="background: #8b5cf6;">📈</div>
+                                <div>
+                                    <div class="course-title">學習記錄</div>
+                                    <div class="course-meta">歷史成績 • 詳細記錄</div>
+                                </div>
+                            </div>
+                            <div class="course-description">
+                                <div id="recordsContent">
+                                    <!-- 學習記錄將在這裡顯示 -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-card">
+                            <div class="course-header">
+                                <div class="course-icon" style="background: #f59e0b;">🏆</div>
+                                <div>
+                                    <div class="course-title">認證證書</div>
+                                    <div class="course-meta">完成證明 • 學分認證</div>
+                                </div>
+                            </div>
+                            <div class="course-description">
+                                <div id="certificatesContent">
+                                    <!-- 認證資料將在這裡顯示 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>關於奇美品質學院</h3>
+                <p>奇美醫院品質管理中心致力於提升醫療品質與病人安全，透過創新的學習方式，培養醫療團隊的專業能力。</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>快速連結</h3>
+                <ul>
+                    <li><a href="#" onclick="alert('功能開發中')">品質管理中心</a></li>
+                    <li><a href="#" onclick="alert('功能開發中')">教育訓練行事曆</a></li>
+                    <li><a href="#" onclick="alert('功能開發中')">聯絡我們</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>聯絡資訊</h3>
+                <p>📧 quality@chimei.org.tw</p>
+                <p>📞 06-2812811 分機 52951</p>
+                <p>📍 台南市永康區中華路901號</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 奇美醫療財團法人奇美醫院 品質管理中心. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // 頁籤切換
+        function showTab(tabName) {
+            // 隱藏所有頁籤內容
+            document.querySelectorAll('[id$="Tab"]').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // 移除所有active狀態
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // 顯示選中的頁籤
+            document.getElementById(tabName + 'Tab').style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        // 年份切換
+        function showYearContent(year) {
+            // 隱藏所有年份內容
+            document.querySelectorAll('.year-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // 移除所有年份標籤的active狀態
+            document.querySelectorAll('.year-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // 顯示選中的年份內容
+            document.getElementById('year' + year).style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        // 下載資源
+        function downloadResource(url) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = '';
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 開啟NIV課程（跳轉到新頁面）
+        function openNIVCourse() {
+            // 這裡可以替換為實際的NIV課程網址
+            const nihUrl = 'niv-course.html'; // 或者其他網址
+            window.open(nihUrl, '_blank');
+        }
+
+        // 開啟學習資源頁面
+        function openResourcePage(type) {
+            // 根據類型跳轉到不同的資源頁面
+            const resourceUrls = {
+                'guidelines': 'resources-guidelines.html',
+                'videos': 'resources-videos.html', 
+                'documents': 'resources-documents.html'
+            };
+            
+            const url = resourceUrls[type] || 'resources.html';
+            window.open(url, '_blank');
+        }
+
+        // 載入用戶學習進度
+        function loadUserProgress() {
+            const employeeId = document.getElementById('employeeIdInput').value.trim();
+            
+            if (!employeeId) {
+                alert('請輸入人事號碼');
+                return;
+            }
+            
+            if (employeeId.length < 3) {
+                alert('請輸入有效的人事號碼');
+                return;
+            }
+            
+            // 模擬載入學習資料
+            const progressResults = document.getElementById('progressResults');
+            const statsContent = document.getElementById('statsContent');
+            const recordsContent = document.getElementById('recordsContent');
+            const certificatesContent = document.getElementById('certificatesContent');
+            
+            // 顯示結果區域
+            progressResults.style.display = 'block';
+            
+            // 模擬數據（實際應該從伺服器載入）
+            statsContent.innerHTML = `
+                <p><strong>總學習時數：</strong> 25 小時</p>
+                <p><strong>完成課程：</strong> 3 / 5</p>
+                <p><strong>平均成績：</strong> 87.5 分</p>
+                <p><strong>最後學習：</strong> 2025-01-15</p>
+            `;
+            
+            recordsContent.innerHTML = `
+                <div style="margin-bottom: 10px; padding: 10px; background: #f0fdf4; border-radius: 6px;">
+                    <strong>NIV團隊照護學習</strong><br>
+                    完成時間：2025-01-15<br>
+                    成績：85分 (通過)
+                </div>
+                <div style="margin-bottom: 10px; padding: 10px; background: #f0fdf4; border-radius: 6px;">
+                    <strong>動脈導管照護安全</strong><br>
+                    完成時間：2025-01-10<br>
+                    成績：90分 (通過)
+                </div>
+            `;
+            
+            certificatesContent.innerHTML = `
+                <p><strong>已獲得認證：</strong></p>
+                <ul style="margin-top: 10px;">
+                    <li>✅ NIV照護基礎認證</li>
+                    <li>✅ 血管通路管理認證</li>
+                    <li>⏳ TRM進階認證 (進行中)</li>
+                </ul>
+            `;
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 預設顯示2025年內容
+            showYearContent('2025');
+        });
+    </script>
+</body>
+</html>
