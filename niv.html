@@ -853,7 +853,7 @@
                 <p style="margin-bottom: 30px;">歡迎來到奇美品質學院！請選擇您想要學習的案例，透過互動式情境模擬，提升專業技能。</p>
                 
                 <div class="course-grid">
-                    <div class="course-card" onclick="window.location='niv.html'">
+                    <div class="course-card" onclick="startCourse('niv')">
                         <div class="course-header">
                             <div class="course-icon">🫁</div>
                             <div>
@@ -869,20 +869,38 @@
                             <div style="font-size: 0.9em; color: #6b7280;">約需 45 分鐘</div>
                         </div>
                     </div>
-                    <div class="course-card" onclick="window.location='arterial.html'">
+
+                    <div class="course-card" style="opacity: 0.6; cursor: not-allowed;">
                         <div class="course-header">
-                            <div class="course-icon">🩺</div>
+                            <div class="course-icon">💊</div>
                             <div>
-                                <div class="course-title">動脈導管置放及照護安全</div>
-                                <div class="course-meta">術後護理 • 安全指引 • 可下載</div>
+                                <div class="course-title">藥物安全管理</div>
+                                <div class="course-meta">用藥安全 • 風險管理 • 即將推出</div>
                             </div>
                         </div>
                         <div class="course-description">
-                            提供動脈導管置放與照護的安全要點說明，可下載參考資料。
+                            學習藥物使用安全、不良事件處理、團隊溝通等關鍵技能，提升用藥安全品質。
                         </div>
                         <div class="course-status">
-                            <div class="status-badge status-available">可開始學習</div>
-                            <div style="font-size: 0.9em; color: #6b7280;">下載文件</div>
+                            <div class="status-badge" style="background: #f3f4f6; color: #6b7280;">即將推出</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">開發中</div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" style="opacity: 0.6; cursor: not-allowed;">
+                        <div class="course-header">
+                            <div class="course-icon">🚨</div>
+                            <div>
+                                <div class="course-title">緊急應變處理</div>
+                                <div class="course-meta">急救技能 • 團隊合作 • 即將推出</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            緊急狀況下的團隊協作、急救技能應用、危機處理等核心能力培養。
+                        </div>
+                        <div class="course-status">
+                            <div class="status-badge" style="background: #f3f4f6; color: #6b7280;">即將推出</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">開發中</div>
                         </div>
                     </div>
                 </div>
@@ -936,7 +954,7 @@
 
                 <div style="text-align: center; margin-top: 30px;">
                     <button class="btn btn-primary" onclick="startLearning()">開始學習</button>
-                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                    <a href="index.html" class="btn" style="background: #6b7280; color: white;">返回課程列表</a>
                 </div>
             </div>
 
@@ -1674,13 +1692,13 @@
                 buttonsHtml = `
                     <button class="btn btn-success" onclick="showCreditModal()">登錄學分</button>
                     <button class="btn btn-primary" onclick="reviewAnswers()">查看詳細解析</button>
-                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                    <a href="index.html" class="btn" style="background: #6b7280; color: white;">返回課程列表</a>
                 `;
             } else {
                 buttonsHtml = `
                     <button class="btn btn-primary" onclick="reviewAnswers()">查看詳細解析</button>
                     <button class="btn btn-primary" onclick="resetQuizState(); startQuiz()">重新測驗</button>
-                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                    <a href="index.html" class="btn" style="background: #6b7280; color: white;">返回課程列表</a>
                 `;
             }
             
@@ -1786,13 +1804,13 @@
                 buttonsHtml = `
                     <button class="btn btn-primary" onclick="showResults()">返回結果</button>
                     <button class="btn btn-success" onclick="showCreditModal()">登錄學分</button>
-                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                    <a href="index.html" class="btn" style="background: #6b7280; color: white;">返回課程列表</a>
                 `;
             } else {
                 buttonsHtml = `
                     <button class="btn btn-primary" onclick="showResults()">返回結果</button>
                     <button class="btn btn-primary" onclick="resetQuizState(); startQuiz()">重新測驗</button>
-                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                    <a href="index.html" class="btn" style="background: #6b7280; color: white;">返回課程列表</a>
                 `;
             }
             
@@ -1908,10 +1926,9 @@
             }
         }
 
-        // 初始化應用程式
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
+            startCourse('niv');
         });
-    </script>
 </body>
 </html>
