@@ -840,8 +840,8 @@
     <!-- Navigation -->
     <div class="nav-tabs">
         <div class="nav-content">
-            <div class="nav-tab active" onclick="showTab('home')">📚 學習案例列表</div>
-            <div class="nav-tab" onclick="showTab('progress')">📊 個人學習歷程</div>
+            <div id="homeNav" class="nav-tab active" onclick="showTab('home', event)">📚 學習案例列表</div>
+            <div id="progressNav" class="nav-tab" onclick="showTab('progress', event)">📊 個人學習歷程</div>
         </div>
     </div>
 
@@ -1425,18 +1425,23 @@
         }
 
         // 頁籤切換
-        function showTab(tabName) {
+        function showTab(tabName, evt) {
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.style.display = 'none';
             });
             document.getElementById('nivCourse').style.display = 'none';
-            
+
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            
+
             document.getElementById(tabName + 'Tab').style.display = 'block';
-            event.target.classList.add('active');
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            } else {
+                const nav = document.getElementById(tabName + 'Nav');
+                if (nav) nav.classList.add('active');
+            }
             
             if (tabName === 'progress') {
                 updateProgressTab();
