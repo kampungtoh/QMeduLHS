@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇美品質學苑 - 學習管理系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #2d3748;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMDAgMjBMMTgwIDYwVjE0MEwxMDAgMTgwTDIwIDE0MFY2MEwxMDAgMjBaIiBmaWxsPSIjRkJCRjI0IiBzdHJva2U9IiMxRTQwQUYiIHN0cm9rZS13aWR0aD0iNCIvPgo8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjMwIiBmaWxsPSIjMUU0MEFGIi8+CjxwYXRoIGQ9Ik0xMDAgODBMMTIwIDEwMEwxMDAgMTIwTDgwIDEwMEwxMDAgODBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 8px;
+        }
+
+        .brand-info h1 {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .brand-values {
+            font-size: 0.9em;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .nav-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .nav-tab:hover {
+            background: #e2e8f0;
+            color: #1e40af;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .card h2 {
+            color: #1e40af;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+
+        /* Course Cards */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .course-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .course-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .course-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .course-meta {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        .course-description {
+            color: #374151;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .course-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .status-available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-completed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Learning History */
+        .history-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .history-title {
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .history-date {
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+
+        .history-score {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .score-excellent {
+            color: #16a34a;
+        }
+
+        .score-good {
+            color: #f59e0b;
+        }
+
+        .score-needs-improvement {
+            color: #dc2626;
+        }
+
+        /* Quiz Layout */
+        .quiz-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .quiz-main {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .quiz-sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        /* AI Chat Box */
+        .ai-chat-box {
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-chat-content {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-messages {
+            margin-bottom: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            max-width: 85%;
+        }
+
+        .chat-message.user {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .chat-message.ai {
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+            margin-right: auto;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        .chat-send-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .chat-send-btn:hover {
+            background: #2563eb;
+        }
+
+        /* Question Components */
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .question-number {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .question-type {
+            color: #6b7280;
+            font-size: 0.9em;
+            background: #f3f4f6;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .scenario-box {
+            background: linear-gradient(135deg, #fef7ff 0%, #fae8ff 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid #a855f7;
+        }
+
+        .scenario-box h4 {
+            color: #7c3aed;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .option:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.15);
+        }
+
+        .option.selected {
+            background: #dbeafe;
+            border-color: #3b82f6;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #16a34a;
+            color: #166534;
+        }
+
+        .option.incorrect {
+            background: #fef2f2;
+            border-color: #dc2626;
+            color: #991b1b;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Visual Aid Section */
+        .visual-aid {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .visual-aid h4 {
+            color: #374151;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .monitor-display {
+            background: #1f2937;
+            color: #10b981;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+
+        .monitor-line {
+            margin: 8px 0;
+            font-size: 1.1em;
+        }
+
+        .team-roles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .role-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .role-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .role-title {
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .safety-alert {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border: 2px solid #ef4444;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .safety-alert h4 {
+            color: #dc2626;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+
+        /* Objectives */
+        .objectives {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #10b981;
+        }
+
+        .objectives h4 {
+            color: #065f46;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .objectives ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #374151;
+        }
+
+        .objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 8px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(22, 163, 74, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .modal-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .modal-title.correct {
+            color: #16a34a;
+        }
+
+        .modal-title.incorrect {
+            color: #dc2626;
+        }
+
+        .modal-text {
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #374151;
+        }
+
+        .modal-reference {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #6b7280;
+            font-size: 0.9em;
+            color: #4b5563;
+        }
+
+        /* Credit Registration Modal */
+        .credit-modal {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 2px solid #16a34a;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .credit-modal h3 {
+            color: #166534;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 2em;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 20px;
+            border: 2px solid #3b82f6;
+        }
+
+        .score-display.excellent {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-color: #16a34a;
+            color: #166534;
+        }
+
+        .score-display.good {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+
+        .score-display.needs-improvement {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border-color: #dc2626;
+            color: #991b1b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .nav-content {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                text-align: center;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .quiz-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .quiz-sidebar {
+                order: -1;
+                position: static;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 25px;
+                width: 95%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quiz-main {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <div class="brand-info">
+                    <h1>奇美品質學苑</h1>
+                    <div class="brand-values">人本 • 創新 • 卓越</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <div class="nav-content">
+            <div class="nav-tab active" onclick="showTab('home')">📚 學習案例列表</div>
+            <div class="nav-tab" onclick="showTab('progress')">📊 個人學習歷程</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Home Tab (Course List) -->
+        <div id="homeTab" class="tab-content active">
+            <div class="card">
+                <h2>📚 學習案例列表</h2>
+                <p style="margin-bottom: 30px;">歡迎來到奇美品質學苑！選擇您想要學習的案例，透過互動式情境模擬，提升專業技能。</p>
+                
+                <div class="course-grid">
+                    <div class="course-card" onclick="startCourse('niv')">
+                        <div class="course-header">
+                            <div class="course-icon">🫁</div>
+                            <div>
+                                <div class="course-title">非侵襲性呼吸器 (NIV) 醫療團隊照護學習</div>
+                                <div class="course-meta">呼吸治療 • TRM應用 • 8題測驗 • 及格分數：80分</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            透過COPD病人的照護情境，學習NIV團隊照護管理、TRM工具應用、安全議題處理等核心技能。包含SBAR溝通、雙重確認、CUS關切表達等實務應用。
+                        </div>
+                        <div class="course-status">
+                            <div class="status-badge status-available">可開始學習</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">約需 45 分鐘</div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" style="opacity: 0.6; cursor: not-allowed;">
+                        <div class="course-header">
+                            <div class="course-icon">💊</div>
+                            <div>
+                                <div class="course-title">藥物安全管理</div>
+                                <div class="course-meta">用藥安全 • 風險管理 • 即將推出</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            學習藥物使用安全、不良事件處理、團隊溝通等關鍵技能，提升用藥安全品質。
+                        </div>
+                        <div class="course-status">
+                            <div class="status-badge" style="background: #f3f4f6; color: #6b7280;">即將推出</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">開發中</div>
+                        </div>
+                    </div>
+
+                    <div class="course-card" style="opacity: 0.6; cursor: not-allowed;">
+                        <div class="course-header">
+                            <div class="course-icon">🚨</div>
+                            <div>
+                                <div class="course-title">緊急應變處理</div>
+                                <div class="course-meta">急救技能 • 團隊合作 • 即將推出</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            緊急狀況下的團隊協作、急救技能應用、危機處理等核心能力培養。
+                        </div>
+                        <div class="course-status">
+                            <div class="status-badge" style="background: #f3f4f6; color: #6b7280;">即將推出</div>
+                            <div style="font-size: 0.9em; color: #6b7280;">開發中</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div id="progressTab" class="tab-content">
+            <div class="card">
+                <h2>📊 個人學習歷程</h2>
+                <div id="progressContent">
+                    <p style="color: #6b7280; text-align: center; margin: 40px 0;">
+                        尚無學習記錄，請先完成學習案例以建立學習歷程。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NIV Course Content -->
+        <div id="nivCourse" style="display: none;">
+            <!-- Course Introduction -->
+            <div class="card" id="courseIntro">
+                <h2>🫁 非侵襲性呼吸器 (NIV) 醫療團隊照護學習</h2>
+                <p style="font-size: 1.1em; margin-bottom: 25px;">
+                    本課程透過一位COPD病人的完整照護歷程，引導您深入了解非侵襲性呼吸器的團隊照護管理。課程特別強調TRM工具的實際應用，包含SBAR溝通、雙重確認、CUS關切表達等核心技能。
+                </p>
+
+                <div class="objectives">
+                    <h4>🎯 學習目標</h4>
+                    <ul>
+                        <li>運用TRM工具(SBAR、閉環溝通、危急值處理)提升團隊效能</li>
+                        <li>掌握NIV照護中的安全檢核清單(Safety Checklist)應用</li>
+                        <li>熟悉非侵襲性呼吸器的適應症、禁忌症及風險評估</li>
+                        <li>實踐"雙重確認"和"Read Back"等安全機制</li>
+                        <li>了解CUS(我關切、我不安、我害怕)溝通模式在緊急狀況的應用</li>
+                        <li>掌握進食時開關機的安全標準作業程序(SOP)</li>
+                        <li>運用RCA(根本原因分析)思維預防併發症</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>💡 TRM核心理念</h4>
+                    <p><strong>"人本、創新、卓越"</strong> - 透過系統化的團隊資源管理，我們致力於：</p>
+                    <ul style="text-align: left; margin-top: 10px;">
+                        <li>🛡️ <strong>零傷害目標</strong>：預防所有可避免的傷害</li>
+                        <li>🤝 <strong>有效溝通</strong>：運用結構化溝通工具</li>
+                        <li>⚡ <strong>即時應變</strong>：建立快速反應機制</li>
+                        <li>📊 <strong>持續改善</strong>：從每個案例中學習成長</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="startLearning()">開始學習</button>
+                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                </div>
+            </div>
+
+            <!-- Case Background -->
+            <div class="card" id="caseBackground" style="display: none;">
+                <h2>📋 案例背景</h2>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h4>👨‍⚕️ 病人資訊</h4>
+                    <p><strong>陳先生，75歲男性</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>既往病史：慢性阻塞性肺疾病(COPD)</li>
+                        <li>主訴：呼吸困難加劇、血氧飽和度下降</li>
+                        <li>入院原因：急性呼吸衰竭</li>
+                        <li>目前狀況：尚未達到插管程度，考慮使用BiPAP治療</li>
+                    </ul>
+                </div>
+
+                <div class="safety-alert">
+                    <h4>⚠️ TRM安全思維</h4>
+                    <p>在這個複雜案例中，醫療團隊需要運用多種TRM工具：<strong>SBAR溝通、雙重確認、安全檢核清單、CUS表達關切</strong>，並遵循奇美醫院的安全文化：<strong>"任何人都可以為了病人安全而暫停程序"</strong>。</p>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="startQuiz()">開始測驗</button>
+                    <button class="btn" onclick="backToIntro()" style="background: #6b7280; color: white;">返回課程介紹</button>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div id="quizSection" style="display: none;">
+                <div class="quiz-layout">
+                    <div class="quiz-main" id="questionCard">
+                        <!-- Question content will be inserted here -->
+                    </div>
+                    
+                    <div class="quiz-sidebar">
+                        <!-- AI Chat Box -->
+                        <div class="ai-chat-box">
+                            <div class="ai-chat-header">
+                                🤖 AI 學習對話框
+                            </div>
+                            <div class="ai-chat-content">
+                                <div class="chat-messages" id="chatMessages">
+                                    <div class="chat-message ai">
+                                        您好！我是您的AI學習助手。如果您對這道題目有任何疑問，或想了解更多相關知識，請隨時提問！
+                                    </div>
+                                </div>
+                                <div class="chat-input-area">
+                                    <input type="text" class="chat-input" id="chatInput" placeholder="輸入您的問題..." onkeypress="handleChatKeyPress(event)">
+                                    <button class="chat-send-btn" onclick="sendChatMessage()">發送</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Info -->
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #374151; margin-bottom: 10px;">📊 學習進度</h4>
+                            <div id="progressInfo">問題 1 / 8</div>
+                            <div style="margin-top: 10px; font-size: 0.9em; color: #6b7280;">
+                                及格分數：80分 (7題以上)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="card results-section" id="resultsSection">
+                <h2>📊 學習成果</h2>
+                <div class="score-display" id="scoreDisplay">
+                    <!-- Score will be displayed here -->
+                </div>
+                <div id="resultsContent">
+                    <!-- Results content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-icon" id="modalIcon">✅</span>
+                <span class="modal-title" id="modalTitle">回饋</span>
+            </div>
+            <div class="modal-text" id="modalText">回饋內容</div>
+            <div class="modal-reference" id="modalReference"></div>
+            <div style="text-align: center;">
+                <button class="btn btn-primary" onclick="nextQuestion()">下一題</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Credit Registration Modal -->
+    <div id="creditModal" class="modal">
+        <div class="modal-content credit-modal">
+            <h3>🎉 恭喜通過測驗！</h3>
+            <p style="margin-bottom: 25px;">您已達到及格標準，可以申請學分認證</p>
+            
+            <div class="form-group">
+                <label for="creditEmployeeId">請輸入您的人事號碼以登錄學分：</label>
+                <input type="text" id="creditEmployeeId" placeholder="例如：A12345" maxlength="10" required>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="btn btn-success" onclick="submitCredit()">登錄學分</button>
+                <button class="btn" onclick="skipCredit()" style="background: #6b7280; color: white;">暫不登錄</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全域變數
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+        let learningHistory = JSON.parse(localStorage.getItem('learningHistory')) || {};
+
+        // 題目資料
+        const quizData = [
+            {
+                id: 1,
+                type: "TRM工具：SBAR溝通模式",
+                scenario: "夜班護理師王小姐在23:00發現陳先生SpO2從92%降至85%，呼吸急促，面罩周圍有大量漏氣聲。她需要立即通知值班醫師。",
+                question: "根據TRM的SBAR溝通模式，王小姐應該如何有效地向醫師報告？請選出最完整且符合SBAR架構的報告方式：",
+                options: [
+                    "A. 「醫師，陳先生的血氧掉了，你要不要來看一下？」",
+                    "B. 「S-陳先生目前在使用BiPAP；B-SpO2從92%降至85%，面罩漏氣；A-我認為可能需要調整面罩或評估是否需要插管；R-請您評估並指示下一步處置」",
+                    "C. 「陳先生血氧降到85%，面罩在漏氣，我已經調整過了但沒改善」",
+                    "D. 「醫師，可能需要幫陳先生插管，他的血氧很低」"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "優秀！這是標準的SBAR溝通模式。S(Situation)-清楚描述病人狀況；B(Background)-提供相關背景資訊；A(Assessment)-表達專業評估；R(Recommendation)-提出具體建議。這種結構化溝通可以大幅降低溝通錯誤，提升病人安全。",
+                    incorrect: "SBAR是TRM的核心工具之一。有效的溝通需要結構化：狀況(S)→背景(B)→評估(A)→建議(R)。簡單的描述或直接下結論都可能造成誤解或延誤處置。"
+                },
+                reference: "TRM標準：SBAR溝通模式是醫療團隊間溝通的黃金標準，可減少90%的溝通錯誤。奇美醫院要求所有危急狀況必須使用SBAR報告。",
+                visual: `
+                    <div class="highlight-box">
+                        <h4>📞 SBAR溝通架構</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444;">
+                                <strong>S - Situation</strong><br>
+                                目前發生什麼事？
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                                <strong>B - Background</strong><br>
+                                相關背景資訊
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                                <strong>A - Assessment</strong><br>
+                                我的專業評估
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #16a34a;">
+                                <strong>R - Recommendation</strong><br>
+                                我的建議或需求
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                type: "TRM安全檢核：雙重確認機制",
+                scenario: "醫師開立醫囑調整BiPAP參數：IPAP從12調至16 cmH2O，EPAP維持5 cmH2O。呼吸治療師李先生準備執行調整。",
+                question: "根據奇美醫院的安全檢核清單，在調整關鍵參數前，李先生必須執行哪項TRM安全措施？",
+                options: [
+                    "A. 直接按照醫囑調整參數，因為醫師已經確認過",
+                    "B. 執行「雙重確認」：與另一位RT核對醫囑內容，同時使用「Read Back」向醫師確認參數變更，並記錄確認時間及人員",
+                    "C. 只要在護理記錄上註記即可",
+                    "D. 調整後通知護理師監測即可"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "完全正確！這展現了多層次安全機制：雙重確認可防止人為錯誤，Read Back確保溝通準確性，記錄提供可追溯性。研究顯示，這套機制可減少醫療錯誤達85%，符合奇美醫院「零傷害」的安全目標。",
+                    incorrect: "關鍵參數調整涉及病人生命安全，需要多重安全機制。單一確認不足以防範系統性錯誤，這正是TRM強調的「冗餘安全網」概念。"
+                },
+                reference: "奇美醫院安全政策：所有影響病人生命徵象的參數變更，必須執行雙重確認和Read Back，並記錄於安全檢核表中。",
+                visual: `
+                    <div class="safety-alert">
+                        <h4>🔒 雙重確認安全流程</h4>
+                        <ol style="text-align: left; margin-top: 10px;">
+                            <li><strong>第一層：</strong>核對醫囑內容(人員A)</li>
+                            <li><strong>第二層：</strong>獨立驗證(人員B)</li>
+                            <li><strong>第三層：</strong>Read Back向醫師確認</li>
+                            <li><strong>第四層：</strong>記錄確認時間與人員</li>
+                            <li><strong>第五層：</strong>執行前最後檢查</li>
+                        </ol>
+                        <p style="color: #dc2626; font-weight: bold; margin-top: 10px;">
+                            💡 記住：「多一次確認，少一次風險」
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                type: "TRM工具：CUS關切表達",
+                scenario: "資深護理師發現新進呼吸治療師準備在病人進食時僅鬆開面罩扣環，而非完全移除面罩並停機。她認為這可能造成嗆咳風險。",
+                question: "在這種情況下，資深護理師應該如何運用CUS(Concern-Uncomfortable-Safety)模式來表達關切？",
+                options: [
+                    "A. 直接告訴RT：「你這樣做是錯的」",
+                    "B. 私下向主管報告這個問題",
+                    "C. 「我關切(Concern)這個做法可能增加嗆咳風險；我感到不安(Uncomfortable)因為程序書要求完全移除；為了安全(Safety)我們應該暫停並重新確認SOP」",
+                    "D. 等到發生問題再處理"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "優秀的安全領導力！CUS模式是TRM中預防錯誤的有力工具。透過結構化的關切表達，既保護了病人安全，又維護了同事關係，並創造了學習機會。奇美醫院鼓勵所有同仁勇於表達安全關切。",
+                    incorrect: "直接批評、消極報告或等待都不是最佳的安全文化表現。CUS模式提供了既堅定又尊重的關切表達方式，是預防錯誤的重要工具。"
+                },
+                reference: "TRM安全文化：任何團隊成員都有責任和權利為了病人安全而表達關切，CUS是標準的表達模式。",
+                visual: `
+                    <div class="highlight-box">
+                        <h4>🗣️ CUS安全溝通模式</h4>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 15px;">
+                            <div style="background: #fef3c7; padding: 12px; border-radius: 6px; border-left: 4px solid #f59e0b;">
+                                <strong>C - Concern (我關切)</strong><br>
+                                客觀描述觀察到的情況
+                            </div>
+                            <div style="background: #fef2f2; padding: 12px; border-radius: 6px; border-left: 4px solid #ef4444;">
+                                <strong>U - Uncomfortable (我不安)</strong><br>
+                                表達內心的專業擔憂
+                            </div>
+                            <div style="background: #dcfce7; padding: 12px; border-radius: 6px; border-left: 4px solid #16a34a;">
+                                <strong>S - Safety (安全停止)</strong><br>
+                                提出具體的安全建議
+                            </div>
+                        </div>
+                        <p style="text-align: center; margin-top: 15px; font-weight: bold; color: #1e40af;">
+                            "每個人都是安全守護者"
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                type: "複雜情境：多重安全威脅識別",
+                scenario: "凌晨2點，陳先生同時出現：(1)SpO2降至82% (2)BiPAP顯示高壓警報 (3)病人躁動不安 (4)面罩周圍有血跡 (5)家屬要求立即進食。值班護理師面臨多重安全威脅。",
+                question: "根據TRM的威脅識別和優先序管理原則，護理師應該採取什麼行動序列？",
+                options: [
+                    "A. 立即滿足家屬要求，讓病人進食以緩解躁動",
+                    "B. 按照ABC+安全原則：先確保氣道暢通(A)→評估呼吸循環(BC)→處理設備警報→安撫病人→與家屬溝通風險",
+                    "C. 先處理設備警報，再評估病人狀況",
+                    "D. 立即通知醫師，等候指示"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "卓越的危機處理！您正確運用了TRM的威脅管理階層：生命優先(ABC)→設備安全→病人舒適→家屬溝通。面罩周圍血跡可能表示壓傷或鼻出血，高壓警報配合低血氧提示呼吸道阻塞或設備故障，這些都是立即威脅。",
+                    incorrect: "在多重威脅情境下，需要系統性的優先序判斷。TRM強調ABC+安全原則：先處理威脅生命的問題，再處理次要問題。"
+                },
+                reference: "TRM危機管理：複雜情境下的ABCDE評估法 - Airway, Breathing, Circulation, Disability, Exposure + Safety measures。",
+                visual: `
+                    <div class="safety-alert">
+                        <h4>🚨 多重威脅處理序列</h4>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 15px;">
+                            <div style="background: #dc2626; color: white; padding: 10px; border-radius: 6px;">
+                                <strong>第1優先：</strong>氣道評估 - 檢查血跡來源
+                            </div>
+                            <div style="background: #ea580c; color: white; padding: 10px; border-radius: 6px;">
+                                <strong>第2優先：</strong>呼吸支持 - 處理低血氧
+                            </div>
+                            <div style="background: #d97706; color: white; padding: 10px; border-radius: 6px;">
+                                <strong>第3優先：</strong>設備檢查 - 解決高壓警報
+                            </div>
+                            <div style="background: #65a30d; color: white; padding: 10px; border-radius: 6px;">
+                                <strong>第4優先：</strong>病人安撫 - 處理躁動
+                            </div>
+                            <div style="background: #0284c7; color: white; padding: 10px; border-radius: 6px;">
+                                <strong>第5優先：</strong>家屬溝通 - 解釋風險
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                type: "TRM工具：閉環溝通在緊急狀況",
+                scenario: "醫師決定緊急插管，下達口頭醫囑：「準備7.5號氣管內管，Etomidate 0.3mg/kg，Rocuronium 1mg/kg，停止BiPAP」。護理師需要確保準確執行。",
+                question: "在這個緊急狀況下，護理師應該如何運用「閉環溝通」確保病人安全？",
+                options: [
+                    "A. 立即執行醫囑，因為情況緊急不能耽誤",
+                    "B. 「Read Back」：重複醫囑內容→獲得醫師確認→執行→回報完成→醫師確認收到，並記錄完整時間軸",
+                    "C. 只要重複一遍醫囑內容即可",
+                    "D. 執行後再向醫師確認"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "完美的緊急狀況TRM應用！閉環溝通在危急時刻更加重要：錯誤的代價可能是生命。完整的閉環包括：接收→確認→執行→回報→再確認，每個環節都有時間記錄，確保可追溯性和責任歸屬。",
+                    incorrect: "緊急狀況下更需要精確溝通，而非省略步驟。閉環溝通雖然需要額外幾秒鐘，但能避免致命錯誤，這正是TRM的核心價值。"
+                },
+                reference: "緊急醫療TRM標準：越是緊急的情況，越需要結構化溝通。閉環溝通可減少緊急狀況下的醫療錯誤達92%。",
+                visual: `
+                    <div class="monitor-display">
+                        <div class="monitor-line">閉環溝通流程：</div>
+                        <div class="monitor-line">1. 醫師下達醫囑 ✓</div>
+                        <div class="monitor-line">2. 護理師Read Back ✓</div>
+                        <div class="monitor-line">3. 醫師確認 ✓</div>
+                        <div class="monitor-line">4. 護理師執行 ✓</div>
+                        <div class="monitor-line">5. 護理師回報完成 ✓</div>
+                        <div class="monitor-line">6. 醫師確認收到 ✓</div>
+                        <div class="monitor-line">時間記錄：00:00-00:45</div>
+                    </div>
+                `
+            },
+            {
+                id: 6,
+                type: "進階安全：進食時的安全標準作業程序",
+                scenario: "陳先生插管後第3天順利脫管，重新使用BiPAP。現在他要求進食，但同時出現輕微呼吸急促。護理師需要評估進食的安全性並執行SOP。",
+                question: "根據奇美醫院進食安全檢核清單，在允許病人進食前，護理師必須完成哪些評估項目？（選擇最完整的安全評估）",
+                options: [
+                    "A. 只要病人想吃就可以進食",
+                    "B. 檢查SpO2>95%、RR<25、意識清楚、無嗆咳史即可進食",
+                    "C. 完整評估：SpO2≥92%(room air 15分鐘)、呼吸型態穩定、意識E4M6V5、吞嚥功能正常、家屬在場、緊急設備備妥、醫師同意，並執行「進食安全檢核表」",
+                    "D. 醫師同意即可進食"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "優秀的安全意識！這是完整的進食安全評估。特別注意「room air 15分鐘」測試，這可以確保病人在沒有呼吸支持下的真實狀況。每個檢核項目都有其安全考量，體現了「預防勝於治療」的TRM理念。",
+                    incorrect: "進食對於剛脫離呼吸支持的病人是高風險活動。需要全面性的安全評估，單一指標或簡單許可都不足以確保安全。"
+                },
+                reference: "奇美醫院進食安全SOP：NIV病人進食前必須通過多項目安全檢核，確保降低嗆咳和呼吸衰竭風險。",
+                visual: `
+                    <div class="safety-alert">
+                        <h4>🍽️ 進食安全檢核清單</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px;">
+                            <div style="background: white; padding: 12px; border-radius: 6px; border: 1px solid #16a34a;">
+                                <strong>生理指標</strong><br>
+                                ✓ SpO2≥92% (room air 15min)<br>
+                                ✓ RR<25, 呼吸穩定<br>
+                                ✓ 血壓穩定
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 6px; border: 1px solid #3b82f6;">
+                                <strong>功能評估</strong><br>
+                                ✓ 意識GCS E4M6V5<br>
+                                ✓ 吞嚥功能測試<br>
+                                ✓ 無嗆咳史
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 6px; border: 1px solid #f59e0b;">
+                                <strong>環境準備</strong><br>
+                                ✓ 家屬/照護者在場<br>
+                                ✓ 抽痰設備備妥<br>
+                                ✓ 緊急藥物準備
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 6px; border: 1px solid #8b5cf6;">
+                                <strong>團隊確認</strong><br>
+                                ✓ 醫師評估同意<br>
+                                ✓ RT確認設備<br>
+                                ✓ 營養師飲食建議
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 7,
+                type: "TRM工具：RCA根本原因分析思維",
+                scenario: "陳先生在進食後30分鐘出現SpO2下降至88%，X光顯示右下肺葉浸潤，懷疑吸入性肺炎。團隊需要進行事件分析。",
+                question: "運用RCA(根本原因分析)的系統思維，團隊應該如何分析這個不良事件？",
+                options: [
+                    "A. 認定是護理師判斷錯誤，加強個人訓練即可",
+                    "B. 認為是病人不配合造成的意外",
+                    "C. 系統性分析：檢視進食評估程序→SOP執行完整性→環境因素→溝通流程→設備因素→人員能力→組織因素，找出多層次原因並改善系統",
+                    "D. 認為是醫師決策問題"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "卓越的系統思維！RCA的精神是「責怪系統而非個人」。透過多層次分析，我們可以發現真正的系統弱點並改善。這可能包括：檢核表設計、人員訓練、溝通流程、環境因素等。真正的改善來自系統優化，而非個人責難。",
+                    incorrect: "RCA的核心是系統分析而非個人責難。不良事件通常是多個因素交互作用的結果，需要深入分析系統性原因才能有效預防再發生。"
+                },
+                reference: "TRM安全文化：運用RCA進行系統性分析，從個案中學習並改善整體照護品質，體現「持續改善」的核心價值。",
+                visual: `
+                    <div class="highlight-box">
+                        <h4>🔍 RCA分析架構</h4>
+                        <div style="margin-top: 15px;">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div style="background: #ef4444; color: white; padding: 10px; border-radius: 50%; width: 60px; height: 60px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-weight: bold;">事件</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                                <div style="background: #fef3c7; padding: 10px; border-radius: 6px; text-align: center;">
+                                    <strong>直接原因</strong><br>
+                                    立即觸發因素
+                                </div>
+                                <div style="background: #dbeafe; padding: 10px; border-radius: 6px; text-align: center;">
+                                    <strong>根本原因</strong><br>
+                                    系統性因素
+                                </div>
+                                <div style="background: #dcfce7; padding: 10px; border-radius: 6px; text-align: center;">
+                                    <strong>貢獻因素</strong><br>
+                                    環境與組織
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 8,
+                type: "TRM整合：領導力與安全文化",
+                scenario: "經過完整的RCA分析，團隊發現進食安全檢核表有設計缺陷，且團隊間溝通存在盲點。身為資深護理師，您需要推動改善措施。",
+                question: "根據TRM的領導力原則和奇美醫院的安全文化，您應該如何推動系統性改善？",
+                options: [
+                    "A. 修改檢核表即可，其他維持現狀",
+                    "B. 只要加強人員訓練就能解決問題",
+                    "C. 運用PDCA循環：Plan(重新設計檢核表+溝通流程)→Do(試行新制度)→Check(監測成效指標)→Action(標準化最佳實務)，並建立「學習型組織」文化",
+                    "D. 等待上級指示再行動"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "傑出的改善領導力！您展現了TRM的最高層次：系統改善和文化建構。PDCA循環確保改善的科學性和持續性，學習型組織文化讓每個事件都成為成長機會。這正體現了奇美醫院「人本、創新、卓越」的核心價值。",
+                    incorrect: "真正的改善需要系統性方法和文化變革。單點改善或被動等待都無法建立持續改善的機制。TRM強調主動領導和系統思維。"
+                },
+                reference: "奇美醫院品質改善原則：運用PDCA科學方法，建立學習型組織，讓每個同仁都成為品質改善的推動者。",
+                visual: `
+                    <div class="highlight-box">
+                        <h4>🔄 PDCA持續改善循環</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px;">
+                            <div style="background: #eff6ff; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                                <strong>Plan 計畫</strong><br>
+                                • 重新設計安全檢核表<br>
+                                • 建立標準溝通流程<br>
+                                • 設定成效指標
+                            </div>
+                            <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border-left: 4px solid #16a34a;">
+                                <strong>Do 執行</strong><br>
+                                • 小規模試行<br>
+                                • 團隊訓練<br>
+                                • 收集反饋
+                            </div>
+                            <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                                <strong>Check 檢核</strong><br>
+                                • 監測安全指標<br>
+                                • 分析成效數據<br>
+                                • 識別改善點
+                            </div>
+                            <div style="background: #faf5ff; padding: 15px; border-radius: 8px; border-left: 4px solid #8b5cf6;">
+                                <strong>Action 行動</strong><br>
+                                • 標準化流程<br>
+                                • 分享最佳實務<br>
+                                • 持續監測
+                            </div>
+                        </div>
+                        <p style="text-align: center; margin-top: 15px; font-weight: bold; color: #1e40af;">
+                            "持續改善，永無止境"
+                        </p>
+                    </div>
+                `
+            }
+        ];
+
+        // AI 對話相關功能
+        const aiResponses = {
+            "SBAR": "SBAR是醫療溝通的黃金標準！S(Situation)描述現況、B(Background)提供背景、A(Assessment)專業評估、R(Recommendation)建議行動。這樣的結構化溝通可以減少90%的醫療錯誤哦！",
+            "雙重確認": "雙重確認是TRM的核心安全機制！就像飛機起飛前的安全檢查，關鍵參數變更需要：獨立驗證→Read Back確認→記錄時間→最後檢查。多一次確認，少一次風險！",
+            "CUS": "CUS是表達安全關切的好工具！C(Concern)客觀描述、U(Uncomfortable)表達擔憂、S(Safety)提出建議。這樣既能保護病人安全，又能維護同事關係。記住：每個人都是安全守護者！",
+            "ABC": "ABC是緊急處理的優先序原則！A(Airway)氣道、B(Breathing)呼吸、C(Circulation)循環。在多重威脅下，永遠先處理威脅生命的問題，再處理次要問題。生命第一！",
+            "閉環溝通": "閉環溝通確保訊息準確傳達！流程是：接收醫囑→Read Back重複→獲得確認→執行→回報完成→再次確認。特別在緊急狀況下，這能避免致命錯誤！",
+            "進食安全": "NIV病人進食是高風險活動！需要完整評估：生理指標(SpO2≥92% room air 15分鐘)、功能評估(GCS、吞嚥)、環境準備(設備、人員)、團隊確認。安全第一，預防嗆咳！",
+            "RCA": "RCA根本原因分析的精神是「責怪系統而非個人」！要系統性分析：程序→執行→環境→溝通→設備→人員→組織。找出真正的系統弱點，才能有效預防再發生！",
+            "PDCA": "PDCA是持續改善的科學方法！Plan計畫→Do執行→Check檢核→Action行動。透過循環改善，建立學習型組織文化。記住：持續改善，永無止境！"
+        };
+
+        // 初始化
+        function initializeApp() {
+            showTab('home');
+            loadLearningHistory();
+        }
+
+        // 頁籤切換
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.getElementById('nivCourse').style.display = 'none';
+            
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName + 'Tab').style.display = 'block';
+            event.target.classList.add('active');
+            
+            if (tabName === 'progress') {
+                updateProgressTab();
+            }
+        }
+
+        // 載入學習歷程
+        function loadLearningHistory() {
+            const saved = localStorage.getItem('learningHistory');
+            if (saved) {
+                learningHistory = JSON.parse(saved);
+            }
+        }
+
+        // 更新學習歷程頁面
+        function updateProgressTab() {
+            const progressContent = document.getElementById('progressContent');
+            const allRecords = [];
+            
+            // 收集所有使用者的學習記錄
+            for (const userId in learningHistory) {
+                learningHistory[userId].forEach(record => {
+                    allRecords.push({...record, userId});
+                });
+            }
+            
+            if (allRecords.length === 0) {
+                progressContent.innerHTML = `
+                    <p style="color: #6b7280; text-align: center; margin: 40px 0;">
+                        尚無學習記錄，請先完成學習案例以建立學習歷程。
+                    </p>
+                `;
+                return;
+            }
+            
+            // 按時間排序（最新的在前）
+            allRecords.sort((a, b) => b.timestamp - a.timestamp);
+            
+            let historyHtml = '<h3 style="margin-bottom: 20px;">📈 全部學習紀錄</h3>';
+            
+            allRecords.forEach(record => {
+                const scoreClass = record.percentage >= 90 ? 'score-excellent' : 
+                                 record.percentage >= 80 ? 'score-good' : 'score-needs-improvement';
+                const statusText = record.percentage >= 80 ? '通過' : '需重修';
+                
+                historyHtml += `
+                    <div class="history-item">
+                        <div class="history-header">
+                            <div class="history-title">${record.courseName}</div>
+                            <div class="history-date">${record.completedDate}</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="margin-bottom: 5px;"><strong>學員：</strong>${record.userId}</div>
+                                <div class="history-score ${scoreClass}">${record.score}/${record.totalQuestions} 題 (${record.percentage}%)</div>
+                                <div style="font-size: 0.9em; color: #6b7280;">狀態：${statusText}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            progressContent.innerHTML = historyHtml;
+        }
+
+        // 課程相關功能
+        function startCourse(courseType) {
+            if (courseType === 'niv') {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.style.display = 'none';
+                });
+                document.getElementById('nivCourse').style.display = 'block';
+                document.getElementById('courseIntro').style.display = 'block';
+                resetQuizState();
+            }
+        }
+
+        function backToHome() {
+            document.getElementById('nivCourse').style.display = 'none';
+            document.getElementById('homeTab').style.display = 'block';
+        }
+
+        function backToIntro() {
+            document.getElementById('caseBackground').style.display = 'none';
+            document.getElementById('courseIntro').style.display = 'block';
+        }
+
+        function startLearning() {
+            document.getElementById('courseIntro').style.display = 'none';
+            document.getElementById('caseBackground').style.display = 'block';
+        }
+
+        function startQuiz() {
+            document.getElementById('caseBackground').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 重置測驗狀態
+        function resetQuizState() {
+            currentQuestion = 0;
+            score = 0;
+            answers = [];
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
+            
+            // 清空聊天記錄
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="chat-message ai">
+                    您好！我是您的AI學習助手。如果您對這道題目有任何疑問，或想了解更多相關知識，請隨時提問！
+                </div>
+            `;
+        }
+
+        // 載入問題
+        function loadQuestion() {
+            const question = quizData[currentQuestion];
+            const questionCard = document.getElementById('questionCard');
+            
+            questionCard.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">問題 ${currentQuestion + 1} / 8</div>
+                    <div class="question-type">${question.type}</div>
+                </div>
+                
+                ${question.scenario ? `
+                    <div class="scenario-box">
+                        <h4>📋 情境</h4>
+                        <p>${question.scenario}</p>
+                    </div>
+                ` : ''}
+                
+                <div class="question-text">${question.question}</div>
+                
+                <div class="options" id="optionsContainer">
+                    ${question.options.map((option, index) => `
+                        <div class="option" onclick="selectAnswer(${index})">${option}</div>
+                    `).join('')}
+                </div>
+                
+                ${question.visual ? `
+                    <div class="visual-aid">
+                        <h4>📊 輔助資訊</h4>
+                        ${question.visual}
+                    </div>
+                ` : ''}
+            `;
+            
+            // 更新進度資訊
+            document.getElementById('progressInfo').textContent = `問題 ${currentQuestion + 1} / 8`;
+        }
+
+        // 選擇答案
+        function selectAnswer(selectedIndex) {
+            const question = quizData[currentQuestion];
+            const isCorrect = selectedIndex === question.correct;
+            
+            // 記錄答案
+            answers.push({
+                question: currentQuestion + 1,
+                selected: selectedIndex,
+                correct: question.correct,
+                isCorrect: isCorrect
+            });
+            
+            if (isCorrect) {
+                score++;
+            }
+            
+            // 停用所有選項並顯示結果
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.add('disabled');
+                option.onclick = null;
+                if (index === selectedIndex) {
+                    option.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+                if (index === question.correct && !isCorrect) {
+                    option.classList.add('correct');
+                }
+            });
+            
+            // 顯示回饋
+            showFeedback(isCorrect, question);
+        }
+
+        // 顯示回饋
+        function showFeedback(isCorrect, question) {
+            const modal = document.getElementById('modal');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+            const modalReference = document.getElementById('modalReference');
+            
+            modalIcon.textContent = isCorrect ? '✅' : '❌';
+            modalTitle.textContent = isCorrect ? '回答正確！' : '回答錯誤';
+            modalTitle.className = `modal-title ${isCorrect ? 'correct' : 'incorrect'}`;
+            modalText.innerHTML = isCorrect ? question.feedback.correct : question.feedback.incorrect;
+            modalReference.innerHTML = `<strong>參考依據：</strong> ${question.reference}`;
+            
+            modal.style.display = 'block';
+        }
+
+        // 下一題
+        function nextQuestion() {
+            document.getElementById('modal').style.display = 'none';
+            
+            currentQuestion++;
+            
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // 顯示結果
+        function showResults() {
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'block';
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            let performanceLevel = '';
+            let performanceClass = '';
+            let feedback = '';
+            
+            if (percentage >= 90) {
+                performanceLevel = '優秀！';
+                performanceClass = 'excellent';
+                feedback = '您對非侵襲性呼吸器的團隊照護管理有深入的了解！';
+            } else if (percentage >= 80) {
+                performanceLevel = '通過！';
+                performanceClass = 'good';
+                feedback = '您已達到及格標準，掌握了大部分重要概念！';
+            } else {
+                performanceLevel = '需要加強';
+                performanceClass = 'needs-improvement';
+                feedback = '建議重新學習程序書內容，並重複練習。及格分數為80分。';
+            }
+            
+            scoreDisplay.className = `score-display ${performanceClass}`;
+            scoreDisplay.innerHTML = `
+                <div style="font-size: 1.2em; margin-bottom: 15px;">${performanceLevel}</div>
+                <div>您的成績：${score} / ${quizData.length} 題</div>
+                <div>答對率：${percentage}%</div>
+            `;
+            
+            let buttonsHtml = '';
+            if (percentage >= 80) {
+                buttonsHtml = `
+                    <button class="btn btn-success" onclick="showCreditModal()">登錄學分</button>
+                    <button class="btn btn-primary" onclick="reviewAnswers()">查看詳細解析</button>
+                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                `;
+            } else {
+                buttonsHtml = `
+                    <button class="btn btn-primary" onclick="reviewAnswers()">查看詳細解析</button>
+                    <button class="btn btn-primary" onclick="resetQuizState(); startQuiz()">重新測驗</button>
+                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                `;
+            }
+            
+            resultsContent.innerHTML = `
+                <p style="font-size: 1.1em; margin-bottom: 30px;">${feedback}</p>
+                
+                <div class="highlight-box">
+                    <h4>📚 重點回顧</h4>
+                    <p>本案例涵蓋了NIV照護的核心要素：</p>
+                    <ul style="text-align: left; margin: 15px 0;">
+                        <li><strong>團隊資源管理(TRM)</strong>：有效的溝通與協調</li>
+                        <li><strong>專業分工</strong>：醫師決策、RT操作、RN監護</li>
+                        <li><strong>病人安全</strong>：特別是進食時的開關機程序</li>
+                        <li><strong>品質照護</strong>：全面監測與風險管理</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    ${buttonsHtml}
+                </div>
+            `;
+        }
+
+        // 顯示學分登錄視窗
+        function showCreditModal() {
+            document.getElementById('creditModal').style.display = 'block';
+        }
+
+        // 提交學分登錄
+        function submitCredit() {
+            const employeeId = document.getElementById('creditEmployeeId').value.trim();
+            
+            if (!employeeId) {
+                alert('請輸入人事號碼');
+                return;
+            }
+            
+            if (employeeId.length < 3) {
+                alert('請輸入有效的人事號碼');
+                return;
+            }
+            
+            saveProgress(employeeId);
+            document.getElementById('creditModal').style.display = 'none';
+            
+            alert('學分登錄成功！您的學習記錄已保存。');
+        }
+
+        // 跳過學分登錄
+        function skipCredit() {
+            document.getElementById('creditModal').style.display = 'none';
+        }
+
+        // 儲存學習進度
+        function saveProgress(employeeId) {
+            const percentage = Math.round((score / quizData.length) * 100);
+            const now = new Date();
+            
+            const learningRecord = {
+                courseName: '非侵襲性呼吸器 (NIV) 醫療團隊照護學習',
+                score: score,
+                totalQuestions: quizData.length,
+                percentage: percentage,
+                answers: answers,
+                completedDate: now.toLocaleString('zh-TW'),
+                timestamp: now.getTime()
+            };
+            
+            // 確保用戶有學習歷程陣列
+            if (!learningHistory[employeeId]) {
+                learningHistory[employeeId] = [];
+            }
+            
+            learningHistory[employeeId].push(learningRecord);
+            
+            // 儲存到localStorage
+            localStorage.setItem('learningHistory', JSON.stringify(learningHistory));
+        }
+
+        // 查看詳細解析
+        function reviewAnswers() {
+            let reviewHtml = '<h3>📋 答題詳細解析</h3>';
+            
+            answers.forEach((answer, index) => {
+                const question = quizData[index];
+                const statusIcon = answer.isCorrect ? '✅' : '❌';
+                const statusColor = answer.isCorrect ? '#16a34a' : '#dc2626';
+                
+                reviewHtml += `
+                    <div style="border: 2px solid ${statusColor}; border-radius: 10px; padding: 20px; margin: 20px 0; background: ${answer.isCorrect ? '#f0fdf4' : '#fef2f2'};">
+                        <h4 style="color: ${statusColor};">${statusIcon} 問題 ${index + 1}：${question.type}</h4>
+                        <p><strong>您的答案：</strong>${question.options[answer.selected]}</p>
+                        <p><strong>正確答案：</strong>${question.options[answer.correct]}</p>
+                        <p><strong>解析：</strong>${answer.isCorrect ? question.feedback.correct : question.feedback.incorrect}</p>
+                        <p style="font-size: 0.9em; color: #6b7280;"><strong>參考：</strong>${question.reference}</p>
+                    </div>
+                `;
+            });
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            let buttonsHtml = '';
+            if (percentage >= 80) {
+                buttonsHtml = `
+                    <button class="btn btn-primary" onclick="showResults()">返回結果</button>
+                    <button class="btn btn-success" onclick="showCreditModal()">登錄學分</button>
+                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                `;
+            } else {
+                buttonsHtml = `
+                    <button class="btn btn-primary" onclick="showResults()">返回結果</button>
+                    <button class="btn btn-primary" onclick="resetQuizState(); startQuiz()">重新測驗</button>
+                    <button class="btn" onclick="backToHome()" style="background: #6b7280; color: white;">返回課程列表</button>
+                `;
+            }
+            
+            reviewHtml += `
+                <div style="text-align: center; margin-top: 30px;">
+                    ${buttonsHtml}
+                </div>
+            `;
+            
+            document.getElementById('resultsContent').innerHTML = reviewHtml;
+        }
+
+        // AI 聊天功能
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // 添加用戶訊息
+            addChatMessage(message, 'user');
+            
+            // 清空輸入框
+            input.value = '';
+            
+            // 生成AI回應
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(message);
+                addChatMessage(aiResponse, 'ai');
+            }, 500);
+        }
+
+        function addChatMessage(message, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            messageDiv.textContent = message;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            // 檢查關鍵字並提供相應回應
+            for (const keyword in aiResponses) {
+                if (message.includes(keyword.toLowerCase())) {
+                    return aiResponses[keyword];
+                }
+            }
+            
+            // 根據當前問題類型提供回應
+            if (currentQuestion < quizData.length) {
+                const currentType = quizData[currentQuestion].type;
+                
+                if (currentType.includes('SBAR')) {
+                    return aiResponses['SBAR'];
+                } else if (currentType.includes('雙重確認')) {
+                    return aiResponses['雙重確認'];
+                } else if (currentType.includes('CUS')) {
+                    return aiResponses['CUS'];
+                } else if (currentType.includes('多重安全威脅')) {
+                    return aiResponses['ABC'];
+                } else if (currentType.includes('閉環溝通')) {
+                    return aiResponses['閉環溝通'];
+                } else if (currentType.includes('進食')) {
+                    return aiResponses['進食安全'];
+                } else if (currentType.includes('RCA')) {
+                    return aiResponses['RCA'];
+                } else if (currentType.includes('PDCA')) {
+                    return aiResponses['PDCA'];
+                }
+            }
+            
+            // 通用回應
+            const generalResponses = [
+                "這是一個很好的問題！讓我來解釋一下...",
+                "根據TRM的核心原則，我建議您思考一下團隊協作和安全管理的重要性。",
+                "NIV照護涉及多個面向，包括技術操作、團隊溝通和病人安全，您想了解哪個部分呢？",
+                "在醫療照護中，任何操作都要以病人安全為優先考量。您對這道題目的哪個部分有疑問？",
+                "TRM強調的是系統性思維和團隊協作，讓我們一起來分析這個情境..."
+            ];
+            
+            return generalResponses[Math.floor(Math.random() * generalResponses.length)];
+        }
+
+        // 防止意外離開
+        window.addEventListener('beforeunload', function(e) {
+            if (currentQuestion > 0 && currentQuestion < quizData.length) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '您的學習進度將會遺失，確定要離開嗎？';
+            }
+        });
+
+        // 點擊模態框外部關閉
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            const creditModal = document.getElementById('creditModal');
+            
+            if (event.target === modal) {
+                return false; // 不允許在測驗期間關閉
+            }
+            if (event.target === creditModal) {
+                creditModal.style.display = 'none';
+            }
+        }
+
+        // 初始化應用程式
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+    </script>
+</body>
+</html>
