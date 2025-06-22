@@ -44,7 +44,7 @@
         .logo {
             width: 60px;
             height: 60px;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMDAgMjBMMTgwIDYwVjE0MEwxMDAgMTgwTDIwIDE0MFY2MEwxMDAgMjBaIiBmaWxsPSIjRkJCRjI0IiBzdHJva2U9IiMxRTQwQUYiIHN0cm9rZS13aWR0aD0iNCIvPgo8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjMwIiBmaWxsPSIjMUU0MEFGIi8+CjxwYXRoIGQ9Ik0xMDAgODBMMTIwIDEwMEwxMDAgMTIwTDgwIDEwMEwxMDAgODBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=');
+            background-image: url('logo.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -553,69 +553,10 @@
         <div id="progressTab" class="tab-content" style="display: none;">
             <div class="card">
                 <h2>📊 個人學習歷程</h2>
-                
-                <div style="background: #f8fafc; padding: 25px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
-                    <div style="font-size: 3em; margin-bottom: 15px;">🔐</div>
-                    <h3 style="color: #374151; margin-bottom: 15px;">登入以查看學習歷程</h3>
-                    <p style="color: #6b7280; margin-bottom: 25px;">請輸入您的人事號碼以查看個人學習記錄</p>
-                    
-                    <div style="max-width: 300px; margin: 0 auto;">
-                        <input type="text" id="employeeIdInput" placeholder="請輸入人事號碼" 
-                               style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; text-align: center;">
-                        <button onclick="loadUserProgress()" 
-                                style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                            查看學習歷程
-                        </button>
-                    </div>
-                </div>
-
-                <div id="progressResults" style="display: none;">
-                    <div class="course-grid">
-                        <div class="course-card">
-                            <div class="course-header">
-                                <div class="course-icon" style="background: #16a34a;">📊</div>
-                                <div>
-                                    <div class="course-title">學習統計</div>
-                                    <div class="course-meta">完成率 • 成績分析</div>
-                                </div>
-                            </div>
-                            <div class="course-description">
-                                <div id="statsContent">
-                                    <!-- 統計資料將在這裡顯示 -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-header">
-                                <div class="course-icon" style="background: #8b5cf6;">📈</div>
-                                <div>
-                                    <div class="course-title">學習記錄</div>
-                                    <div class="course-meta">歷史成績 • 詳細記錄</div>
-                                </div>
-                            </div>
-                            <div class="course-description">
-                                <div id="recordsContent">
-                                    <!-- 學習記錄將在這裡顯示 -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="course-card">
-                            <div class="course-header">
-                                <div class="course-icon" style="background: #f59e0b;">🏆</div>
-                                <div>
-                                    <div class="course-title">認證證書</div>
-                                    <div class="course-meta">完成證明 • 學分認證</div>
-                                </div>
-                            </div>
-                            <div class="course-description">
-                                <div id="certificatesContent">
-                                    <!-- 認證資料將在這裡顯示 -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div style="background: #f8fafc; padding: 40px 0; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🚧</div>
+                    <h3 style="color: #374151; margin-bottom: 15px;">系統建置中，尚未開放查詢</h3>
+                    <p style="color: #6b7280;">敬請期待！</p>
                 </div>
             </div>
         </div>
