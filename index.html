@@ -589,7 +589,13 @@
         
         <div class="footer-bottom">
             <p>&copy; 2025 奇美醫療財團法人奇美醫院 品質管理中心. All rights reserved.</p>
+            <p id="lastUpdated"></p>
         </div>
+        <script>
+            // 自動顯示網站最後更新日期
+            document.getElementById('lastUpdated').textContent = 
+                '網站最後更新：' + new Date().toLocaleDateString('zh-TW');
+        </script>
     </div>
 
     <script>
