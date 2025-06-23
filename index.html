@@ -681,7 +681,7 @@
             ['arterialLine', 'nivCourse'].forEach(function(key) {
                 let count = parseInt(localStorage.getItem('count-' + key) || '0', 10);
                 let el = document.getElementById('count-' + key);
-                if (el) el.textContent = `本機學習人次：${count}`;
+                if (el) el.textContent = `學習人次：${count}`;
             });
         });
 
