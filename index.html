@@ -423,7 +423,7 @@
                 <div id="year2025" class="year-content">
                     <div class="course-grid">
                         <!-- 第一個案例：動脈導管置放及照護安全 -->
-                        <div class="course-card" onclick="downloadResource('https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf')">
+                        <div class="course-card" onclick="downloadResource('https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf'); countClick('arterialLine');">
                             <div class="course-header">
                                 <div class="course-icon download">📄</div>
                                 <div>
@@ -437,11 +437,12 @@
                             <div class="course-status">
                                 <div class="status-badge status-download">點擊下載</div>
                                 <div style="font-size: 0.9em; color: #6b7280;">PDF教材</div>
+                                <div style="font-size: 0.8em; color: #16a34a;" id="count-arterialLine"></div>
                             </div>
                         </div>
 
                         <!-- 第二個案例：NIV學習 -->
-                        <div class="course-card" onclick="openNIVCourse()">
+                        <div class="course-card" onclick="openNIVCourse(); countClick('nivCourse');">
                             <div class="course-header">
                                 <div class="course-icon">🫁</div>
                                 <div>
@@ -455,6 +456,7 @@
                             <div class="course-status">
                                 <div class="status-badge status-interactive">互動學習</div>
                                 <div style="font-size: 0.9em; color: #6b7280;">約需 20 分鐘</div>
+                                <div style="font-size: 0.8em; color: #16a34a;" id="count-nivCourse"></div>
                             </div>
                         </div>
 
@@ -664,59 +666,24 @@
             window.open(url, '_blank');
         }
 
-        // 載入用戶學習進度
-        function loadUserProgress() {
-            const employeeId = document.getElementById('employeeIdInput').value.trim();
-            
-            if (!employeeId) {
-                alert('請輸入人事號碼');
-                return;
-            }
-            
-            if (employeeId.length < 3) {
-                alert('請輸入有效的人事號碼');
-                return;
-            }
-            
-            // 模擬載入學習資料
-            const progressResults = document.getElementById('progressResults');
-            const statsContent = document.getElementById('statsContent');
-            const recordsContent = document.getElementById('recordsContent');
-            const certificatesContent = document.getElementById('certificatesContent');
-            
-            // 顯示結果區域
-            progressResults.style.display = 'block';
-            
-            // 模擬數據（實際應該從伺服器載入）
-            statsContent.innerHTML = `
-                <p><strong>總學習時數：</strong> 25 小時</p>
-                <p><strong>完成課程：</strong> 3 / 5</p>
-                <p><strong>平均成績：</strong> 87.5 分</p>
-                <p><strong>最後學習：</strong> 2025-01-15</p>
-            `;
-            
-            recordsContent.innerHTML = `
-                <div style="margin-bottom: 10px; padding: 10px; background: #f0fdf4; border-radius: 6px;">
-                    <strong>NIV團隊照護學習</strong><br>
-                    完成時間：2025-01-15<br>
-                    成績：85分 (通過)
-                </div>
-                <div style="margin-bottom: 10px; padding: 10px; background: #f0fdf4; border-radius: 6px;">
-                    <strong>動脈導管照護安全</strong><br>
-                    完成時間：2025-01-10<br>
-                    成績：90分 (通過)
-                </div>
-            `;
-            
-            certificatesContent.innerHTML = `
-                <p><strong>已獲得認證：</strong></p>
-                <ul style="margin-top: 10px;">
-                    <li>✅ NIV照護基礎認證</li>
-                    <li>✅ 血管通路管理認證</li>
-                    <li>⏳ TRM進階認證 (進行中)</li>
-                </ul>
-            `;
+        // 點擊計數功能
+        function countClick(key) {
+            // 取得目前人次
+            let count = parseInt(localStorage.getItem('count-' + key) || '0', 10);
+            count++;
+            localStorage.setItem('count-' + key, count);
+            // 顯示人次
+            document.getElementById('count-' + key).textContent = `本機學習人次：${count}`;
         }
+
+        // 頁面載入時顯示目前人次
+        document.addEventListener('DOMContentLoaded', function() {
+            ['arterialLine', 'nivCourse'].forEach(function(key) {
+                let count = parseInt(localStorage.getItem('count-' + key) || '0', 10);
+                let el = document.getElementById('count-' + key);
+                if (el) el.textContent = `本機學習人次：${count}`;
+            });
+        });
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
