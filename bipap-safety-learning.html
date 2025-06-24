@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiPAP團隊照護學習系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.6s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2a5298;
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .reference-link {
+            margin-top: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .reference-link a {
+            color: #2a5298;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .reference-link a:hover {
+            color: #667eea;
+            text-decoration: underline;
+        }
+
+        .introduction-section {
+            display: none;
+            padding: 30px;
+            text-align: left;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .introduction-section h2 {
+            color: #1e3c72;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .intro-content {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-content h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .intro-content p, .intro-content li {
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.05em;
+            margin-bottom: 10px;
+        }
+
+        .intro-content ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        .bipap-diagram {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .bipap-diagram h4 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .device-image {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 600px;
+        }
+
+        .device-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .indicator-list {
+            text-align: left;
+            margin: 20px auto;
+            max-width: 500px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .indicator-list li {
+            margin: 8px 0;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .indicator-list strong {
+            color: #1e3c72;
+        }
+
+        .warning-section {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-section h4 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .warning-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .warning-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .warning-box h5 {
+            color: #dc3545;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .warning-box ul {
+            margin-left: 20px;
+            font-size: 0.95em;
+            color: #495057;
+            text-align: left;
+        }
+
+        .warning-box li {
+            margin: 5px 0;
+        }
+
+        .start-button, .continue-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            margin-top: 20px;
+        }
+
+        .start-button:hover, .continue-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 12px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .score {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #764ba2;
+        }
+
+        .scenario {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .scenario h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .scenario p {
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.05em;
+        }
+
+        .options {
+            margin-top: 25px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f3e7ff 0%, #e6e0ff 100%);
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            animation: correctPulse 0.6s ease;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #4caf50;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border: 2px solid #f44336;
+            color: #721c24;
+        }
+
+        .feedback h4 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .next-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto 0;
+            font-weight: 600;
+            display: none;
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .results h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+
+        .final-score {
+            font-size: 3em;
+            color: #667eea;
+            margin: 20px 0;
+            font-weight: 700;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .performance-message {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .completion-form {
+            background: #f5f7fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px auto;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .completion-form h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .completion-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(86, 171, 47, 0.3);
+            margin-top: 20px;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(86, 171, 47, 0.4);
+        }
+
+        .key-point {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .footer-credit {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            padding: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin-bottom: 60px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .scenario {
+                padding: 20px;
+            }
+            
+            .option {
+                padding: 15px;
+            }
+
+            .warning-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BiPAP團隊照護學習</h1>
+            <p class="subtitle">臨床情境模擬訓練</p>
+        </div>
+
+        <div class="start-screen" id="startScreen">
+            <h2>歡迎使用BiPAP團隊照護互動學習課程</h2>
+            <p style="margin: 20px 0; font-size: 1.1em; color: #666;">
+                本課程將透過臨床情境模擬，幫助您掌握BiPAP照護與安全注意事項
+            </p>
+            <div class="key-point">
+                <strong>重要原則：</strong>先開機，再戴面罩；先脫面罩，再關機
+            </div>
+            <div class="reference-link">
+                學習內容請參考：<a href="/niv/niv.pdf" target="_blank">總院-內科-呼吸-2-20022 使用非侵襲性呼吸器醫療團隊照護管理程序書</a>
+            </div>
+            <button class="start-button" onclick="showIntroduction()">開始學習</button>
+        </div>
+
+        <div class="introduction-section" id="introductionSection">
+            <h2>前言</h2>
+            
+            <div class="intro-content">
+                <h3>BiPAP在臨床的應用情境</h3>
+                <p>BiPAP（雙壓型陽壓呼吸器）是一種非侵襲性通氣治療設備，在臨床上有廣泛的應用。常見的使用情境包括：</p>
+                <ul>
+                    <li><strong>急性呼吸衰竭：</strong>如COPD急性發作、心因性肺水腫等急性狀況</li>
+                    <li><strong>慢性呼吸疾病：</strong>慢性阻塞性肺疾病、神經肌肉疾病造成的呼吸功能不全</li>
+                    <li><strong>睡眠呼吸障礙：</strong>阻塞性睡眠呼吸中止症、中樞性睡眠呼吸中止症</li>
+                    <li><strong>術後照護：</strong>預防或治療術後肺擴張不全、協助脫離侵襲性呼吸器</li>
+                    <li><strong>其他適應症：</strong>肥胖低通氣症候群、胸廓畸形等造成的限制性肺疾病</li>
+                </ul>
+            </div>
+
+            <div class="bipap-diagram">
+                <h4>BiPAP設備介面示意圖</h4>
+                <div class="device-image">
+                    <img src="/niv/niv1.jpg" alt="BiPAP設備介面" style="max-width: 100%; height: auto;">
+                    <ul class="indicator-list">
+                        <li><strong>2. 電源指示燈：</strong>顯示電源連接狀態</li>
+                        <li><strong>3. 治療開關指示燈：</strong>藍色燈閃爍代表裝置通氣中</li>
+                        <li><strong>4. 警報靜音／重設按鈕：</strong>觸發警報時會發亮，靜音時會閃爍</li>
+                        <li><strong>5. 警報列：</strong>紅色燈閃爍表示高級別警報</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
+                    ※ 以ResMed Astral 100機型為例
+                </p>
+            </div>
+
+            <div class="intro-content">
+                <h3>團隊照護的重要性</h3>
+                <p>BiPAP的使用需要跨領域團隊的密切合作，包括：</p>
+                <ul>
+                    <li><strong>臨床醫師：</strong>評估適應症、開立醫囑、監測治療成效、病情解釋及衛教</li>
+                    <li><strong>呼吸治療師：</strong>設定參數、執行呼吸器照護、協助脫離訓練、病人及照護者衛教</li>
+                    <li><strong>護理師：</strong>監測生命徵象、皮膚照護、執行醫囑、病人及照護者衛教</li>
+                    <li><strong>其他專業人員：</strong>依病人需求提供整合性照護</li>
+                </ul>
+                <p style="margin-top: 15px;">透過團隊合作，才能確保病人獲得安全且完善的BiPAP治療照護。</p>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="continue-button" onclick="startQuiz()">進入臨床情境學習</button>
+            </div>
+        </div>
+
+        <div class="question-container" id="questionContainer">
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <div class="question-header">
+                <span class="question-number" id="questionNumber"></span>
+                <span class="score" id="scoreDisplay">得分: 0</span>
+            </div>
+
+            <div class="scenario" id="scenario"></div>
+            
+            <div class="options" id="options"></div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <div style="text-align: center;">
+                <button class="next-button" id="nextButton" onclick="nextQuestion()">下一題</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>學習完成！</h2>
+            <div class="final-score" id="finalScore"></div>
+            <p class="performance-message" id="performanceMessage"></p>
+            
+            <div class="completion-form" id="completionForm">
+                <h3>請輸入您的資料以完成學習紀錄</h3>
+                <div class="form-group">
+                    <label for="staffId">人事號碼</label>
+                    <input type="text" id="staffId" placeholder="請輸入您的人事號碼" required>
+                </div>
+                <div class="form-group">
+                    <label for="staffName">姓名</label>
+                    <input type="text" id="staffName" placeholder="請輸入您的姓名" required>
+                </div>
+                <button class="submit-button" onclick="submitCompletion()">提交學習紀錄</button>
+            </div>
+            
+            <div class="completion-message" id="completionMessage">
+                ✅ 學習紀錄已儲存！感謝您完成BiPAP團隊照護學習課程。
+            </div>
+            
+            <button class="restart-button" onclick="restartQuiz()">重新學習</button>
+        </div>
+
+        <div class="footer-credit">
+            奇美醫院呼吸治療科及品質管理中心製作
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                scenario: "早上8點，護理師小陳準備為李先生（75歲，COPD急性發作）戴上BiPAP。李先生意識清楚但呼吸急促，SpO2 88%。呼吸治療師已經準備好BiPAP機器和面罩。",
+                question: "小陳應該採取以下哪個正確的操作順序？",
+                options: [
+                    "先幫李先生戴上面罩，確認密合度後再開啟BiPAP",
+                    "先開啟BiPAP讓氣流開始供應，再幫李先生戴上面罩",
+                    "同時開機和戴面罩，以節省時間",
+                    "先戴面罩但不扣緊，開機後再調整"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "正確！必須先開機讓BiPAP開始供氣後，才能幫病人戴上面罩。這是為了避免病人在無氣流狀態下戴面罩造成窒息感。",
+                    incorrect: "不正確。記住安全原則：先開機，再戴面罩。若先戴面罩再開機，病人可能會因無氣流而感到窒息不適。"
+                }
+            },
+            {
+                scenario: "承上題，李先生戴上BiPAP已經2小時，但仍持續呼吸急促，SpO2維持在89-90%之間，且出現意識躁動的情況。醫療團隊重新評估後發現病人無法聽從指令，儘管BiPAP設定已調整至適當參數，病人的呼吸窘迫並未改善。",
+                question: "面對這種情況，醫療團隊應該優先考慮哪個處置？",
+                options: [
+                    "繼續調高BiPAP的壓力設定，給予更多時間觀察",
+                    "改用高流量氧氣鼻導管（HFNC）治療",
+                    "評估是否需要插管進行侵襲性機械通氣治療",
+                    "給予鎮靜藥物讓病人配合BiPAP使用"
+                ],
+                correct: 2,
+                feedback: {
+                    correct: "正確！當BiPAP治療效果不佳，病人持續呼吸窘迫且出現意識變化時，應立即評估是否需要升級為侵襲性通氣治療。這是BiPAP使用的重要決策點。",
+                    incorrect: "請注意！BiPAP治療失敗的徵兆包括持續低血氧、意識改變、呼吸窘迫無改善等。此時應考慮插管治療，避免延誤病情。"
+                },
+                extraInfo: `
+                    <div class="warning-section" style="text-align: center;">
+                        <h4>BiPAP使用禁忌症與併發症</h4>
+                        <div class="warning-grid">
+                            <div class="warning-box">
+                                <h5>禁忌症</h5>
+                                <ul>
+                                    <li>呼吸或心跳停止、昏迷</li>
+                                    <li>躁動或無法配合</li>
+                                    <li>嚴重顏面外傷</li>
+                                    <li>近期上消化道手術</li>
+                                    <li>嘔吐風險高</li>
+                                </ul>
+                            </div>
+                            <div class="warning-box">
+                                <h5>可能併發症</h5>
+                                <ul>
+                                    <li>胃脹氣</li>
+                                    <li>臉部壓傷</li>
+                                    <li>眼部刺激</li>
+                                    <li>口乾不適</li>
+                                    <li>降低心輸出量</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                scenario: "上午11點，呼吸治療師小張剛完成王太太（68歲，心因性肺水腫）的BiPAP參數調整。目前設定為IPAP 14 cmH2O、EPAP 8 cmH2O、FiO2 40%。護理師小陳準備接班，小張需要進行交班說明。",
+                question: "以下哪個交班溝通方式最符合團隊資源管理(TRM)的原則？",
+                options: [
+                    "「王太太用BiPAP，參數都調好了，沒什麼問題。」",
+                    "「王太太心因性肺水腫使用BiPAP，目前IPAP 14、EPAP 8、FiO2 40%，SpO2從88%上升到95%，呼吸次數從32降到22次/分，請持續監測呼吸型態。」",
+                    "「機器在14/8，你看著辦就好。」",
+                    "「病人情況還可以，詳細資料都在電腦裡。」"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "完美的交班！使用SBAR架構，提供具體數據（S-情況：心因性肺水腫；B-背景：BiPAP參數；A-評估：生命徵象改善；R-建議：持續監測），這是良好團隊溝通的典範。",
+                    incorrect: "交班時應採用結構化溝通，明確說明：診斷、目前治療參數、病人反應、需要注意事項。這樣才能確保照護的連續性和病人安全。"
+                },
+                extraInfo: `
+                    <div class="intro-content" style="margin-bottom: 20px;">
+                        <h3 style="text-align: center;">BiPAP重要參數意義</h3>
+                        <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; margin-top: 15px;">
+                            <ul style="font-size: 1em; list-style: none; padding: 0;">
+                                <li style="margin-bottom: 15px;">
+                                    <strong style="color: #2e7d32;">📊 IPAP（吸氣壓力）：</strong>吸氣時的壓力（10-20 cmH2O）<br>
+                                    <em style="color: #666; font-size: 0.9em; margin-left: 30px; display: block;">
+                                    → 就像有人在你吸氣時幫你推一把，讓空氣更容易進入肺部
+                                    </em>
+                                </li>
+                                <li style="margin-bottom: 15px;">
+                                    <strong style="color: #2e7d32;">📉 EPAP（吐氣壓力）：</strong>呼氣時的壓力（4-10 cmH2O）<br>
+                                    <em style="color: #666; font-size: 0.9em; margin-left: 30px; display: block;">
+                                    → 吐氣時保持較低的壓力，避免肺泡塌陷，讓呼吸更輕鬆
+                                    </em>
+                                </li>
+                                <li>
+                                    <strong style="color: #2e7d32;">💨 FiO2（氧氣濃度）：</strong>吸入氧濃度（21-100%）<br>
+                                    <em style="color: #666; font-size: 0.9em; margin-left: 30px; display: block;">
+                                    → 空氣中的氧氣比例，正常空氣是21%
+                                    </em>
+                                </li>
+                            </ul>
+                        </div>
+                        <p style="margin-top: 15px; color: #666; font-size: 0.9em; text-align: center;">
+                            ※ 呼吸治療師會根據病人狀況調整這些參數，並向團隊報告治療反應
+                        </p>
+                    </div>
+                `
+            },
+            {
+                scenario: "下午2點，王太太（68歲，心因性肺水腫）使用BiPAP治療中，她表示口渴想要喝水。看護阿美準備協助。依照標準照護程序，喝水時應如何處理？",
+                question: "阿美協助王太太喝水的正確做法是？",
+                options: [
+                    "完全取下面罩，關閉BiPAP，讓王太太慢慢喝水",
+                    "保持BiPAP運轉，短暫將面罩側邊扣環拆下讓王太太喝水",
+                    "不需要動面罩，用吸管從面罩邊緣讓王太太喝水",
+                    "先降低BiPAP壓力，再讓王太太喝水"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "正確！短暫飲水時，可保持BiPAP運轉，僅將面罩側邊扣環暫時拆下。這樣可避免完全中斷治療，同時滿足病人需求。",
+                    incorrect: "請注意，短暫飲水時不需完全停機。正確做法是保持BiPAP運轉，僅短暫拆開面罩側邊扣環即可。"
+                },
+                extraInfo: `
+                    <div class="intro-content" style="margin-bottom: 20px;">
+                        <h3 style="text-align: center;">BiPAP使用期間飲水及進食注意事項</h3>
+                        <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-top: 15px;">
+                            <h4 style="color: #1565c0; margin-bottom: 15px;">短暫飲水（沾濕嘴唇、小口喝水）</h4>
+                            <ul style="margin-left: 20px; color: #424242;">
+                                <li>保持BiPAP持續運轉</li>
+                                <li>僅將面罩側邊扣環短暫拆下</li>
+                                <li>喝水後立即將扣環扣回</li>
+                                <li>時間不可太久，避免血氧下降</li>
+                            </ul>
+                            <h4 style="color: #1565c0; margin: 20px 0 15px 0;">進食或長時間飲水</h4>
+                            <ul style="margin-left: 20px; color: #424242;">
+                                <li>必須由醫護人員執行</li>
+                                <li>需完全取下面罩並停止通氣</li>
+                                <li>進食期間密切監測血氧飽和度</li>
+                                <li>若需繼續使用BiPAP，請重新開機後，再戴上面罩</li>
+                            </ul>
+                        </div>
+                        <p style="margin-top: 15px; color: #d32f2f; font-weight: 600; text-align: center;">
+                            ⚠️ 重要提醒：使用BiPAP期間請評估是否禁食，以減少發生吸入性肺炎的風險
+                        </p>
+                    </div>
+                `
+            },
+            {
+                scenario: "下午4點交班時間，早班護理師小王正在向晚班護理師小李交班。床號15的劉女士（72歲）正在使用BiPAP，但機器持續發出警報聲。小李檢查發現是'大量漏氣'警報。",
+                question: "面對'大量漏氣'警報，小李應優先採取哪個處理步驟？",
+                options: [
+                    "立即關機檢查機器是否故障",
+                    "先評估病人呼吸狀況，然後重新調整面罩確保密合",
+                    "調高BiPAP壓力以補償漏氣",
+                    "更換新的面罩"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "完全正確！處理警報時，永遠要先評估病人狀況，確保安全。大量漏氣通常是面罩密合度問題，重新調整即可解決。",
+                    incorrect: "記住，任何警報處理都要先評估病人！大量漏氣最常見原因是面罩移位，應先確認病人安全後重新調整面罩。"
+                },
+                extraInfo: `
+                    <div class="warning-section">
+                        <h4 style="text-align: center; margin-bottom: 20px;">BiPAP常見警報及處理原則</h4>
+                        <div style="background: white; padding: 20px; border-radius: 10px;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr style="background: #f5f5f5;">
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">警報類型</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">常見原因</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">處理方式</th>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>大量漏氣</strong></td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">面罩鬆脫、鼻胃管影響密合</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">重新調整面罩位置及鬆緊度</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>管路脫落</strong></td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">管路未接好、面罩完全脫落</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">重新連接管路或戴回面罩</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>高壓警報</strong></td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">痰液阻塞、病人對抗呼吸器</td>
+                                    <td style="padding: 12px; border-bottom: 1px solid #eee;">評估是否需要抽痰或調整設定</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px;"><strong>低壓警報</strong></td>
+                                    <td style="padding: 12px;">大量漏氣、管路破損</td>
+                                    <td style="padding: 12px;">檢查整個呼吸迴路的完整性</td>
+                                </tr>
+                            </table>
+                            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                                <strong>🔔 處理警報的黃金原則：</strong>
+                                <ol style="margin: 10px 0 0 20px;">
+                                    <li>先評估病人狀況（呼吸、血氧、意識）</li>
+                                    <li>依警報類型進行相應處理</li>
+                                    <li>若無法排除，立即尋求支援</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                scenario: "晚上8點，劉女士（72歲）晚餐後要繼續使用BiPAP。新進護理師小陳準備操作，但不確定正確順序。資深護理師小美在旁指導。",
+                question: "小美應該教導小陳哪個正確的操作原則？",
+                options: [
+                    "永遠記住：先開機，再戴面罩；先脫面罩，再關機",
+                    "開關機順序不重要，重點是面罩要戴緊",
+                    "只要病人舒適，順序可以彈性調整",
+                    "緊急時可以同時進行開機和戴面罩"
+                ],
+                correct: 0,
+                feedback: {
+                    correct: "非常好！這是BiPAP操作的黃金原則，必須嚴格遵守。這個順序確保病人安全，避免窒息風險。",
+                    incorrect: "安全原則不可妥協！必須遵守：先開機，再戴面罩；先脫面罩，再關機。這是保護病人安全的關鍵。"
+                }
+            },
+            {
+                scenario: "凌晨2點，張先生(55歲，急性肺水腫)的SpO2突然從95%降到85%，BiPAP警報響起。值班護理師小黃發現是'管路脫落'警報，檢查後發現呼吸管路確實從機器接頭脫落。",
+                question: "小黃應該採取什麼緊急處置？",
+                options: [
+                    "先關機，重新連接管路後再開機",
+                    "保持開機狀態，立即重新連接管路，同時監測病人血氧變化",
+                    "先取下病人面罩，等管路接好再重新使用",
+                    "呼叫醫師前來處理"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "正確處理！保持開機並立即重新連接是對的。這樣可以最快恢復通氣支持，同時要密切監測病人的血氧變化。",
+                    incorrect: "緊急情況下，應保持BiPAP開機，立即重新連接脫落的管路，這樣能最快恢復通氣。記得同時監測血氧！"
+                },
+                extraInfo: `
+                    <div class="intro-content" style="margin-bottom: 20px;">
+                        <h3 style="text-align: center;">BiPAP團隊照護安全標示系統</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
+                            <div style="background: #ffebee; padding: 20px; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 2em; margin-bottom: 10px;">🔌</div>
+                                <h4 style="color: #c62828; margin-bottom: 10px;">呼吸器插頭標示</h4>
+                                <ul style="text-align: left; font-size: 0.9em;">
+                                    <li>插在紅色插座</li>
+                                    <li>貼上「請勿拔除」標籤</li>
+                                    <li>確保電源指示燈亮起</li>
+                                </ul>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 2em; margin-bottom: 10px;">🔵</div>
+                                <h4 style="color: #2e7d32; margin-bottom: 10px;">氧氣流量表標示</h4>
+                                <ul style="text-align: left; font-size: 0.9em;">
+                                    <li>掛上「請勿關閉」告示牌</li>
+                                    <li>確認氧氣雙頭管連接</li>
+                                    <li>檢查氧氣流量設定</li>
+                                </ul>
+                            </div>
+                            <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
+                                <h4 style="color: #1565c0; margin-bottom: 10px;">開關機標示</h4>
+                                <ul style="text-align: left; font-size: 0.9em;">
+                                    <li>先開機，再戴面罩</li>
+                                    <li>先脫面罩，再關機</li>
+                                    <li>張貼於機器明顯處</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <img src="/niv/niv2.jpg" alt="團隊照護標示" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                        </div>
+                        <div style="background: #fff9c4; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                            <strong>💡 團隊照護要點：</strong>
+                            <ul style="margin: 10px 0 0 20px;">
+                                <li>所有團隊成員都應熟悉這些標示的意義</li>
+                                <li>交班時確認所有安全標示都在正確位置</li>
+                                <li>發現標示脫落或模糊應立即更換</li>
+                                <li>定期進行團隊教育訓練，確保共識</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                scenario: "早上9點，呼吸治療師小陳正在為新進人員示範BiPAP安全操作。他特別強調某些情況絕對禁止家屬自行操作BiPAP開關機。有位家屬問：'如果半夜病人很不舒服想要暫時拿下面罩，我們可以幫忙嗎？'",
+                question: "小陳應該如何回應這個問題？",
+                options: [
+                    "可以，家屬可以協助暫時取下面罩讓病人休息",
+                    "只要家屬學會了就可以操作",
+                    "緊急時家屬可以先處理，再通知護理人員",
+                    "絕對不行，BiPAP的開機、關機及面罩配戴操作必須由醫療人員執行"
+                ],
+                correct: 3,
+                feedback: {
+                    correct: "完全正確！BiPAP的操作必須由醫療人員執行，這是為了確保病人安全。家屬應該通知醫護人員來處理。",
+                    incorrect: "請記住，為了病人安全，BiPAP的所有操作（開關機、面罩穿脫）都必須由醫療人員執行，家屬不可自行操作。"
+                },
+                extraInfo: `
+                    <div class="intro-content" style="margin-bottom: 20px;">
+                        <h3 style="text-align: center;">BiPAP病人及照護者衛教重點</h3>
+                        <div style="background: #f3e5f5; padding: 25px; border-radius: 10px;">
+                            <h4 style="color: #6a1b9a; margin-bottom: 20px;">🏥 必須由醫護人員執行的操作</h4>
+                            <ul style="margin-bottom: 20px;">
+                                <li><strong>開機與關機：</strong>確保正確的啟動與停止程序</li>
+                                <li><strong>面罩穿脫：</strong>遵守先開機再戴罩、先脫罩再關機原則</li>
+                                <li><strong>參數調整：</strong>任何壓力或氧氣濃度的改變</li>
+                                <li><strong>警報處理：</strong>評估並解決機器警報問題</li>
+                            </ul>
+                            
+                            <h4 style="color: #6a1b9a; margin-bottom: 20px;">👨‍👩‍👧‍👦 家屬可協助的事項</h4>
+                            <ul style="margin-bottom: 20px;">
+                                <li><strong>觀察病人狀況：</strong>呼吸是否順暢、有無不適表現</li>
+                                <li><strong>保持管路通暢：</strong>避免管路扭曲或受壓</li>
+                                <li><strong>提醒不可拔除：</strong>保護電源線和氧氣管路</li>
+                                <li><strong>及時通報：</strong>發現異常立即通知護理人員</li>
+                            </ul>
+                            
+                            <h4 style="color: #6a1b9a; margin-bottom: 20px;">📢 重要提醒事項</h4>
+                            <div style="background: white; padding: 15px; border-radius: 8px;">
+                                <ul>
+                                    <li>🔴 <strong>紅色插座：</strong>呼吸器電源必須插在紅色緊急電源插座</li>
+                                    <li>💨 <strong>氧氣開關：</strong>氧氣流量表上有「請勿關閉」標示</li>
+                                    <li>🚨 <strong>警報聲響：</strong>聽到警報立即通知護理人員</li>
+                                    <li>🍽️ <strong>飲食限制：</strong>使用BiPAP期間禁止進食</li>
+                                    <li>💧 <strong>短暫飲水：</strong>可暫時鬆開面罩側邊，但不可停機</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="background: #ffcdd2; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                                <strong>⚠️ 特別注意：</strong>
+                                <p style="margin-top: 10px;">即使家屬曾接受過訓練或在家中有使用經驗，在醫院環境中仍須由醫護人員操作，以確保符合醫院感染管制及安全規範。</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        let userAnswers = []; // 儲存使用者的答案
+
+        function showIntroduction() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('introductionSection').style.display = 'block';
+        }
+
+        function startQuiz() {
+            document.getElementById('introductionSection').style.display = 'none';
+            document.getElementById('questionContainer').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `第 ${currentQuestion + 1} 題 / 共 ${questions.length} 題`;
+            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            
+            let scenarioContent = '';
+            
+            // 如果有額外資訊，先顯示
+            if (question.extraInfo) {
+                scenarioContent = question.extraInfo;
+            }
+            
+            scenarioContent += `
+                <div class="scenario">
+                    <h3>臨床情境</h3>
+                    <p>${question.scenario}</p>
+                    <p><strong>${question.question}</strong></p>
+                </div>
+            `;
+            
+            document.getElementById('scenario').innerHTML = scenarioContent;
+            
+            const optionsHtml = question.options.map((option, index) => `
+                <div class="option" onclick="selectAnswer(${index})" id="option-${index}">
+                    ${String.fromCharCode(65 + index)}. ${option}
+                </div>
+            `).join('');
+            
+            document.getElementById('options').innerHTML = optionsHtml;
+            
+            // 檢查是否已經回答過這題
+            if (userAnswers[currentQuestion] !== undefined) {
+                showPreviousAnswer();
+            } else {
+                document.getElementById('feedback').style.display = 'none';
+                answered = false;
+            }
+            
+            // 最後一題時修改按鈕文字
+            if (currentQuestion === questions.length - 1) {
+                document.getElementById('nextButton').textContent = '我要看分數';
+            } else {
+                document.getElementById('nextButton').textContent = '下一題';
+            }
+            
+            // 如果已答過，顯示下一題按鈕
+            if (userAnswers[currentQuestion] !== undefined) {
+                document.getElementById('nextButton').style.display = 'inline-block';
+            } else {
+                document.getElementById('nextButton').style.display = 'none';
+            }
+        }
+
+        function showPreviousAnswer() {
+            const question = questions[currentQuestion];
+            const previousAnswer = userAnswers[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            // 顯示之前的答案
+            options[previousAnswer].classList.add('selected');
+            
+            if (previousAnswer === question.correct) {
+                options[previousAnswer].classList.add('correct');
+            } else {
+                options[previousAnswer].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+            }
+            
+            // 顯示回饋
+            const isCorrect = previousAnswer === question.correct;
+            showFeedback(isCorrect, question.feedback[isCorrect ? 'correct' : 'incorrect'], false);
+            
+            // 禁用選項
+            options.forEach(option => {
+                option.style.cursor = 'default';
+                option.onclick = null;
+            });
+            
+            answered = true;
+        }
+
+        function selectAnswer(index) {
+            if (answered) return;
+            
+            answered = true;
+            userAnswers[currentQuestion] = index; // 儲存答案
+            
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            options[index].classList.add('selected');
+            
+            if (index === question.correct) {
+                options[index].classList.add('correct');
+                // 只有第一次答對才計分
+                if (!userAnswers[currentQuestion + '_scored']) {
+                    score++;
+                    userAnswers[currentQuestion + '_scored'] = true;
+                }
+                showFeedback(true, question.feedback.correct, true);
+            } else {
+                options[index].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+                showFeedback(false, question.feedback.incorrect, true);
+            }
+            
+            document.getElementById('scoreDisplay').textContent = `得分: ${score}`;
+            document.getElementById('nextButton').style.display = 'inline-block';
+            
+            // Disable all options
+            options.forEach(option => {
+                option.style.cursor = 'default';
+                option.onclick = null;
+            });
+        }
+
+        function showFeedback(isCorrect, message, showKeyPoint = true) {
+            const feedback = document.getElementById('feedback');
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            // 只在特定題目顯示關鍵提醒
+            const showReminder = !isCorrect && showKeyPoint && 
+                (currentQuestion === 0 || currentQuestion === 1 || currentQuestion === 5 || currentQuestion === 6);
+            
+            feedback.innerHTML = `
+                <h4>${isCorrect ? '✓ 答對了！' : '✗ 答錯了'}</h4>
+                <p>${message}</p>
+                ${showReminder ? '<div class="key-point">記住：先開機，再戴面罩；先脫面罩，再關機</div>' : ''}
+            `;
+            feedback.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = `${score} / ${questions.length}`;
+            
+            let message = '';
+            if (percentage === 100) {
+                message = '太棒了！您已完全掌握BiPAP安全操作原則！';
+            } else if (percentage >= 80) {
+                message = '表現優秀！您對BiPAP安全操作有良好的理解。';
+            } else if (percentage >= 70) {
+                message = '通過測驗！您對BiPAP安全操作有基本的理解。';
+            } else {
+                message = '未合格，請重新學習！';
+            }
+            
+            document.getElementById('performanceMessage').textContent = message;
+            
+            // 只有70分以上才顯示人事號輸入表單
+            if (percentage >= 70) {
+                document.getElementById('completionForm').style.display = 'block';
+            } else {
+                document.getElementById('completionForm').style.display = 'none';
+            }
+        }
+
+        function submitCompletion() {
+            const staffId = document.getElementById('staffId').value;
+            const staffName = document.getElementById('staffName').value;
+            
+            if (!staffId || !staffName) {
+                alert('請填寫完整的人事號碼和姓名');
+                return;
+            }
+            
+            // 取得當前時間
+            const now = new Date();
+            const completionTime = now.toLocaleString('zh-TW', { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            // 儲存學習紀錄到localStorage（實際應用時應改為傳送到伺服器）
+            const learningRecord = {
+                staffId: staffId,
+                staffName: staffName,
+                score: score,
+                totalQuestions: questions.length,
+                percentage: Math.round((score / questions.length) * 100),
+                completionTime: completionTime
+            };
+            
+            // 模擬儲存到伺服器（實際應用時替換為真實的API呼叫）
+            console.log('學習紀錄：', learningRecord);
+            localStorage.setItem('bipap_learning_' + staffId + '_' + Date.now(), JSON.stringify(learningRecord));
+            
+            // 顯示完成訊息
+            document.getElementById('completionForm').style.display = 'none';
+            document.getElementById('completionMessage').style.display = 'block';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            userAnswers = []; // 重置答案記錄
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('scoreDisplay').textContent = '得分: 0';
+            
+            // 重置表單
+            document.getElementById('staffId').value = '';
+            document.getElementById('staffName').value = '';
+            document.getElementById('completionForm').style.display = 'block';
+            document.getElementById('completionMessage').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
