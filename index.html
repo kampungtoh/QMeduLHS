@@ -522,9 +522,6 @@
                 <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
                 <button class="case-btn" onclick="downloadResource('https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf')">下載 PDF</button>
                 <div style="margin-top:20px;">
-                    <!-- 使用 Google Drive 預覽嵌入，請將 FILE_ID 換成你的 Google Drive PDF 檔案ID -->
-                    <iframe src="https://drive.google.com/file/d/18dD6vA3Ex9gIsA6EPYRe-zp-ZbnRyj3D/preview" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
-                    <!-- 若你沒有 Google Drive，可用 PDF.js viewer 或其他支援線上預覽的服務 -->
                     <!-- <iframe 
                       src="pdfjs/web/viewer.html?file=你的PDF網址"
                       style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;overflow:auto;"
@@ -732,6 +729,16 @@
             });
             if (year === '2025') document.querySelector('.year-tab:nth-child(1)').classList.add('active');
             if (year === '2026') document.querySelector('.year-tab:nth-child(2)').classList.add('active');
+        }
+
+        // 新增下載 PDF 功能
+        function downloadResource(url) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         // 初始化
