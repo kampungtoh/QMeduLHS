@@ -317,6 +317,25 @@
             font-size: 0.9em;
         }
 
+        /* 新增：案例內頁按鈕樣式，與 .year-tab 相同 */
+        .case-btn {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: none;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            font-size: 1em;
+            display: inline-block;
+        }
+        .case-btn:hover {
+            background: #e5e7eb;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
@@ -407,7 +426,7 @@
     <div class="container">
         <!-- Courses Tab -->
         <div id="coursesTab" class="tab-content" style="display: block;">
-            <div class="card">
+            <div class="card" id="courseListCard">
                 <h2>📚 學習案例</h2>
                 <p style="margin-bottom: 30px;">
                     歡迎來到奇美品質學院！請選擇您想要學習的案例，我們將透過互動式情境模擬，來協助您完成學習。
@@ -487,6 +506,24 @@
                         <h3 style="color: #374151; margin-bottom: 15px;">2026年學習案例</h3>
                         <p>我們正在規劃2026年的精彩學習內容，敬請期待！</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- 新增：NIV課程內頁區塊，預設隱藏 -->
+            <div class="card" id="nivCourseCard" style="display: none;">
+                <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
+                <button class="case-btn" onclick="showNIVPDF()">下載 PDF</button>
+                <div style="margin-top:20px;">
+                    <iframe id="nivIframe" src="niv-course.html" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
+                </div>
+            </div>
+
+            <!-- 新增：NIV PDF 內頁區塊，預設隱藏 -->
+            <div class="card" id="nivPDFCard" style="display: none;">
+                <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
+                <button class="case-btn" onclick="showNIVCourse()">返回互動課程</button>
+                <div style="margin-top:20px;">
+                    <iframe src="https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
                 </div>
             </div>
         </div>
@@ -646,24 +683,33 @@
             document.body.removeChild(link);
         }
 
-        // 開啟NIV課程（跳轉到新頁面）
+        // 顯示NIV課程（在中間區塊）
         function openNIVCourse() {
-            // 這裡可以替換為實際的NIV課程網址
-            const nihUrl = 'niv-course.html'; // 或者其他網址
-            window.open(nihUrl, '_blank');
+            document.getElementById('courseListCard').style.display = 'none';
+            document.getElementById('nivCourseCard').style.display = 'block';
+            document.getElementById('nivPDFCard').style.display = 'none';
+            // 若需重載iframe內容可加下行
+            // document.getElementById('nivIframe').src = 'niv-course.html';
         }
 
-        // 開啟學習資源頁面
-        function openResourcePage(type) {
-            // 根據類型跳轉到不同的資源頁面
-            const resourceUrls = {
-                'guidelines': 'resources-guidelines.html',
-                'videos': 'resources-videos.html', 
-                'documents': 'resources-documents.html'
-            };
-            
-            const url = resourceUrls[type] || 'resources.html';
-            window.open(url, '_blank');
+        // 顯示NIV PDF（在中間區塊）
+        function showNIVPDF() {
+            document.getElementById('courseListCard').style.display = 'none';
+            document.getElementById('nivCourseCard').style.display = 'none';
+            document.getElementById('nivPDFCard').style.display = 'block';
+        }
+
+        // 返回案例列表
+        function showCourseList() {
+            document.getElementById('courseListCard').style.display = 'block';
+            document.getElementById('nivCourseCard').style.display = 'none';
+            document.getElementById('nivPDFCard').style.display = 'none';
+        }
+
+        // 返回互動課程
+        function showNIVCourse() {
+            document.getElementById('nivCourseCard').style.display = 'block';
+            document.getElementById('nivPDFCard').style.display = 'none';
         }
 
         // 點擊計數功能
