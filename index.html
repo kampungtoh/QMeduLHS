@@ -405,7 +405,7 @@
     <div class="header">
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo"></div>
+                <div class="logo" onclick="goHome()" style="cursor:pointer;"></div>
                 <div class="brand-info">
                     <h1>奇美品質學院</h1>
                     <div class="brand-values">人本 • 創新 • 卓越</div>
@@ -441,7 +441,7 @@
                 <!-- 2025年課程（依上架日期新到舊排序，並顯示上架日期） -->
                 <div id="year2025" class="year-content">
                     <div class="course-grid">
-                        <!-- BiPAP 案例（2025/6/30） -->
+                        <!-- BiPAP 案例 -->
                         <div class="course-card" onclick="openNIVCourse(); countClick('nivCourse');">
                             <div class="course-header">
                                 <div class="course-icon">🫁</div>
@@ -461,7 +461,7 @@
                             </div>
                         </div>
 
-                        <!-- 動脈導管案例（2025/2/1） -->
+                        <!-- 動脈導管案例 -->
                         <div class="course-card" onclick="showArterialPDF(); countClick('arterialLine');">
                             <div class="course-header">
                                 <div class="course-icon download">📄</div>
@@ -514,24 +514,15 @@
             <!-- 新增：NIV課程內頁區塊，預設隱藏 -->
             <div class="card" id="nivCourseCard" style="display: none;">
                 <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
-                <button class="case-btn" onclick="showNIVPDF()">下載 PDF</button>
                 <div style="margin-top:20px;">
                     <iframe id="nivIframe" src="niv-course.html" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
-                </div>
-            </div>
-
-            <!-- 新增：NIV PDF 內頁區塊，預設隱藏 -->
-            <div class="card" id="nivPDFCard" style="display: none;">
-                <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
-                <button class="case-btn" onclick="showNIVCourse()">返回互動課程</button>
-                <div style="margin-top:20px;">
-                    <iframe src="https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
                 </div>
             </div>
 
             <!-- 新增：動脈導管 PDF 內頁區塊，預設隱藏 -->
             <div class="card" id="arterialPDFCard" style="display: none;">
                 <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
+                <button class="case-btn" onclick="downloadResource('https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf')">下載 PDF</button>
                 <div style="margin-top:20px;">
                     <iframe src="https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
                 </div>
@@ -716,35 +707,30 @@
             document.body.removeChild(link);
         }
 
-        // 顯示NIV課程（在中間區塊）
+        // 點logo回首頁
+        function goHome() {
+            showCourseList();
+            showTab('courses');
+        }
+
+        // 顯示NIV課程
         function openNIVCourse() {
             document.getElementById('courseListCard').style.display = 'none';
             document.getElementById('nivCourseCard').style.display = 'block';
-            document.getElementById('nivPDFCard').style.display = 'none';
-            // 若需重載iframe內容可加下行
-            // document.getElementById('nivIframe').src = 'niv-course.html';
+            document.getElementById('arterialPDFCard').style.display = 'none';
         }
 
-        // 顯示NIV PDF（在中間區塊）
-        function showNIVPDF() {
-            document.getElementById('courseListCard').style.display = 'none';
-            document.getElementById('nivCourseCard').style.display = 'none';
-            document.getElementById('nivPDFCard').style.display = 'block';
-        }
-
-        // 顯示動脈導管PDF（在中間區塊）
+        // 顯示動脈導管PDF（並顯示下載按鈕）
         function showArterialPDF() {
             document.getElementById('courseListCard').style.display = 'none';
             document.getElementById('nivCourseCard').style.display = 'none';
-            document.getElementById('nivPDFCard').style.display = 'none';
             document.getElementById('arterialPDFCard').style.display = 'block';
         }
 
-        // 返回案例列表（需隱藏所有內頁卡片）
+        // 返回案例列表
         function showCourseList() {
             document.getElementById('courseListCard').style.display = 'block';
             document.getElementById('nivCourseCard').style.display = 'none';
-            document.getElementById('nivPDFCard').style.display = 'none';
             document.getElementById('arterialPDFCard').style.display = 'none';
         }
 
