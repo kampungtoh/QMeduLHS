@@ -1179,7 +1179,7 @@
             
             // 只在特定題目顯示關鍵提醒
             const showReminder = !isCorrect && showKeyPoint && 
-                (currentQuestion === 0 || currentQuestion === 1 || currentQuestion === 5 || currentQuestion === 6);
+                (currentQuestion === 0 || currentQuestion === 3 || currentQuestion === 5);
             
             feedback.innerHTML = `
                 <h4>${isCorrect ? '✓ 答對了！' : '✗ 答錯了'}</h4>
