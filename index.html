@@ -706,6 +706,34 @@
             document.getElementById('nivPDFCard').style.display = 'none';
         }
 
+        // 切換主選單 tab
+        function showTab(tab) {
+            document.getElementById('coursesTab').style.display = (tab === 'courses') ? 'block' : 'none';
+            document.getElementById('resourcesTab').style.display = (tab === 'resources') ? 'block' : 'none';
+            document.getElementById('progressTab').style.display = (tab === 'progress') ? 'block' : 'none';
+
+            // 切換 tab 樣式
+            document.querySelectorAll('.nav-tab').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            if (tab === 'courses') document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
+            if (tab === 'resources') document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
+            if (tab === 'progress') document.querySelector('.nav-tab:nth-child(3)').classList.add('active');
+        }
+
+        // 切換年度內容
+        function showYearContent(year) {
+            document.getElementById('year2025').style.display = (year === '2025') ? 'block' : 'none';
+            document.getElementById('year2026').style.display = (year === '2026') ? 'block' : 'none';
+
+            // 切換年份 tab 樣式
+            document.querySelectorAll('.year-tab').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            if (year === '2025') document.querySelector('.year-tab:nth-child(1)').classList.add('active');
+            if (year === '2026') document.querySelector('.year-tab:nth-child(2)').classList.add('active');
+        }
+
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             // 預設顯示2025年內容
