@@ -421,63 +421,8 @@
 
                 <!-- 2025年課程 -->
                 <div id="year2025" class="year-content">
-                    <div class="course-grid">
-                        <!-- 第一個案例：動脈導管置放及照護安全 -->
-                        <div class="course-card" onclick="downloadResource('https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf'); countClick('arterialLine');">
-                            <div class="course-header">
-                                <div class="course-icon download">📄</div>
-                                <div>
-                                    <div class="course-title">動脈導管置放及照護安全</div>
-                                    <div class="course-meta">管路事件 • 病人安全 • PDF教材</div>
-                                </div>
-                            </div>
-                            <div class="course-description">
-                                學習動脈導管的置放和照護重點以及安全相關議題。透過詳細的圖文說明，掌握動脈導管的適應症及併發症預防等關鍵知識。
-                            </div>
-                            <div class="course-status">
-                                <div class="status-badge status-download">點擊下載</div>
-                                <div style="font-size: 0.9em; color: #6b7280;">PDF教材</div>
-                                <div style="font-size: 0.8em; color: #16a34a;" id="count-arterialLine"></div>
-                            </div>
-                        </div>
-
-                        <!-- 第二個案例：NIV學習 -->
-                        <div class="course-card" onclick="openNIVCourse(); countClick('nivCourse');">
-                            <div class="course-header">
-                                <div class="course-icon">🫁</div>
-                                <div>
-                                    <div class="course-title">非侵襲性呼吸器 (NIV) 醫療團隊照護學習</div>
-                                    <div class="course-meta">團隊照護 • 病人安全 • 8題測驗 • 及格分數：80分</div>
-                                </div>
-                            </div>
-                            <div class="course-description">
-                                透過一位呼吸困難病人的照護情境，學習BiPAP的團隊照護、TRM工具應用、安全議題處理等核心技能。
-                            </div>
-                            <div class="course-status">
-                                <div class="status-badge status-interactive">互動學習</div>
-                                <div style="font-size: 0.9em; color: #6b7280;">約需 20 分鐘</div>
-                                <div style="font-size: 0.8em; color: #16a34a;" id="count-nivCourse"></div>
-                            </div>
-                        </div>
-
-                        <!-- 第三個案例：建置中 -->
-                        <div class="course-card disabled">
-                            <div class="course-header">
-                                <div class="course-icon building">🔧</div>
-                                <div>
-                                    <div class="course-title">學習案例建置中</div>
-                                    <div class="course-meta">敬請期待 • 即將推出</div>
-                                </div>
-                            </div>
-                            <div class="course-description">
-                                新的學習案例正在精心設計中，將為您帶來更豐富的學習體驗。請持續關注我們的更新。
-                            </div>
-                            <div class="course-status">
-                                <div class="status-badge status-building">建置中</div>
-                                <div style="font-size: 0.9em; color: #6b7280;">開發中</div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="courseList2025" class="course-grid"></div>
+                    <div id="caseDetail" style="display:none;"></div>
                 </div>
 
                 <!-- 2026年課程 -->
@@ -666,29 +611,108 @@
             window.open(url, '_blank');
         }
 
-        // 點擊計數功能
-        function countClick(key) {
-            // 取得目前人次
-            let count = parseInt(localStorage.getItem('count-' + key) || '0', 10);
-            count++;
-            localStorage.setItem('count-' + key, count);
-            // 顯示人次
-            document.getElementById('count-' + key).textContent = `學習人次：${count}`;
+        // 案例資料
+        const cases2025 = [
+            {
+                key: 'nivCourse',
+                title: '非侵襲性呼吸器 (NIV) 醫療團隊照護學習',
+                meta: '團隊照護 • 病人安全 • 8題測驗 • 及格分數：80分',
+                desc: '透過一位呼吸困難病人的照護情境，學習BiPAP的團隊照護、TRM工具應用、安全議題處理等核心技能。',
+                icon: '🫁',
+                type: 'interactive',
+                date: '2025-06-30',
+                detailHtml: `<h2>非侵襲性呼吸器 (NIV) 醫療團隊照護學習</h2>
+                    <p>這裡是NIV課程的詳細內容...</p>`
+            },
+            {
+                key: 'arterialLine',
+                title: '動脈導管置放及照護安全',
+                meta: '管路事件 • 病人安全 • PDF教材',
+                desc: '學習動脈導管的置放和照護重點以及安全相關議題。透過詳細的圖文說明，掌握動脈導管的適應症及併發症預防等關鍵知識。',
+                icon: '📄',
+                type: 'download',
+                date: '2025-02-01',
+                pdfUrl: 'https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf',
+                detailHtml: `<h2>動脈導管置放及照護安全</h2>
+                    <p>這裡是動脈導管PDF教材的介紹與下載連結。</p>
+                    <a href="https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf" target="_blank" class="status-badge status-download">下載PDF</a>`
+            }
+        ];
+
+        // 依上架時間排序（新→舊）
+        cases2025.sort((a, b) => b.date.localeCompare(a.date));
+
+        // 渲染案例列表
+        function renderCourseList() {
+            const list = document.getElementById('courseList2025');
+            list.innerHTML = '';
+            cases2025.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                card.innerHTML = `
+                    <div class="course-header">
+                        <div class="course-icon">${c.icon}</div>
+                        <div>
+                            <div class="course-title">${c.title}</div>
+                            <div class="course-meta">${c.meta}</div>
+                            <div style="font-size:0.85em;color:#64748b;">上架時間：${c.date.replace(/-/g,'/')}</div>
+                        </div>
+                    </div>
+                    <div class="course-description">${c.desc}</div>
+                    <div class="course-status">
+                        <div class="status-badge status-${c.type === 'download' ? 'download' : 'interactive'}">
+                            ${c.type === 'download' ? '點擊下載' : '互動學習'}
+                        </div>
+                        <div id="count-${c.key}" style="font-size:0.8em;color:#16a34a;"></div>
+                    </div>
+                `;
+                card.onclick = () => showCaseDetail(c);
+                list.appendChild(card);
+                // 取得總人次
+                updateCount(c.key);
+            });
         }
 
-        // 頁面載入時顯示目前人次
-        document.addEventListener('DOMContentLoaded', function() {
-            ['arterialLine', 'nivCourse'].forEach(function(key) {
-                let count = parseInt(localStorage.getItem('count-' + key) || '0', 10);
-                let el = document.getElementById('count-' + key);
-                if (el) el.textContent = `學習人次：${count}`;
-            });
-        });
+        // 顯示案例詳情
+        function showCaseDetail(c) {
+            document.getElementById('courseList2025').style.display = 'none';
+            const detail = document.getElementById('caseDetail');
+            detail.style.display = 'block';
+            detail.innerHTML = `
+                <button onclick="backToList()" style="margin-bottom:20px;">← 返回案例列表</button>
+                <div>${c.detailHtml}</div>
+                <div id="count-${c.key}-detail" style="margin-top:10px;color:#16a34a;"></div>
+            `;
+            // 累加人次
+            countClick(c.key, true);
+        }
 
-        // 初始化
+        // 返回列表
+        function backToList() {
+            document.getElementById('caseDetail').style.display = 'none';
+            document.getElementById('courseList2025').style.display = 'grid';
+        }
+
+        // 使用 countapi.xyz 取得/累加總人次
+        function updateCount(key) {
+            fetch(`https://api.countapi.xyz/get/qmedulhs/${key}`)
+                .then(r=>r.json()).then(d=>{
+                    document.getElementById('count-'+key).textContent = `學習人次：${d.value}`;
+                });
+        }
+        function countClick(key, showInDetail) {
+            fetch(`https://api.countapi.xyz/hit/qmedulhs/${key}`)
+                .then(r=>r.json()).then(d=>{
+                    if (showInDetail)
+                        document.getElementById('count-'+key+'-detail').textContent = `學習人次：${d.value}`;
+                    else
+                        document.getElementById('count-'+key).textContent = `學習人次：${d.value}`;
+                });
+        }
+
+        // 頁面載入時
         document.addEventListener('DOMContentLoaded', function() {
-            // 預設顯示2025年內容
-            showYearContent('2025');
+            renderCourseList();
         });
     </script>
 </body>
