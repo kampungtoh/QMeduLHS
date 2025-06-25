@@ -438,29 +438,10 @@
                     <div class="year-tab" onclick="showYearContent('2026')">2026年</div>
                 </div>
 
-                <!-- 2025年課程 -->
+                <!-- 2025年課程（依上架日期新到舊排序，並顯示上架日期） -->
                 <div id="year2025" class="year-content">
                     <div class="course-grid">
-                        <!-- 第一個案例：動脈導管置放及照護安全 -->
-                        <div class="course-card" onclick="downloadResource('https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf'); countClick('arterialLine');">
-                            <div class="course-header">
-                                <div class="course-icon download">📄</div>
-                                <div>
-                                    <div class="course-title">動脈導管置放及照護安全</div>
-                                    <div class="course-meta">管路事件 • 病人安全 • PDF教材</div>
-                                </div>
-                            </div>
-                            <div class="course-description">
-                                學習動脈導管的置放和照護重點以及安全相關議題。透過詳細的圖文說明，掌握動脈導管的適應症及併發症預防等關鍵知識。
-                            </div>
-                            <div class="course-status">
-                                <div class="status-badge status-download">點擊下載</div>
-                                <div style="font-size: 0.9em; color: #6b7280;">PDF教材</div>
-                                <div style="font-size: 0.8em; color: #16a34a;" id="count-arterialLine"></div>
-                            </div>
-                        </div>
-
-                        <!-- 第二個案例：NIV學習 -->
+                        <!-- BiPAP 案例（2025/6/30） -->
                         <div class="course-card" onclick="openNIVCourse(); countClick('nivCourse');">
                             <div class="course-header">
                                 <div class="course-icon">🫁</div>
@@ -476,10 +457,31 @@
                                 <div class="status-badge status-interactive">互動學習</div>
                                 <div style="font-size: 0.9em; color: #6b7280;">約需 20 分鐘</div>
                                 <div style="font-size: 0.8em; color: #16a34a;" id="count-nivCourse"></div>
+                                <div style="font-size: 0.8em; color: #64748b; margin-left:10px;">上架日期：2025/6/30</div>
                             </div>
                         </div>
 
-                        <!-- 第三個案例：建置中 -->
+                        <!-- 動脈導管案例（2025/2/1） -->
+                        <div class="course-card" onclick="showArterialPDF(); countClick('arterialLine');">
+                            <div class="course-header">
+                                <div class="course-icon download">📄</div>
+                                <div>
+                                    <div class="course-title">動脈導管置放及照護安全</div>
+                                    <div class="course-meta">管路事件 • 病人安全 • PDF教材</div>
+                                </div>
+                            </div>
+                            <div class="course-description">
+                                學習動脈導管的置放和照護重點以及安全相關議題。透過詳細的圖文說明，掌握動脈導管的適應症及併發症預防等關鍵知識。
+                            </div>
+                            <div class="course-status">
+                                <div class="status-badge status-download">線上閱讀</div>
+                                <div style="font-size: 0.9em; color: #6b7280;">PDF教材</div>
+                                <div style="font-size: 0.8em; color: #16a34a;" id="count-arterialLine"></div>
+                                <div style="font-size: 0.8em; color: #64748b; margin-left:10px;">上架日期：2025/2/1</div>
+                            </div>
+                        </div>
+
+                        <!-- 建置中 -->
                         <div class="course-card disabled">
                             <div class="course-header">
                                 <div class="course-icon building">🔧</div>
@@ -522,6 +524,14 @@
             <div class="card" id="nivPDFCard" style="display: none;">
                 <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
                 <button class="case-btn" onclick="showNIVCourse()">返回互動課程</button>
+                <div style="margin-top:20px;">
+                    <iframe src="https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
+                </div>
+            </div>
+
+            <!-- 新增：動脈導管 PDF 內頁區塊，預設隱藏 -->
+            <div class="card" id="arterialPDFCard" style="display: none;">
+                <button class="case-btn" onclick="showCourseList()">&larr; 返回案例列表</button>
                 <div style="margin-top:20px;">
                     <iframe src="https://github.com/kampungtoh/QMeduLHS/raw/main/11403%20Arterial%20Line.pdf" style="width:100%;height:600px;border:1px solid #e2e8f0;border-radius:12px;"></iframe>
                 </div>
@@ -612,7 +622,7 @@
             <div class="footer-section">
                 <h3>快速連結</h3>
                 <ul>
-                    <li><a href="#" onclick="alert('功能開發中')">品質管理中心</a></li>
+                    <li><a href="https://sub.chimei.org.tw/59070/index.php" target="_blank">品質管理中心</a></li>
                     <li><a href="#" onclick="alert('功能開發中')">教育訓練行事曆</a></li>
                     <li><a href="#" onclick="alert('功能開發中')">聯絡我們</a></li>
                 </ul>
@@ -638,6 +648,29 @@
     </div>
 
     <script>
+        const COUNTER_API = 'https://script.google.com/macros/s/AKfycbx5GSbl1ODEGt5IpCqeuqRaoQQ8z_SBbBIB6xsOUlxXSECupWRZTIGSunv3aZTm96qJ/exec'; // 換成你的 Apps Script 網址
+
+        // 點擊計數功能（全站）
+        function countClick(key) {
+            fetch(COUNTER_API + '?key=' + key, { method: 'POST' })
+                .then(res => res.text())
+                .then(count => {
+                    document.getElementById('count-' + key).textContent = `學習人次：${count}`;
+                });
+        }
+
+        // 頁面載入時顯示目前人次（全站）
+        document.addEventListener('DOMContentLoaded', function() {
+            ['arterialLine', 'nivCourse'].forEach(function(key) {
+                fetch(COUNTER_API + '?key=' + key)
+                    .then(res => res.text())
+                    .then(count => {
+                        let el = document.getElementById('count-' + key);
+                        if (el) el.textContent = `學習人次：${count}`;
+                    });
+            });
+        });
+
         // 頁籤切換
         function showTab(tabName) {
             // 隱藏所有頁籤內容
@@ -699,11 +732,20 @@
             document.getElementById('nivPDFCard').style.display = 'block';
         }
 
-        // 返回案例列表
+        // 顯示動脈導管PDF（在中間區塊）
+        function showArterialPDF() {
+            document.getElementById('courseListCard').style.display = 'none';
+            document.getElementById('nivCourseCard').style.display = 'none';
+            document.getElementById('nivPDFCard').style.display = 'none';
+            document.getElementById('arterialPDFCard').style.display = 'block';
+        }
+
+        // 返回案例列表（需隱藏所有內頁卡片）
         function showCourseList() {
             document.getElementById('courseListCard').style.display = 'block';
             document.getElementById('nivCourseCard').style.display = 'none';
             document.getElementById('nivPDFCard').style.display = 'none';
+            document.getElementById('arterialPDFCard').style.display = 'none';
         }
 
         // 返回互動課程
@@ -711,25 +753,6 @@
             document.getElementById('nivCourseCard').style.display = 'block';
             document.getElementById('nivPDFCard').style.display = 'none';
         }
-
-        // 點擊計數功能
-        function countClick(key) {
-            // 取得目前人次
-            let count = parseInt(localStorage.getItem('count-' + key) || '0', 10);
-            count++;
-            localStorage.setItem('count-' + key, count);
-            // 顯示人次
-            document.getElementById('count-' + key).textContent = `學習人次：${count}`;
-        }
-
-        // 頁面載入時顯示目前人次
-        document.addEventListener('DOMContentLoaded', function() {
-            ['arterialLine', 'nivCourse'].forEach(function(key) {
-                let count = parseInt(localStorage.getItem('count-' + key) || '0', 10);
-                let el = document.getElementById('count-' + key);
-                if (el) el.textContent = `學習人次：${count}`;
-            });
-        });
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
