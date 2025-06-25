@@ -442,7 +442,7 @@
                 <div id="year2025" class="year-content">
                     <div class="course-grid">
                         <!-- BiPAP 案例 -->
-                        <div class="course-card" onclick="openNIVCourse(); countClick('nivCourse');">
+                        <div class="course-card" onclick="openNIVCourse();">
                             <div class="course-header">
                                 <div class="course-icon">🫁</div>
                                 <div>
@@ -456,13 +456,12 @@
                             <div class="course-status">
                                 <div class="status-badge status-interactive">互動學習</div>
                                 <div style="font-size: 0.9em; color: #6b7280;">約需 20 分鐘</div>
-                                <div style="font-size: 0.8em; color: #16a34a;" id="count-nivCourse"></div>
                                 <div style="font-size: 0.8em; color: #64748b; margin-left:10px;">上架日期：2025/6/30</div>
                             </div>
                         </div>
 
                         <!-- 動脈導管案例 -->
-                        <div class="course-card" onclick="showArterialPDF(); countClick('arterialLine');">
+                        <div class="course-card" onclick="showArterialPDF();">
                             <div class="course-header">
                                 <div class="course-icon download">📄</div>
                                 <div>
@@ -476,7 +475,6 @@
                             <div class="course-status">
                                 <div class="status-badge status-download">線上閱讀</div>
                                 <div style="font-size: 0.9em; color: #6b7280;">PDF教材</div>
-                                <div style="font-size: 0.8em; color: #16a34a;" id="count-arterialLine"></div>
                                 <div style="font-size: 0.8em; color: #64748b; margin-left:10px;">上架日期：2025/2/1</div>
                             </div>
                         </div>
@@ -540,60 +538,8 @@
         <div id="resourcesTab" class="tab-content" style="display: none;">
             <div class="card">
                 <h2>📖 學習資源</h2>
-                
                 <div class="course-grid">
-                    <div class="course-card" onclick="openResourcePage('guidelines')">
-                        <div class="course-header">
-                            <div class="course-icon">📋</div>
-                            <div>
-                                <div class="course-title">臨床指引與程序書</div>
-                                <div class="course-meta">標準作業程序 • 最佳實務指引</div>
-                            </div>
-                        </div>
-                        <div class="course-description">
-                            提供最新的臨床照護指引、標準作業程序書及最佳實務範例，協助醫療團隊標準化照護流程。
-                        </div>
-                        <div class="course-status">
-                            <div class="status-badge status-available">立即瀏覽</div>
-                            <div style="font-size: 0.9em; color: #6b7280;">持續更新</div>
-                        </div>
-                    </div>
-
-                    <div class="course-card" onclick="openResourcePage('videos')">
-                        <div class="course-header">
-                            <div class="course-icon">🎬</div>
-                            <div>
-                                <div class="course-title">教學影片庫</div>
-                                <div class="course-meta">操作示範 • 技能訓練</div>
-                            </div>
-                        </div>
-                        <div class="course-description">
-                            豐富的教學影片資源，包含各項醫療技術操作示範、設備使用教學及安全管理重點說明。
-                        </div>
-                        <div class="course-status">
-                            <div class="status-badge status-available">立即觀看</div>
-                            <div style="font-size: 0.9em; color: #6b7280;">高畫質影片</div>
-                        </div>
-                    </div>
-
-                    <div class="course-card" onclick="openResourcePage('documents')">
-                        <div class="course-header">
-                            <div class="course-icon">📚</div>
-                            <div>
-                                <div class="course-title">參考資料庫</div>
-                                <div class="course-meta">學術資源 • 研究文獻</div>
-                            </div>
-                        </div>
-                        <div class="course-description">
-                            收錄相關學術論文、研究報告、白皮書等參考資料，提供深度學習與研究支援。
-                        </div>
-                        <div class="course-status">
-                            <div class="status-badge status-available">立即下載</div>
-                            <div style="font-size: 0.9em; color: #6b7280;">定期更新</div>
-                        </div>
-                    </div>
-
-                    <!-- 新增學習資源連結 -->
+                    <!-- 只保留有實際連結的資源 -->
                     <a class="course-card" href="https://www.patientsafety.mohw.gov.tw/xcdocb/cont?xsmsid=0M069415939762306582&sid=0O024613642710580442" target="_blank" style="text-decoration:none;">
                         <div class="course-header">
                             <div class="course-icon">📑</div>
@@ -727,74 +673,6 @@
     </div>
 
     <script>
-        const COUNTER_API = 'https://script.google.com/macros/s/AKfycbx5GSbl1ODEGt5IpCqeuqRaoQQ8z_SBbBIB6xsOUlxXSECupWRZTIGSunv3aZTm96qJ/exec'; // 換成你的 Apps Script 網址
-
-        // 點擊計數功能（全站）
-        function countClick(key) {
-            fetch(COUNTER_API + '?key=' + key, { method: 'POST' })
-                .then(res => res.text())
-                .then(count => {
-                    document.getElementById('count-' + key).textContent = `學習人次：${count}`;
-                });
-        }
-
-        // 頁面載入時顯示目前人次（全站）
-        document.addEventListener('DOMContentLoaded', function() {
-            ['arterialLine', 'nivCourse'].forEach(function(key) {
-                fetch(COUNTER_API + '?key=' + key)
-                    .then(res => res.text())
-                    .then(count => {
-                        let el = document.getElementById('count-' + key);
-                        if (el) el.textContent = `學習人次：${count}`;
-                    });
-            });
-        });
-
-        // 頁籤切換
-        function showTab(tabName) {
-            // 隱藏所有頁籤內容
-            document.querySelectorAll('[id$="Tab"]').forEach(tab => {
-                tab.style.display = 'none';
-            });
-            
-            // 移除所有active狀態
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 顯示選中的頁籤
-            document.getElementById(tabName + 'Tab').style.display = 'block';
-            event.target.classList.add('active');
-        }
-
-        // 年份切換
-        function showYearContent(year) {
-            // 隱藏所有年份內容
-            document.querySelectorAll('.year-content').forEach(content => {
-                content.style.display = 'none';
-            });
-            
-            // 移除所有年份標籤的active狀態
-            document.querySelectorAll('.year-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 顯示選中的年份內容
-            document.getElementById('year' + year).style.display = 'block';
-            event.target.classList.add('active');
-        }
-
-        // 下載資源
-        function downloadResource(url) {
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = '';
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
         // 點logo回首頁
         function goHome() {
             showCourseList();
