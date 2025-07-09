@@ -1307,62 +1307,64 @@
         }
 
         function submitCompletion() {
-            const staffId = document.getElementById('staffId').value.trim();
-            if (!/^[A-Za-z0-9]{6}$/.test(staffId)) {
-                alert('人事號碼必須為6個英文字母或數字');
-                return;
-            }
+    const staffId = document.getElementById('staffId').value.trim();
 
-            const now = new Date();
-            const completionTime = now.toLocaleString('zh-TW', { 
-                year: 'numeric', 
-                month: '2-digit', 
-                day: '2-digit', 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
+    // 驗證人事號碼格式
+    if (!/^[A-Za-z0-9]{6}$/.test(staffId)) {
+        alert('人事號碼必須為6個英文字母或數字');
+        return;
+    }
 
-            const learningRecord = {
-                staffId: staffId,
-                score: score,
-                totalQuestions: questions.length,
-                percentage: Math.round((score / questions.length) * 100),
-                completionTime: completionTime
-            };
+    // 取得當前完成時間
+    const now = new Date();
+    const completionTime = now.toLocaleString('zh-TW', { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    });
 
-            // 顯示完成訊息（先隱藏表單）
-            document.getElementById('completionForm').style.display = 'none';
-            document.getElementById('completionMessage').style.display = 'block';
+    // 安全取得 score 和 questions
+    const score = typeof window.score !== 'undefined' ? window.score : 0;
+    const questions = Array.isArray(window.questions) ? window.questions : [];
 
-            // 使用 URL encoded 格式
-            const formData = new URLSearchParams();
-            formData.append('staffId', learningRecord.staffId);
-            formData.append('score', learningRecord.score);
-            formData.append('totalQuestions', learningRecord.totalQuestions);
-            formData.append('percentage', learningRecord.percentage);
-            formData.append('completionTime', learningRecord.completionTime);
+    const totalQuestions = questions.length;
+    const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
-            fetch('https://script.google.com/macros/s/AKfycbykK-7AVJr3UXOQn79uAezFP4PwFPdigQRWrRrkWBYsVM7wCnELyLGcRORSLL4UBxKw/exec', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log('回傳內容:', data);
-                if (data.toLowerCase().includes('success') || data.toLowerCase().includes('ok')) {
-                    document.getElementById('completionMessage').innerHTML += '<br>✅ 學習紀錄已成功儲存！';
-                } else {
-                    document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請聯繫管理員。';
-                    document.getElementById('completionForm').style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('儲存紀錄時發生錯誤：', error);
-                document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請檢查網路或聯繫管理員。<br>請再試一次。';
-                document.getElementById('completionForm').style.display = 'block';
-            });
+    // 準備 URL encoded 格式資料
+    const formData = new URLSearchParams();
+    formData.append('staffId', staffId);
+    formData.append('score', score);
+    formData.append('totalQuestions', totalQuestions);
+    formData.append('percentage', percentage);
+    formData.append('completionTime', completionTime);
+
+    // 顯示完成訊息（先隱藏表單）
+    document.getElementById('completionForm').style.display = 'none';
+    document.getElementById('completionMessage').style.display = 'block';
+
+    // 發送到 Google Apps Script Webhook
+    fetch('https://script.google.com/macros/s/AKfycbykK-7AVJr3UXOQn79uAezFP4PwFPdigQRWrRrkWBYsVM7wCnELyLGcRORSLL4UBxKw/exec', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('回傳內容:', data);
+        if (data.toLowerCase().includes('success') || data.toLowerCase().includes('ok')) {
+            document.getElementById('completionMessage').innerHTML += '<br>✅ 學習紀錄已成功儲存！';
+        } else {
+            document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請聯繫管理員。';
+            document.getElementById('completionForm').style.display = 'block';
         }
-
+    })
+    .catch(error => {
+        console.error('儲存紀錄時發生錯誤：', error);
+        document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請檢查網路或聯繫管理員。<br>請再試一次。';
+        document.getElementById('completionForm').style.display = 'block';
+    });
+}
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
