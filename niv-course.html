@@ -8,7 +8,7 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box;x
         }
 
         body {
@@ -1307,9 +1307,10 @@
         }
 
         function submitCompletion() {
-            const staffId = document.getElementById('staffId').value;
-            if (!staffId) {
-                alert('請填寫完整的人事號碼');
+            const staffId = document.getElementById('staffId').value.trim();
+            // 檢查是否為6個數字或字母
+            if (!/^[A-Za-z0-9]{6}$/.test(staffId)) {
+                alert('人事號碼必須為6個英文字母或數字');
                 return;
             }
             
@@ -1322,8 +1323,7 @@
                 hour: '2-digit', 
                 minute: '2-digit' 
             });
-            
-            // 儲存學習紀錄到localStorage（實際應用時應改為傳送到伺服器）
+    
             const learningRecord = {
                 staffId: staffId,
                 score: score,
@@ -1331,17 +1331,13 @@
                 percentage: Math.round((score / questions.length) * 100),
                 completionTime: completionTime
             };
-            
-            // 模擬儲存到伺服器（實際應用時替換為真實的API呼叫）
-            console.log('學習紀錄：', learningRecord);
-            localStorage.setItem('bipap_learning_' + staffId + '_' + Date.now(), JSON.stringify(learningRecord));
-            
-            // 顯示完成訊息
+
+            // 顯示完成訊息（先隱藏表單）
             document.getElementById('completionForm').style.display = 'none';
             document.getElementById('completionMessage').style.display = 'block';
 
-            // 實際儲存紀錄到伺服器
-            fetch('save_record.php', {
+            // 儲存到 Google Sheets
+            fetch('https://script.google.com/macros/s/AKfycbykK-7AVJr3UXOQn79uAezFP4PwFPdigQRWrRrkWBYsVM7wCnELyLGcRORSLL4UBxKw/exec', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1350,17 +1346,16 @@
             })
             .then(response => response.text())
             .then(data => {
-                console.log('伺服器回應：', data);
-                if (data === 'OK') {
+                if (data === 'OK' || data.toLowerCase().includes('ok')) {
                     document.getElementById('completionMessage').innerHTML += '<br>✅ 學習紀錄已成功儲存！';
                 } else {
                     document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請聯繫管理員。';
+                    document.getElementById('completionForm').style.display = 'block';
                 }
             })
             .catch(error => {
                 console.error('儲存紀錄時發生錯誤：', error);
                 document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請檢查網路或聯繫管理員。<br>請再試一次。';
-                // 重新顯示表單，讓使用者可以再輸入一次
                 document.getElementById('completionForm').style.display = 'block';
             });
         }
