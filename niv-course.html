@@ -715,6 +715,7 @@
         <div class="footer-credit">
             奇美醫院呼吸治療科及品質管理中心製作
         </div>
+        <div id="lastUpdated" style="text-align:center; color:rgba(255,255,255,0.8); font-size:0.9em; margin-top:4px;"></div>
     </div>
 
     <script>
@@ -1384,6 +1385,10 @@
             window.showingOptions = true;
             showQuestion();
         }
+
+        // 顯示最後更新日期
+document.getElementById('lastUpdated').textContent =
+    '最後更新日期：' + document.lastModified;
     </script>
 </body>
 </html>
