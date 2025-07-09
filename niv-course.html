@@ -1326,9 +1326,6 @@
     });
 
     // 安全取得 score 和 questions
-    const score = typeof window.score !== 'undefined' ? window.score : 0;
-    const questions = Array.isArray(window.questions) ? window.questions : [];
-
     const totalQuestions = questions.length;
     const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
