@@ -1212,6 +1212,12 @@
         function nextQuestion() {
             currentQuestion++;
             if (currentQuestion < questions.length) {
+                // 如果下一題已作答，直接顯示作答結果
+                if (userAnswers[currentQuestion] !== undefined) {
+                    window.showingOptions = true;
+                } else {
+                    window.showingOptions = false;
+                }
                 showQuestion();
             } else {
                 showResults();
@@ -1223,13 +1229,18 @@
             // 如果目前在 extraInfo 頁，回到上一題（作答頁或 extraInfo）
             if (question.extraInfo && !window.showingOptions) {
                 if (currentQuestion === 0) {
-                    // 第一題 extraInfo，回首頁
+                    // 第一題 extraInfo，回首頁（前言）
                     document.getElementById('questionContainer').style.display = 'none';
                     document.getElementById('introductionSection').style.display = 'block';
                 } else {
                     // 回上一題的作答頁或 extraInfo
                     currentQuestion--;
-                    window.showingOptions = true; // 直接顯示上一題的作答頁
+                    // 如果上一題已作答，直接顯示作答結果
+                    if (userAnswers[currentQuestion] !== undefined) {
+                        window.showingOptions = true;
+                    } else {
+                        window.showingOptions = false;
+                    }
                     showQuestion();
                 }
             } else if (question.extraInfo && window.showingOptions) {
@@ -1240,7 +1251,12 @@
                 // 沒有 extraInfo，直接回上一題
                 if (currentQuestion > 0) {
                     currentQuestion--;
-                    window.showingOptions = true;
+                    // 如果上一題已作答，直接顯示作答結果
+                    if (userAnswers[currentQuestion] !== undefined) {
+                        window.showingOptions = true;
+                    } else {
+                        window.showingOptions = false;
+                    }
                     showQuestion();
                 }
             }
