@@ -1346,7 +1346,7 @@
             })
             .then(response => response.text())
             .then(data => {
-                if (data === 'OK' || data.toLowerCase().includes('ok')) {
+                if (data.toLowerCase().includes('success') || data.toLowerCase().includes('ok')) {
                     document.getElementById('completionMessage').innerHTML += '<br>✅ 學習紀錄已成功儲存！';
                 } else {
                     document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請聯繫管理員。';
