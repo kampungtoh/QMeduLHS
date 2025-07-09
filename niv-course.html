@@ -1338,6 +1338,28 @@
             // 顯示完成訊息
             document.getElementById('completionForm').style.display = 'none';
             document.getElementById('completionMessage').style.display = 'block';
+
+            // 實際儲存紀錄到伺服器
+            fetch('save_record.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(learningRecord)
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('伺服器回應：', data);
+                if (data === 'OK') {
+                    document.getElementById('completionMessage').innerHTML += '<br>✅ 學習紀錄已成功儲存！';
+                } else {
+                    document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請聯繫管理員。';
+                }
+            })
+            .catch(error => {
+                console.error('儲存紀錄時發生錯誤：', error);
+                document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請聯繫管理員。';
+            });
         }
 
         function restartQuiz() {
