@@ -1308,13 +1308,11 @@
 
         function submitCompletion() {
             const staffId = document.getElementById('staffId').value.trim();
-            // 檢查是否為6個數字或字母
             if (!/^[A-Za-z0-9]{6}$/.test(staffId)) {
                 alert('人事號碼必須為6個英文字母或數字');
                 return;
             }
-            
-            // 取得當前時間
+
             const now = new Date();
             const completionTime = now.toLocaleString('zh-TW', { 
                 year: 'numeric', 
@@ -1323,7 +1321,7 @@
                 hour: '2-digit', 
                 minute: '2-digit' 
             });
-    
+
             const learningRecord = {
                 staffId: staffId,
                 score: score,
@@ -1336,16 +1334,21 @@
             document.getElementById('completionForm').style.display = 'none';
             document.getElementById('completionMessage').style.display = 'block';
 
-            // 儲存到 Google Sheets
+            // 使用 URL encoded 格式
+            const formData = new URLSearchParams();
+            formData.append('staffId', learningRecord.staffId);
+            formData.append('score', learningRecord.score);
+            formData.append('totalQuestions', learningRecord.totalQuestions);
+            formData.append('percentage', learningRecord.percentage);
+            formData.append('completionTime', learningRecord.completionTime);
+
             fetch('https://script.google.com/macros/s/AKfycbykK-7AVJr3UXOQn79uAezFP4PwFPdigQRWrRrkWBYsVM7wCnELyLGcRORSLL4UBxKw/exec', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(learningRecord)
+                body: formData
             })
             .then(response => response.text())
             .then(data => {
+                console.log('回傳內容:', data);
                 if (data.toLowerCase().includes('success') || data.toLowerCase().includes('ok')) {
                     document.getElementById('completionMessage').innerHTML += '<br>✅ 學習紀錄已成功儲存！';
                 } else {
