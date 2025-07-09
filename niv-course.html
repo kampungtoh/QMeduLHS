@@ -593,7 +593,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>BiPAP團隊照護學習</h1>
+            <h1>BiPAP團隊照護</h1>
             <p class="subtitle">臨床情境模擬訓練</p>
         </div>
 
@@ -1323,6 +1323,11 @@
             document.getElementById('staffId').value = '';
             document.getElementById('completionForm').style.display = 'block';
             document.getElementById('completionMessage').style.display = 'none';
+        }
+
+        function showOptions() {
+            window.showingOptions = true;
+            showQuestion();
         }
     </script>
 </body>
