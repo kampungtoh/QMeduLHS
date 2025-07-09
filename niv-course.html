@@ -676,6 +676,7 @@
             <div class="feedback" id="feedback"></div>
             
             <div style="text-align: center;">
+                <button class="next-button" id="prevButton" onclick="prevPage()" style="background:linear-gradient(135deg,#bbb 0%,#888 100%);margin-right:10px;">上一頁</button>
                 <button class="next-button" id="nextButton" onclick="nextQuestion()">下一題</button>
             </div>
         </div>
@@ -690,10 +691,6 @@
                 <div class="form-group">
                     <label for="staffId">人事號碼</label>
                     <input type="text" id="staffId" placeholder="請輸入您的人事號碼" required>
-                </div>
-                <div class="form-group">
-                    <label for="staffName">姓名</label>
-                    <input type="text" id="staffName" placeholder="請輸入您的姓名" required>
                 </div>
                 <button class="submit-button" onclick="submitCompletion()">提交學習紀錄</button>
             </div>
@@ -1061,7 +1058,30 @@
             const question = questions[currentQuestion];
             document.getElementById('questionNumber').textContent = `第 ${currentQuestion + 1} 題 / 共 ${questions.length} 題`;
             document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-            
+
+            // 控制上一頁按鈕顯示
+            if (
+                (question.extraInfo && !window.showingOptions && currentQuestion === 0) // 第一題 extraInfo
+            ) {
+                document.getElementById('prevButton').style.display = 'none';
+            } else {
+                document.getElementById('prevButton').style.display = 'inline-block';
+            }
+
+            // 如果有 extraInfo 且還沒進入作答階段
+            if (question.extraInfo && !window.showingOptions) {
+                document.getElementById('scenario').innerHTML = question.extraInfo +
+                    `<div style="text-align:center;margin-top:20px;">
+                        <button class="start-button" onclick="showOptions()">開始作答</button>
+                    </div>`;
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('feedback').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
+                document.getElementById('prevButton').style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+                return;
+            }
+            window.showingOptions = false;
+
             let scenarioContent = '';
             
             // 如果有額外資訊，先顯示
@@ -1180,11 +1200,11 @@
             // 只在特定題目顯示關鍵提醒
             const showReminder = !isCorrect && showKeyPoint && 
                 (currentQuestion === 0 || currentQuestion === 3 || currentQuestion === 5);
-            
+
             feedback.innerHTML = `
                 <h4>${isCorrect ? '✓ 答對了！' : '✗ 答錯了'}</h4>
                 <p>${message}</p>
-                ${showReminder ? '<div class="key-point">記住：先開機，再戴面罩；先脫面罩，再關機</div>' : ''}
+                ${showReminder ? '<div class="key-point">記住：先開機，再戴面罩；先脫面罩，再關機。<br>⚠️ 確保病人使用時有通氣</div>' : ''}
             `;
             feedback.style.display = 'block';
         }
@@ -1195,6 +1215,34 @@
                 showQuestion();
             } else {
                 showResults();
+            }
+        }
+
+        function prevPage() {
+            const question = questions[currentQuestion];
+            // 如果目前在 extraInfo 頁，回到上一題（作答頁或 extraInfo）
+            if (question.extraInfo && !window.showingOptions) {
+                if (currentQuestion === 0) {
+                    // 第一題 extraInfo，回首頁
+                    document.getElementById('questionContainer').style.display = 'none';
+                    document.getElementById('introductionSection').style.display = 'block';
+                } else {
+                    // 回上一題的作答頁或 extraInfo
+                    currentQuestion--;
+                    window.showingOptions = true; // 直接顯示上一題的作答頁
+                    showQuestion();
+                }
+            } else if (question.extraInfo && window.showingOptions) {
+                // 目前在作答頁，回本題 extraInfo
+                window.showingOptions = false;
+                showQuestion();
+            } else {
+                // 沒有 extraInfo，直接回上一題
+                if (currentQuestion > 0) {
+                    currentQuestion--;
+                    window.showingOptions = true;
+                    showQuestion();
+                }
             }
         }
 
@@ -1228,10 +1276,8 @@
 
         function submitCompletion() {
             const staffId = document.getElementById('staffId').value;
-            const staffName = document.getElementById('staffName').value;
-            
-            if (!staffId || !staffName) {
-                alert('請填寫完整的人事號碼和姓名');
+            if (!staffId) {
+                alert('請填寫完整的人事號碼');
                 return;
             }
             
@@ -1248,7 +1294,6 @@
             // 儲存學習紀錄到localStorage（實際應用時應改為傳送到伺服器）
             const learningRecord = {
                 staffId: staffId,
-                staffName: staffName,
                 score: score,
                 totalQuestions: questions.length,
                 percentage: Math.round((score / questions.length) * 100),
@@ -1276,7 +1321,6 @@
             
             // 重置表單
             document.getElementById('staffId').value = '';
-            document.getElementById('staffName').value = '';
             document.getElementById('completionForm').style.display = 'block';
             document.getElementById('completionMessage').style.display = 'none';
         }
