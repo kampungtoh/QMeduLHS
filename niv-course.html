@@ -566,6 +566,16 @@
             padding: 10px;
         }
 
+        /* 新增 */
+        .scenario-content {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -1090,12 +1100,12 @@
             }
             
             scenarioContent += `
-                <div class="scenario">
-                    <h3>臨床情境</h3>
-                    <p>${question.scenario}</p>
-                    <p><strong>${question.question}</strong></p>
-                </div>
-            `;
+    <div class="scenario-content">
+        <h3>臨床情境</h3>
+        <p>${question.scenario}</p>
+        <p><strong>${question.question}</strong></p>
+    </div>
+`;
             
             document.getElementById('scenario').innerHTML = scenarioContent;
             
@@ -1248,8 +1258,13 @@
                 window.showingOptions = false;
                 showQuestion();
             } else {
-                // 沒有 extraInfo，直接回上一題
-                if (currentQuestion > 0) {
+                // 沒有 extraInfo
+                if (currentQuestion === 0) {
+                    // 第一題直接回前言
+                    document.getElementById('questionContainer').style.display = 'none';
+                    document.getElementById('introductionSection').style.display = 'block';
+                } else {
+                    // 其他題回上一題
                     currentQuestion--;
                     // 如果上一題已作答，直接顯示作答結果
                     if (userAnswers[currentQuestion] !== undefined) {
