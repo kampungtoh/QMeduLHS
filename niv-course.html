@@ -1358,7 +1358,9 @@
             })
             .catch(error => {
                 console.error('儲存紀錄時發生錯誤：', error);
-                document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請聯繫管理員。';
+                document.getElementById('completionMessage').innerHTML += '<br>❌ 儲存失敗，請檢查網路或聯繫管理員。<br>請再試一次。';
+                // 重新顯示表單，讓使用者可以再輸入一次
+                document.getElementById('completionForm').style.display = 'block';
             });
         }
 
