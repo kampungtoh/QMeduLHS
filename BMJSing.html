@@ -479,6 +479,7 @@
             <button class="main-tab-link" onclick="openMainTab(event, 'posters')">海報發表</button>
             <button class="main-tab-link" onclick="openMainTab(event, 'itinerary')">互動行程表</button>
             <button class="main-tab-link" onclick="openMainTab(event, 'map')">住宿與須知</button>
+            <button class="main-tab-link" onclick="openMainTab(event, 'attractions')">週邊景點</button> <!-- 新增分頁 -->
         </div>
     </div>
     
@@ -755,13 +756,13 @@
                         <div class="card-content">
                             <h3><i class="fa-solid fa-hotel"></i> 住宿資訊 (點擊切換地圖)</h3>
                             <ul class="hotel-list">
-                                <li onclick="updateMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.79044122138!2d103.8516700758066!3d1.299815561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a69524f515%3A0x6774577381286e19!2sHotel%20Grand%20Pacific!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw')">
+                                <li onclick="openDirections('Hotel Grand Pacific')">
                                     <i class="fa-solid fa-map-pin"></i>Hotel Grand Pacific
                                 </li>
-                                <li onclick="updateMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.796989476054!2d103.84651347580654!3d1.294158961741165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da190a6158c377%3A0x867f19665633346d!2sWyndham%20Singapore%20at%20City%20Hall!5e0!3m2!1szh-TW!2stw!4v1720665403211!5m2!1szh-TW!2stw')">
+                                <li onclick="openDirections('Wyndham Singapore at City Hall')">
                                     <i class="fa-solid fa-map-pin"></i>Wyndham Singapore Hotel
                                 </li>
-                                <li onclick="updateMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.790597259024!2d103.85291287580655!3d1.2997184617303126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a68c1be971%3A0x3e11e20836a3e586!2sIbis%20Singapore%20On%20Bencoolen!5e0!3m2!1szh-TW!2stw!4v1720665440263!5m2!1szh-TW!2stw')">
+                                <li onclick="openDirections('Ibis Singapore On Bencoolen')">
                                     <i class="fa-solid fa-map-pin"></i>Ibis Singapore On Bencoolen
                                 </li>
                             </ul>
@@ -784,6 +785,38 @@
                                 <li><i class="fa-solid fa-bottle-water"></i><div><strong>飲水:</strong> 自來水可生飲，但建議飲用瓶裝水或煮沸後飲用。</div></li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 新增週邊景點分頁內容 -->
+        <div id="attractions" class="main-tab-content">
+            <section>
+                <h2>週邊景點推薦</h2>
+                <div class="card">
+                    <div class="card-content">
+                        <ul class="hotel-list">
+                            <li onclick="openAttraction('Merlion Park, Singapore')">
+                                <i class="fa-solid fa-location-dot"></i>魚尾獅公園 Merlion Park
+                            </li>
+                            <li onclick="openAttraction('Gardens by the Bay, Singapore')">
+                                <i class="fa-solid fa-tree"></i>濱海灣花園 Gardens by the Bay
+                            </li>
+                            <li onclick="openAttraction('Clarke Quay, Singapore')">
+                                <i class="fa-solid fa-martini-glass-citrus"></i>克拉碼頭 Clarke Quay
+                            </li>
+                            <li onclick="openAttraction('Esplanade - Theatres on the Bay, Singapore')">
+                                <i class="fa-solid fa-masks-theater"></i>濱海藝術中心 Esplanade
+                            </li>
+                            <li onclick="openAttraction('Singapore Flyer')">
+                                <i class="fa-solid fa-circle"></i>新加坡摩天輪 Singapore Flyer
+                            </li>
+                            <li onclick="openAttraction('Bugis Street, Singapore')">
+                                <i class="fa-solid fa-shop"></i>武吉士街 Bugis Street
+                            </li>
+                        </ul>
+                        <p style="margin-top:20px; color:var(--secondary-color);">點擊景點名稱可於 Google 地圖查看位置與資訊。</p>
                     </div>
                 </div>
             </section>
@@ -825,6 +858,18 @@
 
         function updateMap(mapUrl) {
             document.getElementById('hotel-map').src = mapUrl;
+        }
+
+        function openDirections(hotelName) {
+            const venue = encodeURIComponent('Suntec Singapore Convention & Exhibition Centre');
+            const hotel = encodeURIComponent(hotelName);
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${hotel}&destination=${venue}&travelmode=walking`;
+            window.open(url, '_blank');
+        }
+
+        function openAttraction(place) {
+            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`;
+            window.open(url, '_blank');
         }
 
         // Accordion functionality
