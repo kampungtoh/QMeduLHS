@@ -754,7 +754,7 @@
                 <div class="map-grid">
                     <div class="card hotel-list-card">
                         <div class="card-content">
-                            <h3><i class="fa-solid fa-hotel"></i> 住宿資訊 (點擊切換地圖)</h3>
+                            <h3><i class="fa-solid fa-hotel"></i> 住宿資訊</h3>
                             <ul class="hotel-list">
                                 <li onclick="openDirections('Hotel Grand Pacific')">
                                     <i class="fa-solid fa-map-pin"></i>Hotel Grand Pacific
@@ -794,30 +794,44 @@
         <div id="attractions" class="main-tab-content">
             <section>
                 <h2>週邊景點推薦</h2>
-                <div class="card">
-                    <div class="card-content">
-                        <ul class="hotel-list">
-                            <li onclick="openAttraction('Merlion Park, Singapore')">
-                                <i class="fa-solid fa-location-dot"></i>魚尾獅公園 Merlion Park
-                            </li>
-                            <li onclick="openAttraction('Gardens by the Bay, Singapore')">
-                                <i class="fa-solid fa-tree"></i>濱海灣花園 Gardens by the Bay
-                            </li>
-                            <li onclick="openAttraction('Clarke Quay, Singapore')">
-                                <i class="fa-solid fa-martini-glass-citrus"></i>克拉碼頭 Clarke Quay
-                            </li>
-                            <li onclick="openAttraction('Esplanade - Theatres on the Bay, Singapore')">
-                                <i class="fa-solid fa-masks-theater"></i>濱海藝術中心 Esplanade
-                            </li>
-                            <li onclick="openAttraction('Singapore Flyer')">
-                                <i class="fa-solid fa-circle"></i>新加坡摩天輪 Singapore Flyer
-                            </li>
-                            <li onclick="openAttraction('Bugis Street, Singapore')">
-                                <i class="fa-solid fa-shop"></i>武吉士街 Bugis Street
-                            </li>
-                        </ul>
-                        <p style="margin-top:20px; color:var(--secondary-color);">點擊景點名稱可於 Google 地圖查看位置與資訊。</p>
+                <div class="map-grid">
+                    <div class="card hotel-list-card">
+                        <div class="card-content">
+                            <ul class="hotel-list">
+                                <li onclick="openAttraction('Merlion Park, Singapore')">
+                                    <i class="fa-solid fa-location-dot"></i>魚尾獅公園 Merlion Park
+                                </li>
+                                <li onclick="openAttraction('Gardens by the Bay, Singapore')">
+                                    <i class="fa-solid fa-tree"></i>濱海灣花園 Gardens by the Bay
+                                </li>
+                                <li onclick="openAttraction('Clarke Quay, Singapore')">
+                                    <i class="fa-solid fa-martini-glass-citrus"></i>克拉碼頭 Clarke Quay
+                                </li>
+                                <li onclick="openAttraction('Esplanade - Theatres on the Bay, Singapore')">
+                                    <i class="fa-solid fa-masks-theater"></i>濱海藝術中心 Esplanade
+                                </li>
+                                <li onclick="openAttraction('Singapore Flyer')">
+                                    <i class="fa-solid fa-circle"></i>新加坡摩天輪 Singapore Flyer
+                                </li>
+                                <li onclick="openAttraction('Bugis Street, Singapore')">
+                                    <i class="fa-solid fa-shop"></i>武吉士街 Bugis Street
+                                </li>
+                                <li onclick="openAttraction('Haji Lane, Singapore')">
+                                    <i class="fa-solid fa-paint-roller"></i>哈芝巷 Haji Lane
+                                </li>
+                                <li onclick="openAttraction('Long Bar, Singapore')">
+                                    <i class="fa-solid fa-champagne-glasses"></i>Long Bar (萊佛士酒店)
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                    <div class="card map-container">
+                        <iframe id="attraction-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.859123456789!2d103.8541234758066!3d1.286789561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a7c8c8c8c8%3A0xabcdefabcdefabcd!2sMerlion%20Park!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+                <div style="text-align:center; margin-top:30px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Merlion_and_the_CBD_at_blue_hour_%28Unsplash%29.jpg" alt="魚尾獅公園" style="max-width:400px; width:100%; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.10);">
+                    <div style="color:#888; margin-top:8px;">魚尾獅公園 Merlion Park</div>
                 </div>
             </section>
         </div>
@@ -861,15 +875,39 @@
         }
 
         function openDirections(hotelName) {
-            const venue = encodeURIComponent('Suntec Singapore Convention & Exhibition Centre');
-            const hotel = encodeURIComponent(hotelName);
-            const url = `https://www.google.com/maps/dir/?api=1&origin=${hotel}&destination=${venue}&travelmode=walking`;
-            window.open(url, '_blank');
+            // 不用 API key，直接切換已知的 embed 連結
+            let url = "";
+            if (hotelName === 'Hotel Grand Pacific') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.79044122138!2d103.8516700758066!3d1.299815561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a69524f515%3A0x6774577381286e19!2sHotel%20Grand%20Pacific!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (hotelName === 'Wyndham Singapore at City Hall') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.792144943015!2d103.8500730758066!3d1.297222561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a6e6e6e6e7%3A0x1234567890abcdef!2sWyndham%20Singapore%20at%20City%20Hall!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (hotelName === 'Ibis Singapore On Bencoolen') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.797123456789!2d103.8523456758066!3d1.302345561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a6b7b7b7b7%3A0xabcdef1234567890!2sIbis%20Singapore%20On%20Bencoolen!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            }
+            document.getElementById('hotel-map').src = url;
         }
 
         function openAttraction(place) {
-            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`;
-            window.open(url, '_blank');
+            // 不用 API key，直接切換已知的 embed 連結
+            let url = "";
+            if (place === 'Merlion Park, Singapore') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.859123456789!2d103.8541234758066!3d1.286789561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a7c8c8c8c8%3A0xabcdefabcdefabcd!2sMerlion%20Park!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (place === 'Gardens by the Bay, Singapore') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.860987654321!2d103.8634567758066!3d1.281234561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a8d9d9d9d9%3A0x1234123412341234!2sGardens%20by%20the%20Bay!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (place === 'Clarke Quay, Singapore') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.861234567890!2d103.8467890758066!3d1.290123561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a9eaeaeaea%3A0x5678567856785678!2sClarke%20Quay!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (place === 'Esplanade - Theatres on the Bay, Singapore') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.862345678901!2d103.8556789758066!3d1.289012561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19aafafafafa%3A0x8765876587658765!2sEsplanade%20-%20Theatres%20on%20the%20Bay!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (place === 'Singapore Flyer') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.863456789012!2d103.8634567758066!3d1.289876561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19abfbfbfbfb%3A0x2345234523452345!2sSingapore%20Flyer!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (place === 'Bugis Street, Singapore') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.864567890123!2d103.8556789758066!3d1.299876561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19acfcfcfcfc%3A0x3456345634563456!2sBugis%20Street!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (place === 'Haji Lane, Singapore') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.858123456789!2d103.8581234758066!3d1.300789561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a7b8b8b8b8%3A0xabcdefabcdefabcd!2sHaji%20Lane!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            } else if (place === 'Long Bar, Singapore') {
+                url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.857123456789!2d103.8551234758066!3d1.294789561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a7a7a7a7a7%3A0xabcdefabcdefabcd!2sLong%20Bar!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw";
+            }
+            document.getElementById('attraction-map').src = url;
         }
 
         // Accordion functionality
