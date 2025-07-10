@@ -1,0 +1,855 @@
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇美軍團 新加坡行說明會</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #005A9C; /* 奇美藍 */
+            --secondary-color: #008080; /* 蒂芬妮綠 */
+            --background-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-radius: 10px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'Microsoft JhengHei', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.6em;
+            color: var(--secondary-color);
+        }
+
+        section {
+            padding: 40px 0;
+        }
+
+        /* --- Header --- */
+        .header {
+            background: linear-gradient(rgba(0, 90, 156, 0.8), rgba(0, 90, 156, 0.8)), url('https://images.unsplash.com/photo-1563461664303-310b2b85e943?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 80px 20px 60px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: white;
+            font-size: 3.2em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .header p {
+            font-size: 1.3em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        /* --- Main Tab Navigation --- */
+        .main-tabs-container {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .main-tabs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .main-tab-link {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .main-tab-link:hover {
+            color: var(--secondary-color);
+        }
+        .main-tab-link.active {
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        .main-tab-content {
+            display: none;
+            animation: fadeIn 0.6s;
+        }
+        .main-tab-content.active {
+            display: block;
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* --- Team Groups Section --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .team-card {
+            border-left: 7px solid;
+            text-align: center;
+        }
+        .team-card .card-header {
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .team-card .card-header h4 {
+            color: white;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .team-card .card-header i {
+            margin-right: 10px;
+        }
+        .team-card .card-content {
+            padding: 20px;
+        }
+        .team-card ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        .team-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .team-card ul li strong {
+            color: var(--secondary-color);
+        }
+        #team-a { border-color: #3498db; } /* Blue */
+        #team-b { border-color: #e74c3c; } /* Red */
+        #team-c { border-color: #f1c40f; } /* Yellow */
+        #team-d { border-color: #2ecc71; } /* Green */
+        #team-e { border-color: #9b59b6; } /* Purple */
+
+        /* --- Poster Section --- */
+        .poster-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .poster-table th, .poster-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .poster-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.1em;
+        }
+        .poster-table tr:last-child td {
+            border-bottom: none;
+        }
+        .poster-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        .poster-table .theme-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .badge-leadership { background-color: #3498db; }
+        .badge-safety { background-color: #e74c3c; }
+        .badge-people { background-color: #f1c40f; }
+        .badge-change { background-color: #9b59b6; }
+
+        /* --- Itinerary Tabs --- */
+        .sub-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .sub-tabs .tab-link {
+            padding: 12px 25px;
+            cursor: pointer;
+            background: var(--card-bg);
+            margin: 5px;
+            border-radius: 50px;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border: 2px solid var(--primary-color);
+        }
+        .sub-tabs .tab-link:hover, .sub-tabs .tab-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        .sub-tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .sub-tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .itinerary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: stretch;
+        }
+        .itinerary-card {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        .itinerary-card ul {
+            list-style-type: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+        .itinerary-card li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .itinerary-card i {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-right: 15px;
+            margin-top: 5px;
+            width: 20px;
+            text-align: center;
+        }
+        .flight-info {
+            background: #e9f5ff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .itinerary-image-card {
+            /* Removed background-image and min-height */
+            border-radius: var(--border-radius); /* Added border-radius for consistency */
+            overflow: hidden; /* Ensure image respects border-radius */
+            display: flex; /* Use flexbox to center image if needed */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+        .itinerary-image-card img {
+            width: 100%; /* Image fills the width of its container */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove extra space below image */
+        }
+        
+        /* --- Accordion for Itinerary Details --- */
+        .accordion {
+            margin-top: 20px;
+        }
+        .accordion-header {
+            background-color: #f1f1f1;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-header:hover {
+            background-color: #ddd;
+        }
+        .accordion-header::after {
+            content: '\f078'; /* Font Awesome down arrow */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--primary-color);
+            transition: transform 0.3s;
+        }
+        .accordion-header.active::after {
+            transform: rotate(-180deg);
+        }
+        .accordion-panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-top: 1px solid #eee;
+        }
+        .accordion-panel ul {
+            padding: 15px 0 15px 20px;
+            list-style-type: disc;
+        }
+        /* Specific styling for meeting points list */
+        .accordion-panel ul.meeting-points-list {
+            list-style: none; /* Remove default disc */
+            padding-left: 0;
+        }
+        .accordion-panel ul.meeting-points-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .accordion-panel ul.meeting-points-list li::before {
+            content: '\2022'; /* Custom bullet point */
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            position: absolute;
+            left: 0;
+        }
+        .accordion-panel ul.meeting-points-list li ul {
+            list-style-type: circle; /* Sub-list style */
+            padding-left: 30px;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+        .accordion-panel ul.meeting-points-list li ul li {
+            margin-bottom: 5px;
+            padding-left: 0;
+        }
+        .accordion-panel ul.meeting-points-list li ul li::before {
+            content: ''; /* Remove bullet for sub-list */
+        }
+
+
+        /* --- Map & Hotel Section --- */
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        .map-container {
+            height: 450px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        .map-container iframe { /* Added style for iframe inside map-container */
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .hotel-list-card .card-content, .notes-card .card-content {
+             padding: 25px;
+        }
+        .hotel-list {
+            list-style: none;
+            padding: 0;
+        }
+        .hotel-list li {
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+        }
+        .hotel-list li:hover {
+            background-color: #e9f5ff;
+        }
+        .hotel-list i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        .notes-card ul {
+            padding-left: 0;
+            list-style: none;
+        }
+         .notes-card li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+         .notes-card i {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 40px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .itinerary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5em; }
+            h2 { font-size: 1.8em; }
+            .main-tab-link { font-size: 1em; padding: 12px 10px; }
+            /* Removed min-height from itinerary-image-card here as well */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>奇美軍團 新加坡行說明會</h1>
+        <p>2025 BMJ/IHI 國際醫療品質及安全論壇</p>
+    </header>
+
+    <div class="main-tabs-container">
+        <div class="main-tabs">
+            <button class="main-tab-link active" onclick="openMainTab(event, 'overview')">專案總覽</button>
+            <button class="main-tab-link" onclick="openMainTab(event, 'teams')">團隊分組</button>
+            <button class="main-tab-link" onclick="openMainTab(event, 'posters')">海報發表</button>
+            <button class="main-tab-link" onclick="openMainTab(event, 'itinerary')">互動行程表</button>
+            <button class="main-tab-link" onclick="openMainTab(event, 'map')">住宿與須知</button>
+        </div>
+    </div>
+    
+    <main class="container">
+        <!-- Overview Section -->
+        <div id="overview" class="main-tab-content active">
+            <section>
+                <h2>專案總覽</h2>
+                <div class="card">
+                    <div class="card-content" style="text-align:center; padding: 30px;">
+                        <h3>Moving together towards sustainable quality</h3>
+                        <p style="font-size: 1.2em; color: var(--secondary-color);">攜手邁向永續品質</p>
+                        <p><strong><i class="fa-solid fa-calendar-days"></i> 會議時間：</strong> 2025年 8月13日 (三) 至 8月15日 (五)</p>
+                        <p><strong><i class="fa-solid fa-location-dot"></i> 會議地點：</strong> Suntec Singapore Convention & Exhibition Centre</p>
+                        <p><strong><i class="fa-solid fa-users"></i> 參與人員：</strong> 奇美軍團共 21 員</p>
+                        <p><strong><i class="fa-solid fa-user-shield"></i> 行程品安官：</strong> 周淑蓮 副主任</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Teams Section -->
+        <div id="teams" class="main-tab-content">
+            <section>
+                <h2>團隊分組與學習目標</h2>
+                <div class="team-grid">
+                    <div class="card team-card" id="team-a">
+                        <div class="card-header"><h4><i class="fa-solid fa-sitemap"></i> A組 領導組</h4></div>
+                        <div class="card-content">
+                            <ul>
+                                <li><strong>目標:</strong> 學習高可靠組織(HRO)、策略領導、零傷害文化推動。</li>
+                                <li><strong>成員:</strong> 廖熏香、湯宏仁、周淑蓮、盧致穎、李怡珍。</li>
+                                <li><strong>推薦課程:</strong> Lead to Achieve HRO, Keynotes Scaling QI and Lean, Workforce & Culture。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card team-card" id="team-b">
+                        <div class="card-header"><h4><i class="fa-solid fa-shield-halved"></i> B組 安全組</h4></div>
+                        <div class="card-content">
+                            <ul>
+                                <li><strong>目標:</strong> 強化人因系統調查、根本原因分析(RCA)、安全風險辨識工具導入。</li>
+                                <li><strong>成員:</strong> 楊翼寧、徐秉裕、謝靜文、陳月梅。</li>
+                                <li><strong>推薦課程:</strong> Mayhem Room, Incident Investigation, BIPAP RCA, Medication Safety Tour。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card team-card" id="team-c">
+                        <div class="card-header"><h4><i class="fa-solid fa-heart-pulse"></i> C組 人本組</h4></div>
+                        <div class="card-content">
+                            <ul>
+                                <li><strong>目標:</strong> 強化病人參與、共同設計(Co-design)、敘事照護與照護同理。</li>
+                                <li><strong>成員:</strong> 陳志金、王宿鴻、周珊珊、賴雅玲。</li>
+                                <li><strong>推薦課程:</strong> The Power of Patient Stories, PULSE, Empathy and Trust, Person-Centered Care。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card team-card" id="team-d">
+                        <div class="card-header"><h4><i class="fa-solid fa-people-group"></i> D組 族群組</h4></div>
+                        <div class="card-content">
+                            <ul>
+                                <li><strong>目標:</strong> 促進健康平權、高齡照護轉型、跨部門社區整合照護。</li>
+                                <li><strong>成員:</strong> 陳欽明、陳宏睿、陳乃菁、杜漢祥。</li>
+                                <li><strong>推薦課程:</b> Active Ageing Tour, Transforming Care Together, Health Equity, Community Empowerment。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card team-card" id="team-e">
+                        <div class="card-header"><h4><i class="fa-solid fa-lightbulb"></i> E組 變革組</h4></div>
+                        <div class="card-content">
+                            <ul>
+                                <li><strong>目標:</strong> 導入數位工具、AI應用、流程優化、Lean QI 方法落地。</li>
+                                <li><strong>成員::</strong> 謝昆霖、李玉媚、洪宜帆、黃于恬。</li>
+                                <li><strong>推薦課程:</strong> Deming System of Production, Digital Innovation, Next-Level QI, Inner/Outer Change Skills。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Posters Section -->
+        <div id="posters" class="main-tab-content">
+            <section>
+                <h2>海報發表</h2>
+                <div style="overflow-x:auto;">
+                    <table class="poster-table">
+                        <thead>
+                            <tr>
+                                <th>作者</th>
+                                <th>題目</th>
+                                <th>主題</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>杜漢祥</td><td>Breaking Barriers: Empowering Healthcare Staff for Safer, Inclusive & Equitable HIV Care</td><td><span class="theme-badge badge-people">People</span></td></tr>
+                            <tr><td>周淑蓮</td><td>Chi Mei Medical Center "Patient Safety Train": Local Implementation of the IHI Patient Safety Leadership WalkRounds™ in Taiwan</td><td><span class="theme-badge badge-leadership">Leadership</span></td></tr>
+                            <tr><td>賴雅玲</td><td>From Care to Prevention: A Proactive and Comprehensive Training Framework for Medical Dispute Management</td><td><span class="theme-badge badge-people">People</span></td></tr>
+                            <tr><td>陳月梅</td><td>Improving BiPAP Safety Through Systemic Change: Lessons from a Root Cause Analysis in Emergency Care</td><td><span class="theme-badge badge-safety">Safety</span></td></tr>
+                            <tr><td>楊翼寧</td><td>Proactive Hemodialysis Management: How Al Predicts and Prevents Intradialytic Hypotension</td><td><span class="theme-badge badge-safety">Safety</span></td></tr>
+                            <tr><td>陳乃菁</td><td>Using Al Models to Predict Post-Stroke Patient Transition from Acute Hospitalization to Chronic Care Institutions or Home Care</td><td><span class="theme-badge badge-change">Change</span></td></tr>
+                            <tr><td>陳欽明</td><td>The Subsequent improvement in the quality unplanned extubations in Taiwan</td><td><span class="theme-badge badge-safety">Safety</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Itinerary Section -->
+        <div id="itinerary" class="main-tab-content">
+            <section>
+                <h2>互動行程表</h2>
+                <div class="sub-tabs">
+                    <button class="tab-link active" onclick="openSubTab(event, 'day0')">Day 0 (8/12)</button>
+                    <button class="tab-link" onclick="openSubTab(event, 'day1')">Day 1 (8/13)</button>
+                    <button class="tab-link" onclick="openSubTab(event, 'day2')">Day 2 (8/14)</button>
+                    <button class="tab-link" onclick="openSubTab(event, 'day3')">Day 3 (8/15)</button>
+                    <button class="tab-link" onclick="openSubTab(event, 'day4')">Day 4 (8/16)</button>
+                </div>
+
+                <!-- Day 0 Content -->
+                <div id="day0" class="sub-tab-content active">
+                    <div class="itinerary-grid">
+                        <div class="card itinerary-card">
+                            <h3><i class="fa-solid fa-plane-departure"></i> 抵達與準備</h3>
+                            <ul>
+                                <li><i class="fa-solid fa-plane"></i><div><strong>航班資訊 (分批抵達)</strong>
+                                    <div class="flight-info"><strong>台北出發A (2人):</strong> 長榮 BR215 [13:50 抵達]<br>組長: 楊翼寧*</div>
+                                    <div class="flight-info"><strong>高雄出發D (14人):</strong> 中華 CI757 [17:10 抵達]<br>組長: 賴雅玲*</div>
+                                    <div class="flight-info"><strong>台北出發B (5人):</strong> 新航 SQ877 [18:55 抵達]<br>組長: 杜漢祥*</div>
+                                </div></li>
+                                <li><i class="fa-solid fa-hotel"></i><div><strong>飯店 Check-in</strong><br>安全抵達後，各小組負責人向品安官報平安。</div></li>
+                                <li><i class="fa-solid fa-utensils"></i><div><strong>晚間自由行</strong><br>建議晚餐地點：Bugis Street, Clarke Quay, 或鄰近小販中心。</div></li>
+                                <li><i class="fa-solid fa-person-walking"></i><div><strong>海灣散步</strong><br>餐後可輕鬆漫步至魚尾獅公園、濱海藝術中心(Esplanade)、螺旋橋等。</div></li>
+                            </ul>
+                        </div>
+                        <div class="card itinerary-image-card">
+                            <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1974&auto=format&fit=crop" alt="新加坡夜景">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 1 Content -->
+                <div id="day1" class="sub-tab-content">
+                     <div class="itinerary-grid">
+                        <div class="card itinerary-card">
+                            <h3><i class="fa-solid fa-chalkboard-user"></i> 工作坊/參訪日</h3>
+                            <ul>
+                                <li><i class="fa-solid fa-person-chalkboard"></i><div><strong>上午/下午: 工作坊或實地參訪</strong><br>各組依主題參加推薦場次，深入學習。</div></li>
+                                <li><i class="fa-solid fa-bullseye"></i><div><strong>本日任務</strong>
+                                    <div class="flight-info">每人寫下2項可學以致用的工具/方法。</div>
+                                    <div class="flight-info">每人紀錄1句啟發對話/觀察。</div>
+                                    <div class="flight-info">拍下2-3張代表照片，簡述學習重點。</div>
+                                    <div class="flight-info">評估活動於院內教育之可行性。</div>
+                                </div></li>
+                                <li><i class="fa-solid fa-utensils"></i><div><strong>奇美軍團晚宴 (18:00)</strong><br>地點安排中 (候選: Asian Market Cafe, True Blue, Fatt Choy Eating House, New Ubin Seafood CHIJMES)。</div></li>
+                            </ul>
+                             <button class="accordion-header">本日會議重點</button>
+                             <div class="accordion-panel">
+                                <ul class="meeting-points-list">
+                                    <li><strong>工作坊</strong>
+                                        <ul>
+                                            <li>上午：QI工具、病人為中心(PCC)共創、改變的力量、戴明生產力、人因分析。</li>
+                                            <li>下午：進階QI工具、病安風險觀察室、高信賴組織、戴明生產力2、人因分析2。</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>實地參訪</strong>
+                                        <ul>
+                                            <li><strong>X1 – Vanguard Healthcare：</strong>護理之家 / 老人長照中心 (Tampines Care Home) 科技導入</li>
+                                            <li><strong>X2 – Woodlands Health：</strong>綠色永續醫院 (又分三組 – 急性社區 / 醫事 / 急症ORICU)</li>
+                                            <li><strong>X3 – Bedok THK & Monfort Active aging center：</strong>樂齡健康活力中心</li>
+                                            <li><strong>X4 – Esplanade 文化反思：</strong><a href="https://www.youtube.com/watch?v=0KQHQYmmHqM" target="_blank">影片連結</a></li>
+                                            <li><strong>X5 – Sembawang Polyclinic (till 16:30)：</strong>PCC & Family Nexus</li>
+                                            <li><strong>X6 – 黃廷芳醫院及KKH (重)：</strong>持續品質進步（分兩組）</li>
+                                            <li><strong>X7 – 陳篤生醫院及NHG藥事服務中心 (重)：</strong>藥物安全</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                             </div>
+                        </div>
+                        <div class="card itinerary-image-card">
+                            <img src="https://www.hok.com/wp-content/uploads/2019/05/Ng-Teng-Fong-Hospital-Curved-Facade2-1900-1600x1069.jpg" alt="黃廷芳醫院">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 Content -->
+                <div id="day2" class="sub-tab-content">
+                    <div class="itinerary-grid">
+                        <div class="card itinerary-card">
+                            <h3><i class="fa-solid fa-microphone-lines"></i> 主論壇日 (一)</h3>
+                            <ul>
+                                <li><i class="fa-solid fa-camera-retro"></i><div><strong>08:30-09:00: 會議大合照 & 開幕</strong></div></li>
+                                <li><i class="fa-solid fa-bullseye"></i><div><strong>本日任務</strong>
+                                    <div class="flight-info">每組整理1場最值得引進院內的議程內容。</div>
+                                    <div class="flight-info">每組選出1項未來改善專案可能主題。</div>
+                                    <div class="flight-info">每人紀錄1句啟發對話/觀察。</div>
+                                </div></li>
+                                <li><i class="fa-solid fa-martini-glass-citrus"></i><div><strong>大會交流餐會 (19:00-22:00)</strong><br>自由參加，拓展國際人脈。</div></li>
+                            </ul>
+                            <button class="accordion-header">本日會議重點</button>
+                            <div class="accordion-panel">
+                               <ul class="meeting-points-list">
+                                   <li><strong>K1 Keynote:</strong> Steve Davis - Rethinking QI with Innovation</li>
+                                   <li><strong>上午分場 (S1-S4):</strong> 醫療永續、安全與韌性、PCC、價值醫療</li>
+                                   <li><strong>K2 Keynote:</strong> Ivy Ng - Visionary Healthcare Leadership</li>
+                                   <li><strong>下午分場 (S5-S12):</strong> 遠端醫療、警報疲乏、PROM、Hospital At Home 等</li>
+                                   <li><strong>K3 Keynote:</strong> Jonathan Perlin (JCI CEO) - Quality Transformation at Scale</li>
+                               </ul>
+                            </div>
+                        </div>
+                        <div class="card itinerary-image-card">
+                            <img src="https://images.unsplash.com/photo-1542744095-291d1f67b221?q=80&w=2070&auto=format&fit=crop" alt="會議場景">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 Content -->
+                <div id="day3" class="sub-tab-content">
+                    <div class="itinerary-grid">
+                        <div class="card itinerary-card">
+                            <h3><i class="fa-solid fa-lightbulb"></i> 主論壇日 (二)</h3>
+                             <ul>
+                                <li><i class="fa-solid fa-users-viewfinder"></i><div><strong>中午: 小組共識討論</strong><br>利用午餐時間進行小組討論，收斂學習成果。</div></li>
+                                <li><i class="fa-solid fa-bullseye"></i><div><strong>本日任務</strong>
+                                    <div class="flight-info">小組共識討論30分鐘，整理回院初步行動建議及成果報告。</div>
+                                </div></li>
+                                <li><i class="fa-solid fa-martini-glass"></i><div><strong>晚間自由活動</strong><br>小團體活動或自由探索。(p/s: 阿杜要去喝雞尾酒)</div></li>
+                                <li><i class="fa-solid fa-plane-departure"></i><div><strong>部分人員返台</strong><br>湯宏仁、李玉媚*、謝靜文。</div></li>
+                            </ul>
+                            <button class="accordion-header">本日會議重點</button>
+                            <div class="accordion-panel">
+                               <ul class="meeting-points-list">
+                                   <li><strong>K4 Keynote:</strong> Helen Bevan - It's Up to Us: Power of Change</li>
+                                   <li><strong>上午分場 (SH1-SH4, S13-S16):</strong> 醫療行為改變、創新、社區照護、QI與心理健康、Codesign & PCC 等</li>
+                                   <li><strong>領導力論壇 (L1-L2):</strong> 族群健康、人力資源</li>
+                                   <li><strong>K5 Keynote:</strong> Maureen Bisognano - Driving Sustainable Improvement for Lasting Impact</li>
+                               </ul>
+                            </div>
+                        </div>
+                        <div class="card itinerary-image-card">
+                            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop" alt="團隊討論">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 4 Content -->
+                <div id="day4" class="sub-tab-content">
+                    <div class="itinerary-grid">
+                        <div class="card itinerary-card">
+                            <h3><i class="fa-solid fa-house-chimney"></i> 滿載而歸</h3>
+                            <ul>
+                                <li><i class="fa-solid fa-check-double"></i><div><strong>任務: 安全回家</strong><br>各班機組長於抵台後向品安官回報。</div></li>
+                                <li><i class="fa-solid fa-plane-arrival"></i><div><strong>航班資訊 (分批返台)</strong>
+                                    <div class="flight-info"><strong>回台北B (4人):</strong> 新航 SQ878 [16:40 抵達]<br>組長: 杜漢祥*</div>
+                                    <div class="flight-info"><strong>回台北A (2人):</strong> 長榮 BR216 [19:50 抵達]<br>組長: 楊翼寧*</div>
+                                    <div class="flight-info"><strong>回高雄D (12人):</strong> 中華 CI758 [22:30 抵達]<br>組長: 賴雅玲*</div>
+                                </div></li>
+                            </ul>
+                        </div>
+                         <div class="card itinerary-image-card">
+                            <img src="https://pointme.b-cdn.net/c/wp-content/uploads/2025/03/Premium-econ-Singapore-Airlines.jpg?width=1024&height=687" alt="飛機內部">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Map Section -->
+        <div id="map" class="main-tab-content">
+            <section>
+                <h2>住宿與旅遊須知</h2>
+                <div class="map-grid">
+                    <div class="card hotel-list-card">
+                        <div class="card-content">
+                            <h3><i class="fa-solid fa-hotel"></i> 住宿資訊 (點擊切換地圖)</h3>
+                            <ul class="hotel-list">
+                                <li onclick="updateMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.79044122138!2d103.8516700758066!3d1.299815561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a69524f515%3A0x6774577381286e19!2sHotel%20Grand%20Pacific!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw')">
+                                    <i class="fa-solid fa-map-pin"></i>Hotel Grand Pacific
+                                </li>
+                                <li onclick="updateMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.796989476054!2d103.84651347580654!3d1.294158961741165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da190a6158c377%3A0x867f19665633346d!2sWyndham%20Singapore%20at%20City%20Hall!5e0!3m2!1szh-TW!2stw!4v1720665403211!5m2!1szh-TW!2stw')">
+                                    <i class="fa-solid fa-map-pin"></i>Wyndham Singapore Hotel
+                                </li>
+                                <li onclick="updateMap('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.790597259024!2d103.85291287580655!3d1.2997184617303126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a68c1be971%3A0x3e11e20836a3e586!2sIbis%20Singapore%20On%20Bencoolen!5e0!3m2!1szh-TW!2stw!4v1720665440263!5m2!1szh-TW!2stw')">
+                                    <i class="fa-solid fa-map-pin"></i>Ibis Singapore On Bencoolen
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card map-container">
+                        <!-- 地圖 iframe，確保 src 完整且填滿容器 -->
+                        <iframe id="hotel-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.79044122138!2d103.8516700758066!3d1.299815561730032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da19a69524f515%3A0x6774577381286e19!2sHotel%20Grand%20Pacific!5e0!3m2!1szh-TW!2stw!4v1720665330833!5m2!1szh-TW!2stw" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="card notes-card">
+                        <div class="card-content">
+                            <h3><i class="fa-solid fa-circle-info"></i> 新加坡旅遊注意事項</h3>
+                            <ul>
+                                <li><i class="fa-solid fa-cloud-sun"></i><div><strong>天氣:</strong> 新加坡八月天氣炎熱潮濕，氣溫約在 26&deg;C 至 32&deg;C 之間，常有午後雷陣雨，建議攜帶輕便透氣衣物、雨具及防曬用品。</div></li>
+                                <li><i class="fa-solid fa-money-bill-wave"></i><div><strong>貨幣:</strong> 新加坡元 (SGD)。建議攜帶少量現金，多數地方接受信用卡或行動支付。</div></li>
+                                <li><i class="fa-solid fa-wifi"></i><div><strong>網路:</strong> 可購買當地 SIM 卡、租用 Wi-Fi 機，或使用國際漫遊服務。飯店通常提供免費 Wi-Fi。</div></li>
+                                <li><i class="fa-solid fa-plug"></i><div><strong>電壓:</strong> 230V, 50Hz。插座為三孔方型 (英式插座，G型)，需準備轉接頭。</div></li>
+                                <li><i class="fa-solid fa-person-walking-luggage"></i><div><strong>交通:</strong> 大眾運輸系統 (MRT 地鐵、巴士) 便利，建議購買 EZ-Link 卡或使用信用卡感應支付。</div></li>
+                                <li><i class="fa-solid fa-ban-smoking"></i><div><strong>法規:</strong> 新加坡對亂丟垃圾、隨地吐痰、室內吸菸等行為有嚴格罰款，請務必遵守當地法規。</div></li>
+                                <li><i class="fa-solid fa-bottle-water"></i><div><strong>飲水:</strong> 自來水可生飲，但建議飲用瓶裝水或煮沸後飲用。</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 奇美軍團. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function openMainTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("main-tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("main-tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function openSubTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("sub-tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function updateMap(mapUrl) {
+            document.getElementById('hotel-map').src = mapUrl;
+        }
+
+        // Accordion functionality
+        var acc = document.getElementsByClassName("accordion-header");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+
+        // Initialize tabs on load
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Open the first main tab by default
+            document.querySelector('.main-tab-link.active').click();
+            // Open the first sub tab (Day 0) by default
+            document.querySelector('#itinerary .tab-link.active').click();
+        });
+    </script>
+</body>
+</html>
