@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇美醫院醫師新手攻略</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        /* Tab button active state */
+        .tab-button.active {
+            background-color: #ffffff;
+            color: #1d4ed8;
+            border-bottom: 2px solid #1d4ed8;
+        }
+        /* Ensure iframe takes appropriate space */
+        #contentFrame {
+            width: 100%;
+            height: 800px; /* 您可以根據內容調整此高度，或使用 JavaScript 動態調整 */
+            border: none;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8 md:p-12 lg:p-16">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 sm:p-8 text-center rounded-t-xl">
+            <h1 class="text-3xl sm:text-4xl font-bold mb-2">奇美醫院醫師新手攻略</h1>
+            <p class="text-lg sm:text-xl">歡迎加入奇美醫院！這裡是你安心開啟職涯旅程的起點</p>
+            <p class="text-lg sm:text-xl">這裡是您安心開啟職涯旅程的起點</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap justify-center bg-gray-200 p-2 sm:p-4 border-b border-gray-300">
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200 active" data-tab="introduction.html">
+                奇美醫院
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="clinical.html">
+                臨床篇
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="teaching.html">
+                教學篇
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="research.html">
+                研究篇
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="medical-quality.html">
+                醫療品質篇
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="information-systems.html">
+                資訊系統篇
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="hr-admin.html">
+                人事行政篇
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="qa.html">
+                Q&A
+            </button>
+            <button class="tab-button py-2 px-4 sm:px-6 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-colors duration-200" data-tab="conclusion-quiz.html">
+                結語與覆盤
+            </button>
+        </div>
+
+        <!-- Content Frame -->
+        <div class="p-6 sm:p-8">
+            <iframe id="contentFrame" src="introduction.html"></iframe>
+        </div>
+
+        <!-- Last Updated Date -->
+        <div class="text-center text-gray-500 text-sm p-4">
+            最後更新日期：2025年7月22日
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const contentFrame = document.getElementById('contentFrame');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    contentFrame.src = button.dataset.tab; // Update iframe source
+                });
+            });
+
+            // Set initial iframe source to load the introduction page
+            contentFrame.src = document.querySelector('.tab-button.active').dataset.tab;
+        });
+    </script>
+</body>
+</html>
