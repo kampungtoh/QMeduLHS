@@ -76,33 +76,48 @@
         </div>
     </div>
 
-    <!-- Hospital Vision, Mission, Core Values -->
     <div class="infographic-card bg-gradient-to-br from-green-50 to-teal-100">
         <h2 class="infographic-section-title text-green-800">奇美醫院：我們的願景與價值</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div class="p-4 bg-white rounded-xl shadow-md">
+        <!--
+            關鍵修正：
+            1. 確保所有四個項目 (願景、使命、核心價值、宗旨) 都是這個 grid 容器的直接子元素。
+            2. 將 md:grid-cols-3 調整為 md:grid-cols-4，這樣在桌面版上，所有四個項目會排成一行，
+               並共享 gap-6 的間距。如果希望維持三欄，則 md:grid-cols-3 即可，第四個項目會自動換行，
+               但因為都在 grid 內，所以行間距也會由 gap-6 控制。
+               此處選擇 md:grid-cols-4 以達到所有項目在桌面版上水平間距一致的效果。
+        -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+            <!-- 願景 -->
+            <div class="p-4 bg-white rounded-xl shadow-md flex flex-col items-center">
                 <span class="icon-large">💡</span>
-                <h3 class="font-bold text-lg text-gray-800">願景</h3>
-                <p class="text-gray-600 text-sm">成為民眾最信賴的健康照護體系</p>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">願景</h3>
+                <p class="text-gray-600 text-sm flex-grow">成為民眾最信賴的健康照護體系</p>
             </div>
-            <div class="p-4 bg-white rounded-xl shadow-md">
+
+            <!-- 使命 -->
+            <div class="p-4 bg-white rounded-xl shadow-md flex flex-col items-center">
                 <span class="icon-large">🛡️</span>
-                <h3 class="font-bold text-lg text-gray-800">使命</h3>
-                <p class="text-gray-600 text-sm">別人不做的醫療，奇美來做</p>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">使命</h3>
+                <p class="text-gray-600 text-sm flex-grow">別人不做的醫療，奇美來做</p>
             </div>
-            <div class="p-4 bg-white rounded-xl shadow-md">
+
+            <!-- 核心價值 -->
+            <div class="p-4 bg-white rounded-xl shadow-md flex flex-col items-center">
                 <span class="icon-large">💖</span>
-                <h3 class="font-bold text-lg text-gray-800">核心價值</h3>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">核心價值</h3>
                 <p class="text-gray-600 text-sm">關懷</p>
                 <p class="text-gray-600 text-sm">專業</p>
                 <p class="text-gray-600 text-sm">效率</p>
             </div>
-            <div class="p-4 bg-white rounded-xl shadow-md">
+
+            <!-- 宗旨 (已移入正確的 grid 容器內) -->
+            <div class="p-4 bg-white rounded-xl shadow-md flex flex-col items-center">
                 <span class="icon-large">🎯</span>
-                <h3 class="font-bold text-lg text-gray-800">宗旨</h3>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">宗旨</h3>
                 <p class="text-gray-600 text-sm">提供安全、優質的醫療照顧</p>
                 <p class="text-gray-600 text-sm">促進民眾和同仁的健康</p>
                 <p class="text-gray-600 text-sm">培養優秀醫療人才</p>
+            </div>
         </div>
     </div>
 
