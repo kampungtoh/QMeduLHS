@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>攻略簡介</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 這些樣式需要複製到每個獨立的內容頁面中，以確保顯示一致性 */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Background for the iframe content */
+        }
+        .infographic-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .infographic-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .icon-large {
+            font-size: 4rem;
+            line-height: 1;
+            display: block;
+            margin: 0 auto 0.5rem; /* Centering the icon */
+        }
+        .list-center-items li {
+            text-align: center;
+            list-style-position: inside; /* Ensures the bullet is inside the centered text */
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .signature-message, .quiz-message { /* 這些樣式可能只在結語頁面用到，但為了完整性可以包含 */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .signature-message.show, .quiz-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="infographic-card bg-gradient-to-br from-blue-50 to-indigo-100">
+        <p class="text-gray-700 leading-relaxed mb-6 text-center">
+            親愛的醫師們，熱烈歡迎您加入奇美醫院這個充滿活力與溫暖的大家庭！無論您是實習醫學生(UGY)、畢業後一般醫學訓練住院醫師(PGY)、住院醫師或主治醫師，這份攻略都將是您在奇美開啟精彩職涯的堅實夥伴。我們深知您對新環境的期待與挑戰，因此特別為您量身打造這份全方位的指南，涵蓋臨床、教學、研究、醫療品質、人事行政等各個面向。我們將以最真誠的關懷，帶您快速熟悉奇美醫院的文化、豐富資源，助您從容應對各種挑戰，與我們一同成長，最終成為一位卓越非凡的奇美醫師！
+        </p>
+        <span class="icon-large">👋</span>
+        <!-- Embedded Video -->
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Hospital Vision, Mission, Core Values -->
+    <div class="infographic-card bg-gradient-to-br from-green-50 to-teal-100">
+        <h2 class="infographic-section-title text-green-800">奇美醫院：我們的願景與價值</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div class="p-4 bg-white rounded-xl shadow-md">
+                <span class="icon-large">💡</span>
+                <h3 class="font-bold text-lg text-gray-800">願景</h3>
+                <p class="text-gray-600 text-sm">成為民眾最信賴的健康照護體系</p>
+            </div>
+            <div class="p-4 bg-white rounded-xl shadow-md">
+                <span class="icon-large">🛡️</span>
+                <h3 class="font-bold text-lg text-gray-800">使命</h3>
+                <p class="text-gray-600 text-sm">別人不做的醫療，奇美來做</p>
+            </div>
+            <div class="p-4 bg-white rounded-xl shadow-md">
+                <span class="icon-large">💖</span>
+                <h3 class="font-bold text-lg text-gray-800">核心價值</h3>
+                <p class="text-gray-600 text-sm">關懷 (Compassion)、專業 (Accountability)、效率 (Effectiveness)</p>
+            </div>
+        </div>
+        <div class="p-4 bg-white rounded-xl shadow-md mt-6">
+            <span class="icon-large">🎯</span>
+            <h3 class="font-bold text-lg text-gray-800">宗旨</h3>
+            <ul class="list-disc list-inside text-gray-600 text-sm list-center-items">
+                <li>提供安全、優質的醫療照顧</li>
+                <li>促進民眾和同仁的健康</li>
+                <li>培養優秀醫療人才</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SNQ National Quality Mark -->
+    <div class="infographic-card bg-gradient-to-br from-purple-50 to-purple-100 text-center">
+        <h2 class="infographic-section-title text-purple-800">奇美醫院榮獲 SNQ 國家品質標章</h2>
+        <span class="icon-large">🏅</span>
+        <button onclick="window.open('https://www.chimei.org.tw/newindex/award/cmh_snq.html', '_blank')"
+                class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105 mt-4">
+            前往 SNQ 專區了解更多
+        </button>
+    </div>
+</body>
+</html>
