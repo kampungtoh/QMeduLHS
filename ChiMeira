@@ -1,0 +1,161 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChiMeira International Symposium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .container-bg {
+            background: linear-gradient(to bottom, #e2e8f0, #cbd5e1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 sm:p-8 flex items-center justify-center min-h-screen">
+    <div class="container-bg max-w-5xl w-full mx-auto p-6 sm:p-10 rounded-3xl shadow-2xl border border-white/50 transform transition-transform duration-500 hover:scale-[1.01]">
+
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 leading-tight">
+                ChiMeira International Symposium
+            </h1>
+            <h2 class="text-xl sm:text-2xl font-medium text-blue-700 mt-2">
+                雙管奇下．深耕臺南
+            </h2>
+            <p class="text-lg sm:text-xl font-medium text-gray-600 mt-1">
+                The Synergy of Quality Management and Infection Control
+            </p>
+            <div class="mt-6 text-gray-700 font-semibold">
+                <p class="text-base sm:text-lg">
+                    <span class="text-red-600">Date:</span> Sunday, November 16, 2025
+                </p>
+                <p class="text-base sm:text-lg">
+                    <span class="text-red-600">Venue:</span> Chi Mei Museum, Tainan City
+                </p>
+                <p class="text-base sm:text-lg">
+                    <span class="text-red-600">Host:</span> Chi Mei Medical Center, Tainan City
+                </p>
+            </div>
+        </header>
+
+        <!-- Agenda Section -->
+        <main class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8 border border-gray-200">
+            <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-6 border-b-2 border-blue-500 pb-2">
+                Agenda
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-blue-600 rounded-t-lg">
+                        <tr>
+                            <th scope="col" class="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-bold text-white uppercase tracking-wider rounded-tl-xl">
+                                Time
+                            </th>
+                            <th scope="col" class="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-bold text-white uppercase tracking-wider">
+                                Agenda
+                            </th>
+                            <th scope="col" class="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-bold text-white uppercase tracking-wider rounded-tr-xl">
+                                Speaker
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">09:30 - 09:50</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Registration</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm font-medium text-gray-900">09:50 - 10:00</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm font-medium text-gray-900">Opening Ceremony<br/><span class="text-gray-500 text-xs">World AMR Awareness Week Celebration</span></td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm font-medium text-gray-900">10:00 - 10:05</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Opening Remarks I</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Prof. Hung-Jen Tang</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm font-medium text-gray-900">10:05 - 10:10</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Opening Remarks II</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Dr. Yi-Chun Lo</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm font-medium text-gray-900">10:10 - 10:15</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Patient Journey at Chi Mei Medical Center</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500"></td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm font-bold text-gray-900">10:15 - 10:55</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm font-bold text-gray-900">Keynote I: Clean Care, Safer Care 2.0: Infection Prevention & Organizational Resilience in the AMR Era</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm font-medium text-gray-500">Professor Didier Pittet (TBD)</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm font-bold text-gray-900">10:55 - 11:35</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm font-bold text-gray-900">Keynote II: Building Equitable Care Systems: From Quality Improvement to Health Justice</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm font-medium text-gray-500">Dr. Bruce Agins</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm font-bold text-gray-900">11:35 - 12:15</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm font-bold text-gray-900">Keynote III: Global Trend in Patient Safety</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm font-medium text-gray-500">Prof. Shin Ushiro (TBD)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">12:15 - 13:15</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Lunch Time</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">13:15 - 14:00</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Cultivating Tainan, Healthy Taiwan: Creating Population Health Value with Learning Health System</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Dr. Hung-Jung Lin, Dr. Yi-Chun Lo, Dr. Che-Kim Tan</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">14:00 - 15:00</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Advancing Medical Quality in the Era of Smart Healthcare Transformation</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Dr. Wang-Chuan Juang</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">15:00 - 15:30</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Human-Centricity & Innovative Excellence</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Dr. Han Siong Toh</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">15:30 - 16:00</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Coffee Break</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500"></td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">16:00 - 16:40</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Visionary Implementation Report</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">TBD</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900">16:40 - 17:00</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-900">Closing Remarks</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Dr. Hung-Jung Lin<br/>Prof. Hung-Jen Tang</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm text-gray-900 rounded-b-xl">17:00 - 17:30</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500">Chi Mei Month Exhibition</td>
+                            <td class="px-3 py-2 sm:px-6 sm:py-4 text-sm text-gray-500"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="text-center mt-10 text-gray-600">
+            <p class="text-xs sm:text-sm">
+                Proudly Hosted by Chi Mei Medical Center, Tainan City.
+            </p>
+        </footer>
+
+    </div>
+</body>
+</html>
