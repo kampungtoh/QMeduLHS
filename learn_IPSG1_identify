@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病人識別安全學習模組</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #0f4c75 0%, #1a73e8 100%); /* 調整為更沉穩的藍色 */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98); /* 略微調高透明度 */
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.6s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #0f4c75;
+        }
+
+        h1 {
+            color: #0f4c75;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 800; /* 加強標題粗細 */
+        }
+
+        .subtitle {
+            color: #4a4a4a; /* 調整顏色 */
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .reference-link {
+            margin-top: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .reference-link a {
+            color: #1a73e8; /* 連結顏色 */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .reference-link a:hover {
+            color: #0f4c75;
+            text-decoration: underline;
+        }
+
+        .introduction-section {
+            display: none;
+            padding: 30px;
+            text-align: left;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .introduction-section h2 {
+            color: #0f4c75;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px dashed #a0c4ff;
+            padding-bottom: 10px;
+        }
+
+        .intro-content {
+            background: linear-gradient(135deg, #f0f7ff 0%, #dbe8ff 100%); /* 淡雅藍色背景 */
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #1a73e8; /* 專業藍色邊條 */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-content h3 {
+            color: #0f4c75;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #c0d8f7;
+            padding-bottom: 5px;
+        }
+
+        .intro-content p, .intro-content li {
+            line-height: 1.8;
+            color: #333;
+            font-size: 1.05em;
+            margin-bottom: 10px;
+        }
+
+        .intro-content ul {
+            margin-left: 25px;
+            margin-top: 10px;
+            list-style-type: '👉 '; /* 自定義列表符號 */
+        }
+
+        .intro-content li {
+            padding-left: 5px;
+        }
+
+        /* 移除不相關的 BiPAP 樣式 */
+        .bipap-diagram, .device-image, .indicator-list {
+            display: none;
+        }
+
+        .warning-section {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .warning-section h4 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .warning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 響應式網格 */
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .warning-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid #ffeeba;
+        }
+
+        .warning-box h5 {
+            color: #dc3545;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .warning-box ul {
+            margin-left: 20px;
+            font-size: 0.95em;
+            color: #495057;
+            list-style-type: disc;
+        }
+
+        .warning-box li {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .start-button, .continue-button {
+            background: linear-gradient(135deg, #1a73e8 0%, #0f4c75 100%); /* 專業藍色漸變 */
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(26, 115, 232, 0.3);
+            margin-top: 20px;
+        }
+
+        .start-button:hover, .continue-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(26, 115, 232, 0.4);
+        }
+
+        /* 測驗區塊樣式沿用 */
+
+        .key-point {
+            background: #e6f7ff; /* 淺藍色重點 */
+            border-left: 4px solid #1890ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #004d40;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        .footer-credit {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            padding: 10px;
+        }
+
+        /* 沿用或微調原有的問答區塊樣式 */
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 12px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress {
+            background: linear-gradient(90deg, #1a73e8 0%, #0f4c75 100%);
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            box-shadow: 0 2px 4px rgba(26, 115, 232, 0.3);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .question-number {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #1a73e8;
+        }
+
+        .score {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #0f4c75;
+        }
+
+        .scenario {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #1a73e8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .scenario h3 {
+            color: #0f4c75;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .scenario p {
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.05em;
+        }
+
+        .options {
+            margin-top: 25px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .option:hover {
+            border-color: #1a73e8;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.2);
+        }
+
+        .option.selected {
+            border-color: #1a73e8;
+            background: linear-gradient(135deg, #e0efff 0%, #d1e2ff 100%);
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            animation: correctPulse 0.6s ease;
+        }
+
+        .option.incorrect {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            animation: shake 0.5s ease;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            animation: slideDown 0.5s ease;
+            font-size: 1.05em;
+            line-height: 1.7;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+
+        .next-button {
+            background: linear-gradient(135deg, #1a73e8 0%, #0f4c75 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto 0;
+            font-weight: 600;
+            display: none;
+            box-shadow: 0 8px 15px rgba(26, 115, 232, 0.3);
+        }
+
+        .next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(26, 115, 232, 0.4);
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .results h2 {
+            color: #0f4c75;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .final-score {
+            font-size: 4em; /* 放大分數 */
+            color: #1a73e8;
+            margin: 20px 0;
+            font-weight: 800;
+            animation: bounce 1s ease;
+        }
+
+        .performance-message {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin-bottom: 60px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .scenario {
+                padding: 15px;
+            }
+            
+            .option {
+                padding: 15px;
+                font-size: 1em;
+            }
+
+            .warning-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ 病人識別安全學習模組</h1>
+            <p class="subtitle">IPSG目標一：正確識別病人臨床情境訓練</p>
+        </div>
+
+        <div class="start-screen" id="startScreen">
+            <h2>歡迎使用病人識別安全課程</h2>
+            <p style="margin: 20px 0; font-size: 1.1em; color: #4a4a4a;">
+                本課程旨在提升醫事人員在各項照護環節中**正確識別病人**的認知與執行能力。<br>這是 JCI、醫學中心評鑑與醫品病安的首要目標。
+            </p>
+            <div class="key-point">
+                <strong>核心原則：</strong>在執行任何照護行為前，應以**兩種以上**的識別方式核對病人身份。
+            </div>
+            <div class="reference-link">
+                學習內容參考：<a href="#" onclick="return false;">JCI IPSG.01.01.01</a>、醫院醫品病安九大目標
+            </div>
+            <button class="start-button" onclick="showIntroduction()">開始學習</button>
+            <div id="completionCount" style="margin-top:10px; font-weight:bold; color:#333;">
+                <span id="completionMessageCount"></span>
+            </div>
+        </div>
+
+        <div class="introduction-section" id="introductionSection">
+            <h2>🚨 正確識別病人的重要性</h2>
+            
+            <div class="intro-content">
+                <h3>為什麼要正確識別病人？</h3>
+                <p>錯誤的病人識別可能導致嚴重後果，包括：</p>
+                <ul>
+                    <li><strong>治療錯誤：</strong>手術、藥物、輸血等對錯病人。</li>
+                    <li><strong>診斷錯誤：</strong>檢體標示錯誤導致檢驗結果混淆。</li>
+                    <li><strong>死亡或嚴重傷害：</strong>國際間已有多起因識別錯誤導致病人死亡的案例。</li>
+                </ul>
+                <p style="font-weight: 600; color: #d32f2f;">⭐ IPSG 國際病人安全目標一：確保在提供照護服務時，正確識別病人。</p>
+            </div>
+
+            <div class="intro-content">
+                <h3>誰需要被識別？什麼時候需要識別？</h3>
+                <ul>
+                    <li><strong>識別對象：</strong>所有住院、門診、急診、接受檢查和治療的病人。</li>
+                    <li><strong>必須識別的時機：</strong>
+                        <ul style="list-style-type: circle; margin-top: 5px;">
+                            <li>💉 <strong>給藥</strong>（包括口服、針劑、輸液）前。</li>
+                            <li>🩸 <strong>輸血</strong>或血品、或準備輸血時。</li>
+                            <li>🔬 <strong>採集檢體</strong>或準備檢體時（如血液、尿液）。</li>
+                            <li>🏥 <strong>執行治療、手術、檢查</strong>、或處置前。</li>
+                            <li>🔄 <strong>交接班</strong>時。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="warning-section">
+                <h4>✅ 雙重識別方式（Two Identifiers）</h4>
+                <p style="color: #000; font-weight: 600; margin-bottom: 10px;">請至少使用以下兩種資訊，且不可使用病室/床位號碼作為唯一識別方式：</p>
+                <div class="warning-grid">
+                    <div class="warning-box">
+                        <h5>常見正確識別項目</h5>
+                        <ul>
+                            <li><strong>全名</strong> (姓名)</li>
+                            <li><strong>病歷號碼</strong></li>
+                            <li><strong>出生年月日</strong> (與病人或家屬口述確認)</li>
+                            <li>身份證/護照號碼 (依各院規定，多用於門診)</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h5>特殊情況識別</h5>
+                        <ul>
+                            <li><strong>意識不清者：</strong>核對手圈與醫囑/病歷。</li>
+                            <li><strong>無名氏：</strong>應使用院方規定的臨時識別碼（如「99999-無名氏」）。</li>
+                            <li><strong>嬰兒/新生兒：</strong>核對母親手圈、嬰兒腳圈與母親資料。</li>
+                            <li><strong>隔離區病人：</strong>除雙重識別外，應留意手圈顏色或標示。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="continue-button" onclick="startQuiz()">進入臨床情境測驗</button>
+            </div>
+        </div>
+
+        <div class="question-container" id="questionContainer">
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            
+            <div class="question-header">
+                <span class="question-number" id="questionNumber"></span>
+                <span class="score" id="scoreDisplay">得分: 0</span>
+            </div>
+
+            <div class="scenario" id="scenario"></div>
+            
+            <div class="options" id="options"></div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <div style="text-align: center;">
+                <button class="next-button" id="prevButton" onclick="prevPage()" style="background:linear-gradient(135deg,#aaa 0%,#777 100%);margin-right:10px;">上一題</button>
+                <button class="next-button" id="nextButton" onclick="nextQuestion()">下一題</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>🎉 學習完成！</h2>
+            <div class="final-score" id="finalScore"></div>
+            <p class="performance-message" id="performanceMessage"></p>
+            
+            <div class="completion-form" id="completionForm">
+                <h3>請輸入您的資料以完成學習紀錄</h3>
+                <div class="form-group">
+                    <label for="staffId">人事號碼</label>
+                    <input type="text" id="staffId" placeholder="請輸入您的人事號碼" required>
+                </div>
+                <button class="submit-button" onclick="submitCompletion()">提交學習紀錄</button>
+            </div>
+            
+            <div class="completion-message" id="completionMessage">
+                ✅ 學習紀錄已儲存！感謝您完成病人識別安全學習課程。
+            </div>
+            
+            <button class="restart-button" onclick="restartQuiz()">重新學習</button>
+        </div>
+
+        <div class="footer-credit">
+            品質管理中心及教育訓練部製作 | <span id="lastUpdated" style="color:rgba(255,255,255,0.8); font-size:0.9em;">最後更新日期：2025.10.7 (Ver 1.0)</span>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                scenario: "護理師小美準備為12床的病人注射胰島素。她來到床邊，詢問病人：「請問您是陳志明先生對嗎？」。病人點頭表示是。",
+                question: "根據標準的病人識別流程，小美在給藥前採取的識別方式是否足夠？",
+                options: [
+                    "足夠，因為病人意識清楚，且口述確認了姓名。",
+                    "不足夠，應同時核對病人的病歷號或出生年月日。",
+                    "足夠，因為床號和姓名都確認了。",
+                    "不足夠，但只要核對床頭卡和醫囑即可。"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "👍 正確！在執行給藥、輸血、採檢等關鍵照護行為前，必須使用**至少兩種識別方式**（例如：姓名 + 病歷號/出生年月日），單一姓名確認不足以確保安全。",
+                    incorrect: "⚠️ 不正確。單純口述姓名或核對床號是不足夠的，這違反了**雙重識別**原則（Two Identifiers）。應加上核對病歷號或出生年月日，並核對手圈資訊。"
+                }
+            },
+            {
+                scenario: "小兒科護理師小陳準備為剛出生的雙胞胎嬰兒注射維生素K。兩位嬰兒的母親都叫『王美玲』，病房內共有三位同名的嬰兒。小陳站在保溫箱前，感到有些混淆。",
+                question: "在為這位『王美玲』嬰兒注射前，小陳最安全且正確的識別流程是？",
+                options: [
+                    "核對嬰兒腳圈上的『王美玲』姓名，然後進行注射。",
+                    "核對嬰兒腳圈上的**姓名和出生年月日**，並確認**母親的手圈**資訊，然後進行注射。",
+                    "請母親口述嬰兒的姓名和病歷號，然後進行注射。",
+                    "核對嬰兒的床號與醫囑，並確認嬰兒的性別，然後進行注射。"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "💯 非常好！新生兒識別必須同時核對嬰兒腳圈上的**兩種識別碼**（通常是姓名+出生年月日或病歷號），並且與**母親的手圈**進行交叉比對，以確保不會誤認同名同姓的嬰兒。",
+                    incorrect: "❌ 不正確。同名嬰兒是病人識別錯誤的高風險群。僅核對姓名非常危險。正確做法是核對**嬰兒腳圈上的雙識別碼**，並與**母親手圈**交叉確認。"
+                },
+                extraInfo: `
+                    <div class="intro-content">
+                        <h3>👶 新生兒/同名病人識別：高風險情況</h3>
+                        <p><strong>風險點：</strong>新生兒無法自我表達，同名同姓病人增加誤判風險。</p>
+                        <p><strong>標準作業：</strong></p>
+                        <ul>
+                            <li><strong>三方核對：</strong>確認**嬰兒識別環**、**母親識別環**、以及**醫囑或病歷**上的資訊。</li>
+                            <li><strong>識別碼：</strong>使用**姓名** + **母親病歷號**或**嬰兒出生日期**作為雙識別碼。</li>
+                            <li><strong>特別注意：</strong>不可只依賴外觀或床位進行識別。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                scenario: "急診護理師小李在處理一位嚴重車禍昏迷的無名氏病人。此病人手部沒有任何識別手環，身上也沒有任何證件。急診醫師已緊急下達輸血醫囑。",
+                question: "在為此病人採血及準備輸血前，小李應優先採取的病人識別步驟是？",
+                options: [
+                    "先採血送驗，等家屬或警方確認身份後再補上手環。",
+                    "使用醫院規定的**臨時識別碼**（例如：99999-無名氏），填寫在手環及檢體標籤上，然後進行採血和輸血程序。",
+                    "先詢問救護車人員病人姓名。",
+                    "暫緩輸血，直到病人意識恢復能口述姓名為止。"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "✅ 正確！**無名氏/身份不明**的病人必須立即給予**臨時識別碼**，並製作手環。所有處置（採血、輸血、給藥）都必須依此臨時碼進行，並記錄於病歷中。",
+                    incorrect: "❌ 不正確。在緊急情況下，不能延誤輸血，但也不能在沒有手環的情況下進行。必須立即使用**醫院規定的臨時識別碼**，並貼於手環和所有檢體、輸血袋上，確保所有環節的一致性。"
+                },
+                extraInfo: `
+                    <div class="warning-section">
+                        <h4>🔍 身份不明（Unknown Patient）處理原則</h4>
+                        <p>身份不明或無意識病人屬於高風險群，其處置的標準流程為：</p>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>立即給予：</strong>醫院系統生成的**臨時病歷號碼**（如：無名氏、急診編號）。</li>
+                            <li><strong>製作手環：</strong>將臨時識別碼和性別、年齡等資訊製作成**手環**戴上。</li>
+                            <li><strong>一致性：</strong>所有檢體標籤、影像學申請單、治療單據必須與手環上的**臨時識別碼完全一致**。</li>
+                            <li><strong>身份確認：</strong>一旦身份被確認，應立即移除臨時手環，更換為正式手環，並在病歷中明確記錄更換時間。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                scenario: "外科病房護理師小王準備為5床的張太太和6床的林女士採集飯前血糖檢體。他先幫張太太抽血並將檢體放入推車，然後再為林女士抽血。",
+                question: "為了確保檢體識別的絕對安全，小王正確的作業流程應是？",
+                options: [
+                    "將兩個檢體都採集完成後，一起貼上標籤，節省時間。",
+                    "先採集張太太的檢體，**立即在床邊貼上張太太的標籤**；然後再採集林女士的檢體，**立即在床邊貼上林女士的標籤**。",
+                    "採集完檢體後，在護理站的電腦旁貼標籤，減少在床邊逗留時間。",
+                    "採集檢體時，只需要口述確認病人姓名即可，貼標籤可以延後。"
+                ],
+                correct: 1,
+                feedback: {
+                    correct: "✅ 正確！檢體貼標籤作業必須在**病人床邊即時完成**。這是預防檢體混淆的關鍵步驟。貼標籤前仍需執行雙重識別。",
+                    incorrect: "❌ 不正確！檢體識別錯誤是嚴重的病安事件。標準作業規定：**採集檢體後，必須在病人床邊立即貼標籤**，並再次核對病人手環上的雙識別碼與標籤資訊是否一致。"
+                }
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredQuestions = new Array(questions.length).fill(null);
+        let answeredCorrectly = new Array(questions.length).fill(false);
+
+        function showIntroduction() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('introductionSection').style.display = 'block';
+            updateCompletionCount();
+        }
+
+        function startQuiz() {
+            document.getElementById('introductionSection').style.display = 'none';
+            document.getElementById('questionContainer').style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions.fill(null);
+            answeredCorrectly.fill(false);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                showResults();
+                return;
+            }
+
+            const q = questions[currentQuestionIndex];
+            document.getElementById('questionNumber').textContent = `問題 ${currentQuestionIndex + 1} / ${questions.length}`;
+            document.getElementById('scoreDisplay').textContent = `得分: ${score}`;
+            document.getElementById('progressBar').style.width = `${(currentQuestionIndex / questions.length) * 100}%`;
+
+            document.getElementById('scenario').innerHTML = `
+                <h3>情境：</h3>
+                <div class="scenario-content">
+                    <p>${q.scenario}</p>
+                </div>
+                <h3>問題：</h3>
+                <div class="scenario-content">
+                    <p>${q.question}</p>
+                </div>
+            `;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((optionText, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = optionText;
+                optionDiv.setAttribute('data-index', index);
+                optionDiv.onclick = () => selectOption(index);
+
+                if (answeredQuestions[currentQuestionIndex] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            const feedbackDiv = document.getElementById('feedback');
+            feedbackDiv.style.display = 'none';
+            document.getElementById('nextButton').style.display = 'none';
+            document.getElementById('prevButton').style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+
+            // 如果已經回答過，顯示結果
+            if (answeredQuestions[currentQuestionIndex] !== null) {
+                showFeedback(answeredQuestions[currentQuestionIndex], answeredCorrectly[currentQuestionIndex]);
+            }
+        }
+
+        function selectOption(selectedIndex) {
+            if (answeredQuestions[currentQuestionIndex] !== null) return; // 已經回答過，不可再選
+
+            const q = questions[currentQuestionIndex];
+            const isCorrect = selectedIndex === q.correct;
+            
+            // 處理分數和狀態
+            answeredQuestions[currentQuestionIndex] = selectedIndex;
+            answeredCorrectly[currentQuestionIndex] = isCorrect;
+            
+            if (isCorrect) {
+                score++;
+            }
+            
+            // 顯示結果
+            showFeedback(selectedIndex, isCorrect);
+        }
+
+        function showFeedback(selectedIndex, isCorrect) {
+            const q = questions[currentQuestionIndex];
+            const optionsDivs = document.getElementById('options').querySelectorAll('.option');
+            
+            optionsDivs.forEach((opt, index) => {
+                opt.onclick = null; // 鎖定選項
+                if (index === selectedIndex) {
+                    opt.classList.add(isCorrect ? 'correct' : 'incorrect');
+                } else if (index === q.correct) {
+                    opt.classList.add('correct');
+                }
+            });
+
+            const feedbackDiv = document.getElementById('feedback');
+            feedbackDiv.classList.remove('correct', 'incorrect');
+            feedbackDiv.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            let feedbackText = `<h4>${isCorrect ? '👍 回答正確！' : '❌ 回答錯誤。'}</h4>`;
+            feedbackText += `<p><strong>說明：</strong>${isCorrect ? q.feedback.correct : q.feedback.incorrect}</p>`;
+            
+            if (q.extraInfo) {
+                feedbackText += q.extraInfo;
+            }
+
+            feedbackDiv.innerHTML = feedbackText;
+            feedbackDiv.style.display = 'block';
+            
+            document.getElementById('scoreDisplay').textContent = `得分: ${score}`;
+            document.getElementById('nextButton').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            renderQuestion();
+        }
+
+        function prevPage() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('progressBar').style.width = '100%';
+            
+            const finalScoreElement = document.getElementById('finalScore');
+            const messageElement = document.getElementById('performanceMessage');
+            
+            finalScoreElement.textContent = `${score} / ${questions.length}`;
+            
+            let message = '';
+            if (score === questions.length) {
+                message = "恭喜您！您已完全掌握病人識別的核心原則，是病人安全的重要守護者！";
+                messageElement.style.color = '#28a745';
+            } else if (score >= questions.length * 0.75) {
+                message = "表現優秀！您已掌握大部分重點，請繼續保持警覺心！";
+                messageElement.style.color = '#ffc107';
+            } else {
+                message = "請注意！您的分數未達標準，請點選重新學習，加強病人識別的高風險情境處理。";
+                messageElement.style.color = '#dc3545';
+                document.getElementById('completionForm').style.display = 'none'; // 低分不顯示提交
+            }
+            messageElement.textContent = message;
+
+            // 只有高分才顯示提交表單
+            if (score === questions.length) { // 假設滿分才可提交
+                document.getElementById('completionForm').style.display = 'block';
+            } else {
+                document.getElementById('completionForm').style.display = 'none';
+            }
+            document.getElementById('completionMessage').style.display = 'none';
+        }
+
+        function submitCompletion() {
+            const staffId = document.getElementById('staffId').value.trim();
+            if (staffId) {
+                // 實際應用中，此處應使用 AJAX 或 Fetch API 將 (staffId, score) 發送到伺服器進行紀錄
+                // 模擬提交成功
+                document.getElementById('completionForm').style.display = 'none';
+                document.getElementById('completionMessage').style.display = 'block';
+                // 可以在此處設定一個 localStorage 或 SessionStorage 標記，模擬學分已獲得
+                let count = parseInt(localStorage.getItem('completionCount') || '0');
+                localStorage.setItem('completionCount', count + 1);
+                updateCompletionCount();
+            } else {
+                alert('請輸入您的人事號碼！');
+            }
+        }
+
+        function restartQuiz() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions.fill(null);
+            answeredCorrectly.fill(false);
+            document.getElementById('completionForm').style.display = 'block';
+            document.getElementById('completionMessage').style.display = 'none';
+            document.getElementById('staffId').value = '';
+        }
+
+        function updateCompletionCount() {
+            const count = localStorage.getItem('completionCount') || '0';
+            const countElement = document.getElementById('completionMessageCount');
+            if(countElement) {
+                countElement.textContent = `您已完成本課程 ${count} 次`;
+            }
+        }
+
+        // 頁面加載完成時執行
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCompletionCount();
+        });
+    </script>
+</body>
+</html>
