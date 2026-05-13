@@ -1,0 +1,2514 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>頸部腫瘤病人之暈厥與用藥判斷｜互動式臨床案例</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:        #f7f3ea;
+    --paper-deep:   #efe9dc;
+    --card:         #ffffff;
+    --ink:          #1a1d29;
+    --ink-soft:     #3d4252;
+    --muted:        #7a766a;
+    --rule:         #d8cfb9;
+    --rule-soft:    #e8e0cc;
+
+    --teal:         #1a4d4a;
+    --teal-soft:    #e5ede9;
+    --teal-deep:    #0e3635;
+
+    --rust:         #b34020;
+    --rust-soft:    #f8e5dc;
+
+    --sage:         #5d6f3a;
+    --sage-soft:    #e9ecdb;
+
+    --ochre:        #b88a2b;
+    --ochre-soft:   #f4ead0;
+
+    --shadow-sm:    0 1px 2px rgba(26,29,41,.04), 0 1px 1px rgba(26,29,41,.03);
+    --shadow:       0 12px 28px -12px rgba(26,29,41,.18), 0 2px 4px rgba(26,29,41,.04);
+    --shadow-lg:    0 30px 60px -25px rgba(26,29,41,.22), 0 4px 10px rgba(26,29,41,.05);
+
+    --serif:        "Noto Serif TC", "Fraunces", Georgia, "Times New Roman", serif;
+    --serif-en:     "Fraunces", "Noto Serif TC", Georgia, serif;
+    --sans:         "Inter", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --mono:         "JetBrains Mono", "SF Mono", Consolas, monospace;
+
+    --radius-sm:    6px;
+    --radius:       10px;
+    --radius-lg:    18px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 12% 6%, rgba(26,77,74,.04), transparent 38%),
+      radial-gradient(circle at 88% 92%, rgba(179,64,32,.035), transparent 42%);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+    font-size:16px;
+  }
+
+  body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(26,29,41,.012) 3px, rgba(26,29,41,.012) 4px);
+    mix-blend-mode:multiply;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    margin:0 auto;
+    padding:36px 22px 96px;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    border-top:3px solid var(--ink);
+    border-bottom:1px solid var(--rule);
+    padding:14px 0 18px;
+    margin-bottom:42px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .masthead-left{display:flex;flex-direction:column;gap:4px}
+  .pub{
+    font-family:var(--serif-en);
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--muted);
+  }
+  .pub b{color:var(--teal);font-weight:700}
+  .pub-zh{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:13px;
+    color:var(--ink);
+    letter-spacing:.02em;
+  }
+  .masthead-right{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    text-align:right;
+    line-height:1.7;
+  }
+  .masthead-right b{color:var(--ink);font-weight:600}
+
+  /* ---------- progress ---------- */
+  .progress-rail{
+    position:sticky;
+    top:0;
+    background:rgba(247,243,234,.92);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    z-index:50;
+    margin:0 -22px 26px;
+    padding:10px 22px 12px;
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .progress-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.06em;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .progress-meta span:first-child{text-transform:uppercase}
+  .progress-meta b{color:var(--teal);font-weight:600;font-family:var(--mono)}
+  .progress-bar{
+    height:2px;
+    background:var(--rule-soft);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .progress-bar i{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--teal),var(--sage));
+    transition:width .55s cubic-bezier(.2,.7,.2,1);
+  }
+
+  /* ---------- cover ---------- */
+  .cover{
+    margin-bottom:60px;
+  }
+  .cover .eyebrow{
+    font-family:var(--serif-en);
+    font-style:italic;
+    color:var(--rust);
+    font-size:14px;
+    letter-spacing:.04em;
+    margin-bottom:14px;
+  }
+  .cover h1{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(34px,5.6vw,52px);
+    line-height:1.2;
+    letter-spacing:-.005em;
+    margin:0 0 18px;
+    color:var(--ink);
+  }
+  .cover h1 em{
+    font-style:italic;
+    color:var(--teal);
+    font-weight:600;
+  }
+  .cover h1 .sub{
+    display:block;
+    font-size:.58em;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin-top:10px;
+    font-style:normal;
+  }
+  .cover .deck{
+    font-family:var(--serif);
+    font-size:19px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    margin:0 0 30px;
+    max-width:640px;
+    font-weight:400;
+  }
+  .cover-meta{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:0;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:18px 0;
+    margin:28px 0 32px;
+  }
+
+  .cover-illustration{
+    margin:8px 0 28px;
+    padding:0;
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    background:linear-gradient(180deg,
+      rgba(244,234,208,0.45) 0%,
+      rgba(229,237,233,0.35) 50%,
+      rgba(247,243,234,0) 100%);
+    border:1px solid var(--rule-soft);
+    box-shadow:var(--shadow-sm);
+    position:relative;
+  }
+  .cover-illustration:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(26,29,41,.018) 2px, rgba(26,29,41,.018) 3px),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 7px, rgba(184,138,43,.025) 7px, rgba(184,138,43,.025) 8px);
+    pointer-events:none;
+    mix-blend-mode:multiply;
+    border-radius:var(--radius-lg);
+  }
+  .cover-illustration svg{
+    display:block;
+    width:100%;
+    height:auto;
+    position:relative;
+    z-index:1;
+  }
+  .cover-meta dl{
+    margin:0;
+    padding:0 18px;
+    border-left:1px solid var(--rule-soft);
+  }
+  .cover-meta dl:first-child{border-left:0;padding-left:0}
+  .cover-meta dt{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:4px;
+  }
+  .cover-meta dd{
+    margin:0;
+    font-family:var(--serif);
+    font-size:15px;
+    color:var(--ink);
+    font-weight:500;
+  }
+
+  .start-btn{
+    appearance:none;
+    border:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:15px;
+    padding:15px 28px;
+    border-radius:999px;
+    cursor:pointer;
+    letter-spacing:.01em;
+    box-shadow:var(--shadow);
+    transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .start-btn:hover{
+    background:var(--teal);
+    transform:translateY(-1px);
+    box-shadow:var(--shadow-lg);
+  }
+  .start-btn svg{width:14px;height:14px}
+
+  .cover-note{
+    margin-top:22px;
+    padding:16px 18px;
+    background:var(--ochre-soft);
+    border-left:3px solid var(--ochre);
+    border-radius:0 var(--radius) var(--radius) 0;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.75;
+  }
+  .cover-note b{color:var(--ink);font-weight:600}
+  .cover-note ol{margin:6px 0 0;padding-left:22px}
+  .cover-note ol li{margin-bottom:3px}
+
+  /* ---------- scenes ---------- */
+  .scene{
+    display:none;
+    animation:fadein .55s cubic-bezier(.2,.7,.2,1);
+  }
+  .scene.active{display:block}
+
+  @keyframes fadein{
+    from{opacity:0;transform:translateY(14px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  .scene-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .scene-num{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:500;
+    color:var(--rust);
+    font-size:14px;
+    letter-spacing:.04em;
+  }
+  .scene-stamp{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    background:var(--paper-deep);
+    padding:3px 9px;
+    border-radius:3px;
+    letter-spacing:.04em;
+  }
+  .scene-title{
+    font-family:var(--serif);
+    font-size:clamp(26px,4vw,34px);
+    font-weight:700;
+    line-height:1.2;
+    margin:0 0 8px;
+    color:var(--ink);
+    letter-spacing:-.005em;
+  }
+  .scene-sub{
+    font-family:var(--serif);
+    font-style:italic;
+    color:var(--muted);
+    font-size:16px;
+    margin:0 0 26px;
+    font-weight:400;
+  }
+
+  .narrative{
+    font-family:var(--serif);
+    font-size:17.5px;
+    line-height:1.85;
+    color:var(--ink-soft);
+    margin:0 0 24px;
+  }
+  .narrative p{margin:0 0 14px}
+  .narrative p:last-child{margin-bottom:0}
+  .narrative strong{
+    color:var(--ink);
+    font-weight:600;
+    background:linear-gradient(transparent 62%, var(--ochre-soft) 62%);
+    padding:0 2px;
+  }
+  .narrative em{
+    color:var(--rust);
+    font-style:italic;
+    font-weight:500;
+  }
+  .narrative .quote{
+    margin:18px 0;
+    padding:14px 20px;
+    border-left:3px solid var(--teal);
+    background:var(--teal-soft);
+    font-style:italic;
+    color:var(--teal-deep);
+    border-radius:0 var(--radius) var(--radius) 0;
+  }
+
+  .chart{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    padding:20px 22px;
+    margin:0 0 26px;
+    box-shadow:var(--shadow-sm);
+    position:relative;
+  }
+  .chart-label{
+    position:absolute;
+    top:-9px;
+    left:18px;
+    background:var(--card);
+    padding:0 8px;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--rust);
+    font-weight:600;
+  }
+  .chart dl{
+    margin:0;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:8px 18px;
+    align-items:baseline;
+  }
+  .chart dt{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.06em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+  .chart dd{
+    margin:0;
+    font-family:var(--sans);
+    font-size:14.5px;
+    color:var(--ink);
+    line-height:1.55;
+  }
+  .chart dd b{color:var(--rust);font-weight:600}
+
+  /* ---------- figures (inline SVG diagrams) ---------- */
+  .figure{
+    margin:0 0 26px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    padding:26px 22px 18px;
+    box-shadow:var(--shadow-sm);
+    position:relative;
+  }
+  .figure-label{
+    position:absolute;
+    top:-9px;
+    left:18px;
+    background:var(--card);
+    padding:0 8px;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:600;
+  }
+  .figure svg{
+    width:100%;
+    height:auto;
+    display:block;
+    max-width:100%;
+  }
+  .figure-caption{
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px dashed var(--rule-soft);
+    font-family:var(--serif);
+    font-size:13px;
+    font-style:italic;
+    color:var(--muted);
+    line-height:1.6;
+    text-align:center;
+  }
+  .figure-caption b{
+    font-style:normal;
+    color:var(--ink);
+    font-weight:600;
+  }
+
+  .figure-in-teach{
+    margin:18px 0 0;
+    background:#fafaf3;
+    border-color:var(--rule-soft);
+  }
+  .figure-in-teach .figure-label{
+    background:#fafaf3;
+    color:var(--ochre);
+  }
+
+  /* ---------- references (inside teach box) ---------- */
+  .teach-refs{
+    margin-top:14px;
+    padding-top:10px;
+    border-top:1px dashed var(--rule);
+  }
+  .teach-refs-label{
+    font-family:var(--mono);
+    font-size:9.5px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .teach-refs-list{
+    margin:0;
+    padding-left:18px;
+    font-family:var(--sans);
+    font-size:12px;
+    line-height:1.6;
+    color:var(--ink-soft);
+  }
+  .teach-refs-list li{
+    margin-bottom:4px;
+  }
+  .teach-refs-list li:last-child{margin-bottom:0}
+  .teach-refs-list em{
+    font-style:italic;
+    color:var(--ink);
+  }
+  .teach-refs-list b{
+    color:var(--ink);
+    font-weight:600;
+  }
+
+  .timeline{
+    margin:0 0 26px;
+    border-left:2px solid var(--rule);
+    padding-left:0;
+  }
+  .timeline-item{
+    position:relative;
+    padding:0 0 18px 22px;
+    margin-left:-2px;
+    border-left:2px solid transparent;
+  }
+  .timeline-item:before{
+    content:"";
+    position:absolute;
+    left:-7px;
+    top:6px;
+    width:10px;height:10px;
+    border-radius:50%;
+    background:var(--card);
+    border:2px solid var(--teal);
+  }
+  .timeline-item.alert:before{border-color:var(--rust);background:var(--rust)}
+  .timeline-item.recover:before{border-color:var(--sage);background:var(--sage)}
+  .timeline-time{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--rust);
+    font-weight:600;
+    letter-spacing:.03em;
+    margin-bottom:2px;
+  }
+  .timeline-text{
+    font-family:var(--serif);
+    font-size:15.5px;
+    line-height:1.65;
+    color:var(--ink-soft);
+  }
+  .timeline-text b{color:var(--ink);font-weight:600}
+
+  /* ---------- question ---------- */
+  .q-block{
+    margin:32px 0 0;
+    padding-top:28px;
+    border-top:1px dashed var(--rule);
+  }
+  .q-label{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--rust);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .q-text{
+    font-family:var(--serif);
+    font-size:19px;
+    line-height:1.55;
+    color:var(--ink);
+    font-weight:600;
+    margin:0 0 22px;
+  }
+
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:0 0 8px;
+  }
+  .opt{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:14px 18px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:all .18s ease;
+    font-family:var(--sans);
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--ink-soft);
+    text-align:left;
+    user-select:none;
+  }
+  .opt:hover:not(.locked){
+    border-color:var(--teal);
+    background:#fff;
+    transform:translateX(2px);
+    box-shadow:var(--shadow-sm);
+  }
+  .opt-marker{
+    font-family:var(--serif-en);
+    font-weight:600;
+    color:var(--teal);
+    font-size:16px;
+    line-height:1.4;
+    flex-shrink:0;
+    width:22px;
+  }
+  .opt-text{flex:1;padding-top:1px}
+
+  .opt.selected{
+    border-color:var(--teal);
+    background:var(--teal-soft);
+  }
+  .opt.correct{
+    border-color:var(--sage);
+    background:var(--sage-soft);
+    color:var(--ink);
+  }
+  .opt.correct .opt-marker{color:var(--sage)}
+  .opt.incorrect{
+    border-color:var(--rust);
+    background:var(--rust-soft);
+    color:var(--ink-soft);
+  }
+  .opt.incorrect .opt-marker{color:var(--rust)}
+  .opt.locked{cursor:default}
+  .opt.locked:hover{transform:none}
+  .opt-icon{
+    margin-left:auto;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-size:13px;
+    color:var(--muted);
+    flex-shrink:0;
+  }
+  .opt.correct .opt-icon{color:var(--sage);font-weight:600}
+  .opt.incorrect .opt-icon{color:var(--rust);font-weight:600}
+
+  /* ---------- peer distribution ---------- */
+  .peer-block{
+    display:none;
+    margin-top:18px;
+    padding:18px 20px 16px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    animation:slidein .5s cubic-bezier(.2,.7,.2,1) .15s both;
+  }
+  .peer-block.show{display:block}
+  .peer-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:14px;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .peer-title{
+    font-family:var(--serif);
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .peer-title span{color:var(--muted);font-weight:500;font-style:italic;font-family:var(--serif-en);font-size:13px;margin-left:4px}
+  .peer-n{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:.04em;
+  }
+  .peer-n b{color:var(--ink);font-weight:600}
+  .peer-bars{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .peer-row{
+    display:grid;
+    grid-template-columns:18px 1fr 56px;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+  }
+  .peer-mark{
+    font-family:var(--serif-en);
+    font-weight:600;
+    color:var(--muted);
+    font-size:13px;
+    text-align:center;
+  }
+  .peer-row.is-correct .peer-mark{color:var(--sage)}
+  .peer-bar-wrap{
+    position:relative;
+    height:22px;
+    background:var(--paper-deep);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .peer-bar{
+    position:absolute;
+    inset:0 auto 0 0;
+    width:0;
+    background:var(--rule);
+    border-radius:4px;
+    transition:width .9s cubic-bezier(.2,.7,.2,1) .1s;
+  }
+  .peer-row.is-correct .peer-bar{background:linear-gradient(90deg, var(--sage) 0%, #7d8f55 100%)}
+  .peer-row.is-mine .peer-bar-wrap{box-shadow:inset 0 0 0 1.5px var(--rust)}
+  .peer-row.is-mine.is-correct .peer-bar-wrap{box-shadow:inset 0 0 0 1.5px var(--sage)}
+  .peer-pct{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink);
+    font-weight:600;
+    text-align:right;
+  }
+  .peer-row.is-correct .peer-pct{color:var(--sage)}
+  .peer-tags{
+    display:flex;
+    gap:6px;
+    margin-top:10px;
+    flex-wrap:wrap;
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--muted);
+    letter-spacing:.04em;
+  }
+  .peer-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:2px 8px;
+    border-radius:99px;
+    background:var(--paper-deep);
+  }
+  .peer-tag i{
+    width:8px;height:8px;border-radius:50%;background:var(--sage);display:inline-block;
+  }
+  .peer-tag.mine i{background:transparent;border:1.5px solid var(--rust);width:9px;height:9px}
+  .peer-note{
+    margin-top:10px;
+    font-size:12px;
+    color:var(--muted);
+    font-family:var(--sans);
+    font-style:italic;
+    line-height:1.5;
+  }
+
+  /* ---------- feedback ---------- */
+  .feedback{
+    display:none;
+    margin-top:24px;
+    background:var(--card);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    border:1px solid var(--rule);
+    box-shadow:var(--shadow);
+    animation:slidein .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .feedback.show{display:block}
+
+  @keyframes slidein{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  .feedback-verdict{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 22px;
+    font-family:var(--serif);
+    font-size:17px;
+    font-weight:600;
+    border-bottom:1px solid var(--rule);
+  }
+  .feedback.correct .feedback-verdict{
+    background:var(--sage-soft);
+    color:var(--sage);
+  }
+  .feedback.incorrect .feedback-verdict{
+    background:var(--rust-soft);
+    color:var(--rust);
+  }
+  .verdict-icon{
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-weight:700;
+    font-size:18px;
+  }
+
+  .feedback-body{
+    padding:20px 22px 22px;
+  }
+  .feedback-body p{
+    font-family:var(--serif);
+    font-size:15.5px;
+    line-height:1.7;
+    margin:0 0 12px;
+    color:var(--ink-soft);
+  }
+  .feedback-body p:last-child{margin-bottom:0}
+  .feedback-body strong{color:var(--ink);font-weight:600}
+  .feedback-body em{font-style:italic;color:var(--rust)}
+
+  .teach{
+    margin-top:18px;
+    padding:14px 16px;
+    background:var(--paper-deep);
+    border-radius:var(--radius);
+    border-left:3px solid var(--ochre);
+  }
+  .teach-label{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ochre);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .teach-text{
+    font-family:var(--serif);
+    font-size:14.5px;
+    line-height:1.65;
+    color:var(--ink);
+  }
+  .teach-text ul{margin:6px 0 0;padding-left:20px}
+  .teach-text li{margin-bottom:4px}
+
+  /* nav */
+  .nav-row{
+    margin-top:38px;
+    padding-top:24px;
+    border-top:1px solid var(--rule);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+  }
+  .nav-btn{
+    appearance:none;
+    border:1px solid var(--rule);
+    background:transparent;
+    color:var(--muted);
+    font-family:var(--sans);
+    font-size:14px;
+    font-weight:500;
+    padding:10px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .18s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .nav-btn:hover:not(:disabled){
+    color:var(--ink);
+    border-color:var(--ink);
+  }
+  .nav-btn:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+  }
+  .nav-btn.primary{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .nav-btn.primary:hover:not(:disabled){
+    background:var(--teal);
+    border-color:var(--teal);
+  }
+  .nav-btn.primary[disabled]{
+    background:var(--rule);
+    color:var(--muted);
+    border-color:var(--rule);
+  }
+
+  /* ---------- summary ---------- */
+  .summary{
+    text-align:center;
+    padding:40px 0 20px;
+  }
+  .summary .eyebrow{
+    font-family:var(--serif-en);
+    font-style:italic;
+    color:var(--rust);
+    font-size:15px;
+    margin-bottom:14px;
+  }
+  .summary h2{
+    font-family:var(--serif);
+    font-size:clamp(30px,5vw,44px);
+    font-weight:700;
+    line-height:1.2;
+    margin:0 0 16px;
+    color:var(--ink);
+  }
+  .summary-note{
+    font-family:var(--serif);
+    font-size:14px;
+    color:var(--muted);
+    margin:0 0 8px;
+    font-style:italic;
+  }
+  .score-display{
+    margin:30px auto;
+    max-width:380px;
+    padding:34px 22px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  .score-number{
+    font-family:var(--serif-en);
+    font-size:72px;
+    font-weight:700;
+    line-height:1;
+    color:var(--teal);
+    letter-spacing:-.02em;
+    transition:color .3s ease;
+  }
+  .score-display.fail .score-number{color:var(--rust)}
+  .score-number small{
+    font-size:28px;
+    color:var(--muted);
+    font-weight:500;
+  }
+  .score-label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:8px;
+  }
+  .score-msg{
+    font-family:var(--serif);
+    font-size:16px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    font-style:italic;
+  }
+
+  .takeaways{
+    text-align:left;
+    margin:36px 0;
+  }
+  .takeaways h3{
+    font-family:var(--serif);
+    font-size:22px;
+    font-weight:700;
+    margin:0 0 16px;
+    color:var(--ink);
+    padding-bottom:10px;
+    border-bottom:2px solid var(--ink);
+  }
+  .takeaway-item{
+    display:flex;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .takeaway-item:last-child{border-bottom:0}
+  .takeaway-num{
+    font-family:var(--serif-en);
+    font-weight:700;
+    color:var(--rust);
+    font-size:20px;
+    line-height:1.3;
+    flex-shrink:0;
+  }
+  .takeaway-body{flex:1}
+  .takeaway-body h4{
+    font-family:var(--serif);
+    font-size:16px;
+    font-weight:600;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .takeaway-body p{
+    font-family:var(--serif);
+    font-size:14.5px;
+    line-height:1.6;
+    margin:0;
+    color:var(--ink-soft);
+  }
+
+  .restart-row{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    margin-top:30px;
+    flex-wrap:wrap;
+  }
+
+  @media (max-width:560px){
+    .wrap{padding:24px 16px 80px}
+    .cover-meta{grid-template-columns:1fr 1fr}
+    .cover-meta dl{padding:6px 10px}
+    .cover-meta dl:nth-child(even){border-left:1px solid var(--rule-soft)}
+    .cover-meta dl:nth-child(2n+1){border-left:0;padding-left:0}
+    .chart dl{grid-template-columns:1fr;gap:2px 0}
+    .chart dd{margin-bottom:8px}
+    .narrative{font-size:16.5px}
+    .q-text{font-size:17px}
+    .opt{font-size:14px;padding:13px 14px}
+    .nav-btn{padding:9px 14px;font-size:13px}
+    .peer-row{grid-template-columns:16px 1fr 48px;gap:8px}
+  }
+
+  .ornament{
+    text-align:center;
+    margin:30px 0;
+    font-family:var(--serif-en);
+    color:var(--rule);
+    font-size:18px;
+    letter-spacing:1em;
+  }
+
+  @media print{
+    .progress-rail,.nav-row,.opt,.start-btn,.peer-block{display:none!important}
+    .scene{display:block!important;page-break-after:always}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- masthead -->
+  <header class="masthead">
+    <div class="masthead-left">
+      <div class="pub-zh">奇美醫院 ‧ 品質管理部醫療安全科</div>
+      <div class="pub">Clinical Case Learning &nbsp;·&nbsp; 病人安全互動式案例</div>
+    </div>
+    <div class="masthead-right">
+      Reading time <b>15–20 min</b><br>
+      適用 醫師 / 護理師 / 藥師
+    </div>
+  </header>
+
+  <!-- progress rail -->
+  <div class="progress-rail" id="progressRail" style="display:none">
+    <div class="progress-meta">
+      <span>Case progression</span>
+      <span><b id="progressNum">0</b> / 10</span>
+    </div>
+    <div class="progress-bar"><i id="progressBar"></i></div>
+  </div>
+
+  <!-- ============ COVER ============ -->
+  <section id="cover" class="cover">
+    <div class="eyebrow">A teaching case in patient safety &nbsp;·&nbsp; 互動式臨床推理</div>
+    <h1>
+      暈厥？跌倒？還是藥物中毒？
+      <span class="sub">一位<em>頸部腫瘤</em>病人的照護</span>
+    </h1>
+    <p class="deck">
+      一位 60 歲右頸腫瘤的住院病人，在半夜嘔吐後突然失去意識、無脈搏，
+      心肺復甦後恢復生命徵象。這個案例邀請你重新走一遍 60 個小時，
+      在每個關鍵時刻停下來，讓我們一起來學習如何進行決策。
+    </p>
+
+    <div class="cover-illustration">
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="編輯風格插畫：病房場景，含病床、點滴架、監視器與照護人員">
+        <defs>
+          <linearGradient id="windowLight" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#f4ead0" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#e5ede9" stop-opacity="0.4"/>
+          </linearGradient>
+          <linearGradient id="floorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#efe9dc" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#efe9dc" stop-opacity="0.6"/>
+          </linearGradient>
+          <pattern id="paperGrain" width="3" height="3" patternUnits="userSpaceOnUse">
+            <rect width="3" height="3" fill="transparent"/>
+            <circle cx="1.5" cy="1.5" r="0.3" fill="#7a766a" opacity="0.04"/>
+          </pattern>
+          <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+            <feOffset dx="0" dy="2"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- background wash -->
+        <rect width="760" height="280" fill="url(#paperGrain)"/>
+
+        <!-- floor shadow -->
+        <rect x="0" y="200" width="760" height="80" fill="url(#floorGrad)"/>
+
+        <!-- ============ Wall + window ============ -->
+        <!-- large window with morning light -->
+        <rect x="60" y="30" width="200" height="150" fill="url(#windowLight)" stroke="#d8cfb9" stroke-width="1.5" rx="2"/>
+        <line x1="160" y1="30" x2="160" y2="180" stroke="#d8cfb9" stroke-width="1"/>
+        <line x1="60" y1="105" x2="260" y2="105" stroke="#d8cfb9" stroke-width="1"/>
+        <!-- gentle distant trees outside window -->
+        <g opacity="0.55">
+          <ellipse cx="100" cy="95" rx="22" ry="18" fill="#9ab07a"/>
+          <ellipse cx="130" cy="88" rx="18" ry="15" fill="#7d9362"/>
+          <ellipse cx="200" cy="92" rx="20" ry="16" fill="#9ab07a"/>
+          <ellipse cx="225" cy="90" rx="14" ry="12" fill="#7d9362"/>
+          <line x1="60" y1="120" x2="260" y2="120" stroke="#b88a2b" stroke-width="0.6" opacity="0.5"/>
+        </g>
+        <!-- window-sill plant -->
+        <rect x="225" y="155" width="22" height="22" fill="#b34020" opacity="0.55" rx="2"/>
+        <path d="M 236 155 Q 232 142 226 145 M 236 155 Q 240 140 248 144 M 236 155 Q 234 138 240 134" stroke="#5d6f3a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+
+        <!-- ============ Bedside / patient bed ============ -->
+        <!-- bed frame -->
+        <rect x="300" y="155" width="220" height="60" fill="#ffffff" stroke="#d8cfb9" stroke-width="1.5" rx="4" filter="url(#softShadow)"/>
+        <!-- mattress / sheets -->
+        <rect x="305" y="160" width="210" height="40" fill="#f7f3ea" rx="2"/>
+        <!-- pillow -->
+        <rect x="310" y="163" width="60" height="28" fill="#ffffff" stroke="#e8e0cc" stroke-width="0.8" rx="3"/>
+        <!-- patient blanket -->
+        <path d="M 370 165 Q 420 160 520 167 L 515 200 L 370 200 Z" fill="#e5ede9" stroke="#1a4d4a" stroke-width="0.6" opacity="0.85"/>
+        <!-- patient head -->
+        <circle cx="340" cy="177" r="11" fill="#f4ead0" stroke="#7a5d12" stroke-width="0.6"/>
+        <path d="M 333 173 Q 340 168 347 173" stroke="#7a5d12" stroke-width="0.6" fill="none" opacity="0.5"/>
+        <!-- bed legs -->
+        <line x1="305" y1="215" x2="305" y2="225" stroke="#d8cfb9" stroke-width="2"/>
+        <line x1="515" y1="215" x2="515" y2="225" stroke="#d8cfb9" stroke-width="2"/>
+
+        <!-- ============ IV pole ============ -->
+        <line x1="555" y1="58" x2="555" y2="220" stroke="#7a766a" stroke-width="1.5"/>
+        <!-- IV hook -->
+        <path d="M 555 58 Q 555 50 562 50 Q 569 50 569 58" stroke="#7a766a" stroke-width="1.5" fill="none"/>
+        <!-- IV bag -->
+        <rect x="552" y="64" width="20" height="34" fill="#e5ede9" stroke="#1a4d4a" stroke-width="0.8" rx="2"/>
+        <line x1="556" y1="74" x2="568" y2="74" stroke="#1a4d4a" stroke-width="0.4" opacity="0.5"/>
+        <line x1="556" y1="80" x2="566" y2="80" stroke="#1a4d4a" stroke-width="0.4" opacity="0.5"/>
+        <!-- IV tubing -->
+        <path d="M 562 98 Q 562 130 540 150 Q 530 162 510 168" stroke="#7a766a" stroke-width="0.8" fill="none"/>
+        <!-- IV pole base -->
+        <ellipse cx="555" cy="222" rx="14" ry="3" fill="#7a766a" opacity="0.4"/>
+
+        <!-- ============ Vital monitor ============ -->
+        <rect x="585" y="80" width="90" height="62" fill="#1a1d29" stroke="#0e3635" stroke-width="1.2" rx="4" filter="url(#softShadow)"/>
+        <rect x="590" y="85" width="80" height="52" fill="#0e3635" rx="2"/>
+        <!-- ECG line -->
+        <path d="M 593 110 L 605 110 L 610 100 L 614 122 L 618 95 L 622 110 L 640 110 L 645 100 L 649 122 L 653 95 L 657 110 L 670 110"
+              stroke="#7d9362" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+        <!-- monitor numbers -->
+        <text x="595" y="100" font-family="JetBrains Mono, monospace" font-size="7" fill="#b34020" font-weight="700">98</text>
+        <text x="660" y="135" font-family="JetBrains Mono, monospace" font-size="7" fill="#e5ede9" font-weight="700">72</text>
+        <!-- stand -->
+        <line x1="630" y1="142" x2="630" y2="200" stroke="#7a766a" stroke-width="1.5"/>
+        <ellipse cx="630" cy="202" rx="18" ry="3.5" fill="#7a766a" opacity="0.4"/>
+
+        <!-- ============ Caregiver figure (left, by bedside) ============ -->
+        <g transform="translate(265, 132)">
+          <!-- head -->
+          <circle cx="0" cy="0" r="11" fill="#f4ead0" stroke="#1a4d4a" stroke-width="0.8"/>
+          <!-- hair -->
+          <path d="M -10 -3 Q -8 -12 0 -12 Q 8 -12 10 -3 L 9 -1 Q 6 -7 0 -7 Q -6 -7 -9 -1 Z" fill="#5d6f3a" opacity="0.85"/>
+          <!-- body / scrubs -->
+          <path d="M -12 8 Q -14 30 -12 60 L 14 60 Q 16 30 12 8 Q 6 4 0 4 Q -6 4 -12 8 Z" fill="#1a4d4a" opacity="0.85"/>
+          <!-- collar V -->
+          <path d="M -4 8 L 0 16 L 4 8" fill="none" stroke="#0e3635" stroke-width="0.8"/>
+          <!-- arm reaching toward patient -->
+          <path d="M 8 12 Q 22 18 32 24" stroke="#1a4d4a" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85"/>
+          <!-- hand -->
+          <circle cx="34" cy="25" r="4" fill="#f4ead0" stroke="#1a4d4a" stroke-width="0.6"/>
+          <!-- stethoscope hint -->
+          <path d="M -6 18 Q -2 28 4 30 Q 10 28 12 20" stroke="#1a1d29" stroke-width="0.8" fill="none"/>
+        </g>
+
+        <!-- ============ Second figure (right, by monitor) — slight motion ============ -->
+        <g transform="translate(700, 145)">
+          <circle cx="0" cy="0" r="10" fill="#f4ead0" stroke="#b34020" stroke-width="0.6"/>
+          <path d="M -9 -2 Q -7 -11 0 -11 Q 7 -11 9 -2 L 8 1 Q 5 -5 0 -5 Q -5 -5 -8 1 Z" fill="#7a1f0a" opacity="0.8"/>
+          <!-- white coat -->
+          <path d="M -12 7 Q -14 35 -12 65 L 14 65 Q 16 35 12 7 Q 6 3 0 3 Q -6 3 -12 7 Z" fill="#ffffff" stroke="#d8cfb9" stroke-width="0.6"/>
+          <!-- coat lapel -->
+          <path d="M -4 7 L 0 18 L 4 7" stroke="#d8cfb9" stroke-width="0.8" fill="none"/>
+          <!-- clipboard -->
+          <rect x="-22" y="20" width="14" height="18" fill="#f4ead0" stroke="#7a5d12" stroke-width="0.6" rx="1"/>
+          <line x1="-20" y1="25" x2="-10" y2="25" stroke="#7a5d12" stroke-width="0.3"/>
+          <line x1="-20" y1="29" x2="-12" y2="29" stroke="#7a5d12" stroke-width="0.3"/>
+          <line x1="-20" y1="33" x2="-11" y2="33" stroke="#7a5d12" stroke-width="0.3"/>
+        </g>
+
+        <!-- ============ Subtle atmospheric details ============ -->
+        <!-- floor line -->
+        <line x1="20" y1="225" x2="740" y2="225" stroke="#d8cfb9" stroke-width="0.8" opacity="0.6"/>
+        <!-- soft warm light beams from window -->
+        <path d="M 60 30 L 180 220 L 80 220 Z" fill="#f4ead0" opacity="0.18"/>
+        <path d="M 260 30 L 340 220 L 220 220 Z" fill="#f4ead0" opacity="0.12"/>
+
+        <!-- editorial caption -->
+        <text x="380" y="258" font-family="serif" font-size="11" fill="#7a766a" text-anchor="middle" font-style="italic" opacity="0.7">在病房裡的一個尋常深夜·一個不尋常的決定</text>
+      </svg>
+    </div>
+
+    <div class="cover-meta">
+      <dl><dt>SAC 等級</dt><dd>SAC&nbsp;3</dd></dl>
+      <dl><dt>通報事件分類</dt><dd>心跳停止事件</dd></dl>
+      <dl><dt>題目數</dt><dd>10 題單選</dd></dl>
+    </div>
+
+    <button class="start-btn" id="startBtn" type="button">
+      開始閱讀案例
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+
+    <div class="cover-note">
+      <b>學習目標。</b>讀完本案例後，你應該能夠：
+      <ol>
+        <li>辨識頸部腫瘤病人的高風險解剖位置與其臨床意涵</li>
+        <li>Syncope 之鑑別診斷</li>
+        <li>了解癌症病人疼痛控制及藥物中毒之解毒劑使用</li>
+        <li>認識少見之藥物交互作用</li>
+        <li>運用系統性思維討論醫療品質及改善</li>
+      </ol>
+    </div>
+
+    <div class="cover-note" style="background:var(--rust-soft);border-left-color:var(--rust);margin-top:12px">
+      本案改編自實際 RCA 案例。
+    </div>
+  </section>
+
+  <!-- ============ SCENES 1-10 ============ -->
+  <div id="scenes"></div>
+
+  <!-- ============ SUMMARY ============ -->
+  <section id="summary" class="scene">
+    <div class="summary">
+      <div class="eyebrow">Case Closed &nbsp;·&nbsp; 結案</div>
+      <h2>您已完成本次的學習案例</h2>
+      <p class="summary-note">（70 分以上才算通過）</p>
+
+      <div class="score-display">
+        <div class="score-number"><span id="finalScore">0</span><small>&nbsp;/&nbsp;10</small></div>
+        <div class="score-label">Correct answers</div>
+        <div class="score-msg" id="scoreMsg"></div>
+      </div>
+
+      <div class="takeaways">
+        <h3>關鍵學習點 (Key Takeaways)</h3>
+
+        <div class="takeaway-item">
+          <div class="takeaway-num">01</div>
+          <div class="takeaway-body">
+            <h4>辨識頸部腫瘤病人的高風險解剖位置與其臨床意涵</h4>
+            <p>頸部 5 cm 腫瘤侵犯頸內靜脈、緊鄰頸動脈竇（carotid sinus），是一個結構性高風險位置。任何 Valsalva、姿勢改變、頭轉動皆可能誘發迷走神經反射，造成 bradycardia 與血壓驟降，重者導致心跳停止。識別這類解剖即是預防 vagal cardiac arrest 的第一步。</p>
+          </div>
+        </div>
+
+        <div class="takeaway-item">
+          <div class="takeaway-num">02</div>
+          <div class="takeaway-body">
+            <h4>Syncope 之鑑別診斷</h4>
+            <p>當病人出現心跳停止，須區分 <b>Syncope（vagal）vs Fall（外傷）vs Opioid toxicity</b>：意識喪失與心跳停止的先後順序、是否有明確 vagal trigger、瞳孔大小、與 opioid 用藥的時間軸，都是關鍵線索。本案的核心鑑別點是「意識喪失先於跌倒」+ 明確 vagal trigger。</p>
+          </div>
+        </div>
+
+        <div class="takeaway-item">
+          <div class="takeaway-num">03</div>
+          <div class="takeaway-body">
+            <h4>了解癌症病人疼痛控制及藥物中毒之解毒劑使用</h4>
+            <p>Opioid-naïve 病人應 <em>start low, titrate slow</em>；癌症病人「痛到嘔吐」是需要 multimodal 策略的訊號。Naloxone 的適應症是 opioid-induced 呼吸 / 意識抑制，奇美劑型 0.4 mg/vial，呼吸抑制慢慢 titrate（0.04–0.4 mg）；給予後需監測 ≥ 2 小時，注意 rebound pain 與 re-narcotization。</p>
+          </div>
+        </div>
+
+        <div class="takeaway-item">
+          <div class="takeaway-num">04</div>
+          <div class="takeaway-body">
+            <h4>認識少見之藥物交互作用</h4>
+            <p>Prochlorperazine（Novamine<sup>®</sup>）為 phenothiazine 類抗精神病藥兼止吐藥，其 α₁ 受體拮抗作用會造成血管擴張與血壓下降；與 morphine 共用為加成風險。對血流動力學脆弱的病人（CSH、頸部腫瘤、年長、低血容），止吐藥的選擇需考慮血壓影響——ondansetron 與 metoclopramide 是較安全的替代。</p>
+          </div>
+        </div>
+
+        <div class="takeaway-item">
+          <div class="takeaway-num">05</div>
+          <div class="takeaway-body">
+            <h4>運用系統性思維討論醫療品質及改善</h4>
+            <p>Just Culture 提醒我們：在追究個人之前先問「系統是否讓這個決策在當下看起來合理？」。Safety II 則邀請我們研究「為什麼平常做得對」。本案的高槓桿改善方向不是究責個人，也不是禁藥、加人力，而是建立「頸部腫瘤 / 高 vagal 風險病人」的 care bundle + 教育訓練——把這次的學習轉換為系統的預設值。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ornament">· · ·</div>
+
+      <div class="restart-row">
+        <button class="nav-btn primary" type="button" onclick="restart()">重新開始</button>
+        <button class="nav-btn" type="button" onclick="window.print()">列印 / 儲存為 PDF</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   Case data — all multi-content strings use backticks
+   to avoid quote-escaping bugs.
+   ============================================================ */
+const SCENES = [
+  /* -------------------- SCENE 1 -------------------- */
+  {
+    num: `Scene 01`,
+    stamp: `Day 0 · 入院`,
+    title: `一位 60 歲的男性，因右頸腫脹入院`,
+    sub: `Patient profile · 解剖風險辨識`,
+    body: `
+      <p>一位 <strong>60 歲男性</strong>，因 <strong>右頸與右臉頰疼痛、腫脹</strong>六個月，由急診收住院。</p>
+      <p>急診頸部電腦斷層顯示：右頸部有一個 <strong>約 5 公分的不規則軟組織腫塊</strong>，中央壞死，<strong>侵犯右側腮腺與右側頸內靜脈（IJV）</strong>。高度懷疑為轉移性淋巴結，或源自腮腺的腫瘤（例如 acinic cell carcinoma）。</p>
+    `,
+    chart: {
+      label: `Admission summary`,
+      rows: [
+        [`主訴`, `右頸與右臉頰疼痛、腫脹 6 個月`],
+        [`影像`, `頸部 CT：5 cm 軟組織腫塊，中央壞死`],
+        [`侵犯`, `<b>右側腮腺、右側頸內靜脈 (IJV)</b>`],
+        [`診斷印象`, `懷疑腮腺腫瘤 / 轉移性淋巴結`],
+        [`既往史`, `—`]
+      ]
+    },
+    q: `看完這張片子與病史，以下哪一個是病人<u>可能發生</u>的併發症？`,
+    options: [
+      { mark: `A`, text: `夜間睡眠時呼吸道阻塞（airway compromise）` },
+      { mark: `B`, text: `頸動脈竇反射 / vasovagal episode（腫瘤位置鄰近 carotid sinus 與大血管）` },
+      { mark: `C`, text: `睡眠中突然大出血（spontaneous bleeding）` },
+      { mark: `D`, text: `腦部轉移` }
+    ],
+    correct: 1,
+    dist: { n: 142, pct: [21, 64, 9, 6] },
+    figure: {
+      label: `Figure 01 · 電腦斷層`,
+      caption: `右頸解剖示意圖：5 cm 腫瘤緊鄰 <b>頸動脈竇</b>（位於頸總動脈分叉處，甲狀軟骨上緣高度）並侵犯 <b>右側頸內靜脈</b>。當病人 Valsalva、蹲下、頭轉向右側時，腫瘤對 carotid sinus 的機械壓迫會誘發強烈迷走神經反射。`,
+      svg: `
+<svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Anatomical diagram of right neck showing carotid sinus, IJV, parotid gland, and 5 cm tumor">
+  <defs>
+    <pattern id="grid01" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M30 0 L0 0 L0 30" fill="none" stroke="#e8e0cc" stroke-width="0.5" opacity="0.45"/>
+    </pattern>
+    <marker id="arr01" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#b34020"/>
+    </marker>
+    <radialGradient id="tumor01" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#f8e5dc"/>
+      <stop offset="60%" stop-color="#e9b9a4"/>
+      <stop offset="100%" stop-color="#b34020" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="380" fill="url(#grid01)"/>
+
+  <!-- skull/mandible silhouette -->
+  <path d="M 340 50 Q 380 30 480 50 L 510 90 Q 520 115 500 135 Q 460 152 380 142 Q 350 130 345 108 Z"
+        fill="#efe9dc" stroke="#d8cfb9" stroke-width="1.5"/>
+  <text x="445" y="105" font-family="Noto Serif TC, serif" font-size="11" fill="#7a766a" text-anchor="middle" font-style="italic">下頷骨 / 顱底</text>
+
+  <!-- sternocleidomastoid (light hint) -->
+  <path d="M 320 360 Q 340 280 380 200 Q 410 130 460 95" fill="none" stroke="#e8e0cc" stroke-width="22" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- parotid gland (dashed teal oval) -->
+  <ellipse cx="415" cy="180" rx="48" ry="36" fill="#e5ede9" stroke="#1a4d4a" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="415" y="184" font-family="Noto Serif TC, serif" font-size="12" fill="#1a4d4a" text-anchor="middle" font-weight="600">右腮腺</text>
+  <text x="415" y="198" font-family="serif" font-size="10" fill="#1a4d4a" text-anchor="middle" font-style="italic">Parotid</text>
+
+  <!-- Internal Jugular Vein (right side) - teal, partially behind tumor -->
+  <path d="M 295 360 Q 305 280 325 200 Q 332 150 345 110" fill="none" stroke="#1a4d4a" stroke-width="16" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 295 360 Q 305 280 325 200 Q 332 150 345 110" fill="none" stroke="#0e3635" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Common carotid artery -->
+  <path d="M 235 360 L 235 215" stroke="#b34020" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <!-- Internal carotid (medial branch up) -->
+  <path d="M 235 215 Q 220 180 210 130 Q 207 100 215 70" stroke="#b34020" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- External carotid (lateral branch up) -->
+  <path d="M 235 215 Q 255 180 270 145 Q 280 115 275 80" stroke="#b34020" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+  <!-- Carotid sinus — bulge at bifurcation -->
+  <ellipse cx="237" cy="208" rx="16" ry="13" fill="#b34020" stroke="#7a1f0a" stroke-width="2"/>
+  <circle cx="237" cy="208" r="6.5" fill="#ffe5da" stroke="#7a1f0a" stroke-width="1.5"/>
+
+  <!-- Tumor mass — irregular shape, abutting IJV and approaching carotid -->
+  <path d="M 270 280
+           C 245 265, 245 235, 260 215
+           C 245 195, 255 165, 285 158
+           C 305 142, 350 158, 360 188
+           C 380 200, 380 235, 360 248
+           C 365 270, 335 290, 300 282 Z"
+        fill="url(#tumor01)" stroke="#b34020" stroke-width="2" stroke-dasharray="5 3" opacity="0.9"/>
+  <text x="310" y="218" font-family="Noto Serif TC, serif" font-size="14" fill="#7a1f0a" text-anchor="middle" font-weight="700" font-style="italic">5 cm</text>
+  <text x="310" y="234" font-family="Noto Serif TC, serif" font-size="11" fill="#7a1f0a" text-anchor="middle">腮腺腫瘤</text>
+  <text x="310" y="248" font-family="serif" font-size="9.5" fill="#7a1f0a" text-anchor="middle" font-style="italic">central necrosis</text>
+
+  <!-- Labels with leader lines -->
+  <!-- Common carotid -->
+  <line x1="115" y1="320" x2="225" y2="320" stroke="#7a766a" stroke-width="1"/>
+  <text x="110" y="316" font-family="serif" font-size="11" fill="#1a1d29" text-anchor="end" font-weight="500">Common Carotid Artery</text>
+  <text x="110" y="328" font-family="serif" font-size="10" fill="#7a766a" text-anchor="end" font-style="italic">頸總動脈</text>
+
+  <!-- Carotid sinus -->
+  <line x1="100" y1="208" x2="222" y2="208" stroke="#b34020" stroke-width="1.5"/>
+  <text x="95" y="204" font-family="serif" font-size="13" fill="#b34020" text-anchor="end" font-weight="700">Carotid sinus</text>
+  <text x="95" y="218" font-family="Noto Serif TC, serif" font-size="10.5" fill="#b34020" text-anchor="end" font-style="italic">頸動脈竇（壓力感受器）</text>
+
+  <!-- ICA -->
+  <line x1="160" y1="100" x2="208" y2="100" stroke="#7a766a" stroke-width="0.8"/>
+  <text x="155" y="103" font-family="serif" font-size="11" fill="#b34020" text-anchor="end" font-weight="600">ICA</text>
+
+  <!-- ECA -->
+  <line x1="275" y1="70" x2="275" y2="55" stroke="#7a766a" stroke-width="0.8"/>
+  <text x="275" y="48" font-family="serif" font-size="11" fill="#b34020" text-anchor="middle" font-weight="600">ECA</text>
+
+  <!-- IJV -->
+  <line x1="500" y1="295" x2="330" y2="270" stroke="#7a766a" stroke-width="1"/>
+  <text x="505" y="294" font-family="serif" font-size="11" fill="#1a4d4a" font-weight="600">Internal Jugular Vein</text>
+  <text x="505" y="307" font-family="Noto Serif TC, serif" font-size="10" fill="#1a4d4a" font-style="italic">右側頸內靜脈（受侵犯）</text>
+
+  <!-- Mechanism arrow: tumor → carotid sinus -->
+  <path d="M 280 222 Q 263 218 252 213" fill="none" stroke="#b34020" stroke-width="1.6" stroke-dasharray="3 2" marker-end="url(#arr01)"/>
+  <text x="160" y="265" font-family="Noto Serif TC, serif" font-size="11.5" fill="#b34020" font-style="italic" font-weight="600">↑ Valsalva / 蹲姿 / 頭轉右</text>
+  <text x="160" y="280" font-family="serif" font-size="10" fill="#b34020" font-style="italic">→ 機械壓迫 carotid sinus</text>
+  <text x="160" y="294" font-family="serif" font-size="10" fill="#b34020" font-style="italic">→ vagal reflex</text>
+
+  <!-- Compass / orientation -->
+  <g transform="translate(550, 30)">
+    <text font-family="serif" font-size="9" fill="#7a766a" text-anchor="middle" font-style="italic">右側 / Right</text>
+    <line x1="-12" y1="6" x2="12" y2="6" stroke="#7a766a" stroke-width="0.6"/>
+    <text y="20" font-family="Noto Serif TC, serif" font-size="9" fill="#7a766a" text-anchor="middle">頭側</text>
+    <text y="38" font-family="serif" font-size="9" fill="#7a766a" text-anchor="middle">↓</text>
+  </g>
+</svg>
+      `
+    },
+    feedback: {
+      correct: `正解。5 cm 腫瘤已經 <strong>侵犯右側 IJV</strong>，這個位置與 carotid sinus、迷走神經、頸動脈竇都緊鄰。任何「擠壓 + Valsalva」的動作（用力、蹲下、嘔吐、頭轉向右側）都可能誘發強烈 vagal reflex，導致心搏過緩、暈厥，嚴重時無脈搏。`,
+      incorrect: `選項 B 是這個案例的關鍵風險。<strong>5 cm 腫瘤侵犯右 IJV</strong> 意味著它就在 carotid sinus 旁邊。雖然氣道阻塞與出血也是需要監測的風險，但影像中仍未有氣道及動脈之侵犯。<strong>頸部腫瘤遠端轉移最常見的部位為肺部（~50–66%）、骨頭（~19–24%）與肝臟（~10–24%）</strong>，腦部轉移較少見。`
+    },
+    teach: {
+      label: `Anatomy → Clinical pearl`,
+      text: `<strong>頸動脈竇</strong>位於頸總動脈分叉處（甲狀軟骨上緣高度），對機械刺激與壓力敏感。<strong>頸部腫瘤、頸圈過緊、刮鬍、轉頭、按摩</strong> 都可被報告誘發 carotid sinus reflex / hypersensitivity（CSH），導致 cardioinhibitory（心搏過緩 / asystole ≥ 3 s）、vasodepressor（systolic BP 下降 ≥ 50 mmHg）或混合型反應。`,
+      refs: [
+        `Brignole M, Moya A, de Lange FJ, et al. <em>2018 ESC Guidelines for the diagnosis and management of syncope</em>. Eur Heart J. 2018;39(21):1883–1948.`,
+        `Solbiati M, Sheldon RS. <em>Carotid sinus syndrome: progress in understanding and management</em>. Glob Cardiol Sci Pract. 2014;2014(2):18.`,
+        `Hering D, Narkiewicz K. <em>Novel approaches: targeting sympathetic outflow in the carotid sinus</em>. Blood Press. 2023 Dec;32(1):2232873.`,
+        `Pisani P, Airoldi M, Allais A, et al. <em>Metastatic disease in head &amp; neck oncology</em>. Acta Otorhinolaryngol Ital. 2020;40(Suppl 1):S1–S86.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 2 -------------------- */
+  {
+    num: `Scene 02`,
+    stamp: `住院第 2 天 · 頸部超音波切片`,
+    title: `切片過程中，病人「一度暈了過去」`,
+    sub: `Vasovagal reflex during biopsy · 早期警訊`,
+    body: `
+      <p>住院第 2 天，病人接受 <strong>頸部超音波導引切片檢查（ultrasound-guided neck biopsy）</strong>。檢查過程中突然 <strong>臉色蒼白、噁心，短暫意識下降</strong>，幾秒鐘後自行恢復。生命徵象量測後血壓、心率回到正常。</p>
+      <p>當下執行醫師的紀錄寫的是：<em>one episode of syncope; recovered spontaneously</em>。檢查順利完成，病人返回病房。</p>
+      <div class="quote">「病人緊張，躺著做切片，碰到頸部時，就發現他暈了一下，醒過來就還好了。」——人員描述</div>
+    `,
+    q: `這次<u>住院第 2 天</u>的暈厥（syncope）事件，事後回頭看，<u>最合理</u>的臨床意義是？`,
+    options: [
+      { mark: `A`, text: `屬於檢查時的緊張反應，無臨床意義，不需特別處理` },
+      { mark: `B`, text: `頸動脈竇 / 迷走神經反射（carotid sinus / vagal reflex）episode，提示未來只要再有類似誘發因子，極可能再發` },
+      { mark: `C`, text: `應該懷疑是癲癇（seizure / epilepsy）` },
+      { mark: `D`, text: `應該安排心臟科檢查急性冠心症（acute coronary syndrome）` }
+    ],
+    correct: 1,
+    dist: { n: 138, pct: [38, 46, 11, 5] },
+    feedback: {
+      correct: `正解。住院第 2 天那一次暈厥可以視為病人 <strong>個人化的「壓力測試」</strong>。同一個解剖位置 + 操作壓迫頸部 + 病人因疼痛/緊張的 Valsalva 反應，已經誘發出一次 vagal episode。這個小事件提供了 <em>後續事件機轉的線索</em>，但在當下不容易被連結到後續可能的更嚴重事件，這也是本案值得回顧的學習點。`,
+      incorrect: `選項 B 較貼近本案。雖然臨床上「切片時暈一下」偶爾會見到，但對 <strong>這位 5 cm 腫瘤侵犯頸內靜脈（IJV）的病人</strong>，這次 episode 是一次被誘發的迷走神經反射（vagal reflex）。若能在當下把它連結到後續風險，會是一個提早升級照護的機會。`
+    },
+    teach: {
+      label: `Event-based reasoning · 預防 vagal reflex`,
+      text: `
+        病安學裡有一個關鍵概念：<strong>「成功避免的事件就是預警」</strong>。住院第 2 天的 episode 雖然 minor，但具備所有後續事件的元素（誘因 / trigger + 解剖風險 / anatomical predisposition + 反射 / reflex）。回顧時，這應該觸發：護理交班標註、家屬衛教、PRN 用藥/止吐方式重新評估。
+        <br><br>
+        <b>預防 vasovagal reflex 的常見策略（Aydin 2010）</b>：
+        <ul>
+          <li><b>誘因識別與避免（trigger avoidance）</b>：脫水（dehydration）、悶熱環境、長時間站立（prolonged standing）、強烈情緒、Valsalva 動作、特定姿勢（蹲姿、頭轉向腫瘤側）</li>
+          <li><b>足量水分與鹽分補充（adequate hydration / salt intake）</b>：每日水分 ≥ 2 L、適度鹽分</li>
+          <li><b>身體反壓動作（physical counter-pressure manoeuvres, PCM）</b>：腿交叉（leg crossing）、握拳（handgrip）、手臂繃緊（arm tensing），可在 prodromal symptoms 出現時即時執行</li>
+          <li><b>姿勢衛教（postural counselling）</b>：避免突然起立；嘔吐時 <em>不蹲、不彎腰</em>，採坐姿並有人陪同</li>
+          <li><b>tilt training</b>：對反覆發作病人，每日靠牆站立訓練可減少發作頻率</li>
+          <li><b>藥物選擇（refractory cases）</b>：midodrine、fludrocortisone、β-blocker（證據有限）、SSRI</li>
+        </ul>
+      `,
+      refs: [
+        `Aydin MA, Salukhe TV, Wilke I, Willems S. <em>Management and therapy of vasovagal syncope: A review</em>. World J Cardiol. 2010;2(10):308–315.`,
+        `Brignole M, Moya A, de Lange FJ, et al. <em>2018 ESC Guidelines for the diagnosis and management of syncope</em>. Eur Heart J. 2018;39(21):1883–1948.`,
+        `Reason J. <em>Human error: models and management</em>. BMJ. 2000;320(7237):768–770.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 3 -------------------- */
+  {
+    num: `Scene 03`,
+    stamp: `住院第 4 天 · 疼痛加劇`,
+    title: `右頸疼痛加劇，需要疼痛控制`,
+    sub: `Opioid initiation · 鴉片類藥物起始與劑量調整`,
+    body: `
+      <p>住院第 4 天，病人 <strong>右頸與右臉頰疼痛加劇</strong>，原本的 tramadol (50 mg) 1# QID 已經壓不住。醫師重新評估後，開立：</p>
+    `,
+    chart: {
+      label: `Medication order — 住院第 4 天`,
+      rows: [
+        [`新增`, `<b>Morphine（嗎啡）5 mg SC Q6H 規則使用</b>`],
+        [`原有`, `Tramadol (50 mg) 1# QID`],
+        [`NRS pain`, `8–9 / 10（右頸、右臉頰，深層）`],
+        [`過去 opioid 使用`, `無`],
+        [`備註`, `病人為 <b>opioid-naïve</b>（未曾規律使用鴉片類藥物）`]
+      ]
+    },
+    q: `對於一位 <u>opioid-naïve（未曾規律使用鴉片類藥物）</u>的病人，醫師開立「<b>Morphine 5 mg Q6H SC</b>」這個處方，有哪些建議？`,
+    options: [
+      { mark: `A`, text: `沒有問題，opioid-naïve 病人可以直接從規則劑量開始` },
+      { mark: `B`, text: `建議先以 PRN 短效劑量試水溫並逐步調整劑量（titrate），觀察反應與副作用後，再決定是否轉成規則劑量；若已決定規則，也應考慮 從較低起始劑量（如 morphine 2.5 mg）開始，並開立適當的突破性疼痛（breakthrough）PRN 劑量` },
+      { mark: `C`, text: `應該直接從靜脈病人自控止痛（IV PCA, patient-controlled analgesia）開始` },
+      { mark: `D`, text: `應該用 fentanyl（吩坦尼）貼片` }
+    ],
+    correct: 1,
+    dist: { n: 134, pct: [29, 57, 9, 5] },
+    feedback: {
+      correct: `正解。Opioid-naïve 病人的安全做法是 <strong>start low, titrate slow（從低劑量起始、緩慢調整）</strong>：先以 PRN 劑量觀察反應、副作用（尤其是嗜睡、呼吸抑制、低血壓、噁心嘔吐），再決定是否規則化。本案直接給 5 mg Q6H 規則，後續若出現副作用，較難釐清是否與 morphine 相關。`,
+      incorrect: `選項 B 才是 best practice（最佳實務）。<strong>Start low, titrate slow（從低劑量起始、緩慢調整）</strong>是 opioid-naïve 病人的黃金原則。直接開規則劑量會讓後續若出現副作用時，很難判斷是否與 opioid 相關（如本案）。`
+    },
+    teach: {
+      label: `Opioid titration principle`,
+      text: `
+        <ul>
+          <li><b>起始</b>：opioid-naïve 病人 morphine 2.5–5 mg PO/SC PRN，先 titrate 24–48 小時</li>
+          <li><b>規則化</b>：總劑量穩定後，把 24 小時總量除以給藥次數，作為規則劑量</li>
+          <li><b>Breakthrough</b>：規則劑量的 10–20% 作為 PRN（同樣 short-acting）</li>
+          <li><b>監測</b>：昏迷指數（Glasgow Coma Scale, GCS）、呼吸、血壓、噁心嘔吐、便秘</li>
+        </ul>
+      `,
+      refs: [
+        `Paice JA, Bohlke K, Barton D, et al. <em>Use of Opioids for Adults With Pain From Cancer or Cancer Treatment: ASCO Guideline</em>. J Clin Oncol. 2023;41(4):914–930.`,
+        `Swarm RA, Youngwerth JM, Anghelescu DL, et al. <em>Adult Cancer Pain, Version 2.2025, NCCN Clinical Practice Guidelines in Oncology</em>. J Natl Compr Canc Netw. 2025;23(7).`,
+        `Fallon M, Giusti R, Aielli F, et al. <em>Management of cancer pain in adult patients: ESMO Clinical Practice Guidelines</em>. Ann Oncol. 2018;29(Suppl 4):iv166–iv191.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 4 -------------------- */
+  {
+    num: `Scene 04`,
+    stamp: `住院第 4–6 天 · 噁心嘔吐`,
+    title: `病人說：「痛到我會吐」`,
+    sub: `Severe pain with nausea/vomiting · 不只是 morphine 的副作用`,
+    body: `
+      <p>使用 morphine 後，病人陸續出現 <strong>噁心、嘔吐</strong>。護理師依醫囑使用止吐藥物（metoclopramide、ondansetron、prochlorperazine）暫時緩解，但病人主訴：</p>
+      <div class="quote">「我不是打了藥才吐，是<u>痛到頭暈、痛到想吐</u>。」</div>
+      <p>紀錄顯示，病人從住院第 4 天起每 12 小時左右就出現一次 nausea episode，<strong>多半發生在 NRS pain ≥ 7 的時候</strong>，止痛藥作用後嘔吐感也隨之緩解。</p>
+    `,
+    q: `面對一位「<u>痛到會噁心嘔吐</u>」的病人，最合理的下一步是？`,
+    options: [
+      { mark: `A`, text: `只要加重止吐劑量就好` },
+      { mark: `B`, text: `加開更強的 opioid，比如 IV morphine 一次推 10 mg` },
+      { mark: `C`, text: `會診疼痛科 / 安寧緩和團隊，重新評估 pain syndrome、評估神經痛/侵犯性疼痛、調整止痛策略` },
+      { mark: `D`, text: `等開刀後就會好` }
+    ],
+    correct: 2,
+    dist: { n: 129, pct: [12, 7, 76, 5] },
+    feedback: {
+      correct: `正解。<strong>「痛到噁心嘔吐」並不常見</strong>，通常代表這是一個 <em>難治型疼痛（complex pain）</em>，可能含有 neuropathic、infiltrative 或 visceral 成分。靠單純 opioid 加量不僅效果有限，還會增加副作用。疼痛科會診的價值在於 multimodal 策略：抗痙攣藥、類固醇、神經阻斷、心理介入等。`,
+      incorrect: `選項 C 較貼近本案。<strong>痛到噁心嘔吐是需要重新評估的訊號</strong>——多數情形下這代表單純 opioid 已經不夠用，需要 multimodal 策略。光是「加止吐」或「加 opioid」可能不容易掌握介入時機。`
+    },
+    teach: {
+      label: `Pain that triggers vomiting`,
+      text: `嚴重疼痛經由 limbic / autonomic pathway 可以直接誘發噁心嘔吐（pain-induced emesis），常見於 <strong>頭頸部癌、肝腫瘤、急性胰臟炎、心肌梗塞</strong>。處理重點是「<em>止對的痛</em>」，不是「止對的吐」。在頸部腫瘤病人身上，嘔吐動作本身又會誘發 Valsalva → vagal reflex，形成 <strong>痛→吐→暈→更痛</strong> 的惡性迴圈。`,
+      refs: [
+        `Glare P, Miller J, Nikolova T, Tickoo R. <em>Treating nausea and vomiting in palliative care: a review</em>. Clin Interv Aging. 2011;6:243–259.`,
+        `Caraceni A, Hanks G, Kaasa S, et al. <em>Use of opioid analgesics in the treatment of cancer pain: evidence-based recommendations from the EAPC</em>. Lancet Oncol. 2012;13(2):e58–e68.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 5 -------------------- */
+  {
+    num: `Scene 05`,
+    stamp: `住院第 7 天 · 凌晨`,
+    title: `凌晨 00:21，護理師按下急救鈴`,
+    sub: `Cardiac arrest event · 機轉判斷`,
+    body: `
+      <p>住院第 6 天 晚間 22:30，護理師依醫囑施打了當天最後一劑常規 Morphine 5 mg SC。深夜時分，事情急轉直下。</p>
+    `,
+    timeline: [
+      { time: `22:30`, type: `normal`,  text: `小夜班護理師依醫囑施打常規 Morphine 5 mg SC，病人入睡。病人臥床時突感噁心想吐，<b>蹲於病床邊使用嘔吐袋進行嘔吐</b>，由妻子陪同。` },
+      { time: `00:20`, type: `alert`,   text: `嘔吐後，病人坐回病床邊，<b>突然失去意識向前傾倒</b>，左額頭撞到點滴架，造成一個 2 × 0.2 cm 傷口。` },
+      { time: `00:21`, type: `alert`,   text: `病人妻子按下紅鈴，護理師到場發現病人意識 <b>E1V1M1</b>，<b>觸摸頸動脈無脈搏</b>，立即將病人移至床上，開始進行心臟按摩，並啟動 999。` },
+      { time: `00:23`, type: `recover`, text: `<b>ROSC</b>（恢復心跳），心跳 67/min，血壓 124/60 mmHg。` },
+      { time: `00:27`, type: `recover`, text: `意識回復至 <b>E3V4M6</b>。病人仍感噁心。` }
+    ],
+    q: `病人發生心跳停止（cardiac arrest）<u>最可能</u>的機轉是？`,
+    options: [
+      { mark: `A`, text: `嗎啡過量 / 鴉片類藥物中毒（morphine overdose / opioid toxicity）` },
+      { mark: `B`, text: `跌倒造成頭部外傷（fall with head injury）` },
+      { mark: `C`, text: `肺栓塞（pulmonary embolism, PE）` },
+      { mark: `D`, text: `頸動脈竇反射 / 血管迷走神經暈厥（carotid sinus reflex / vasovagal episode）` }
+    ],
+    correct: 3,
+    dist: { n: 126, pct: [33, 6, 4, 57] },
+    feedback: {
+      correct: `正解。仔細看時間序：事件發生在嗎啡施打約 2 小時後，誘發點非常清楚——<strong>蹲姿 + 嘔吐 Valsalva + 頭轉向右側</strong>。意識喪失發生在 <em>無脈搏之前</em>，跌倒是 syncope 的「結果」而非「原因」。Opioid toxicity 通常是漸進性的呼吸抑制 + 意識下降，本案的急性無脈搏較不符合。`,
+      incorrect: `答案是 D。本案的關鍵在於 <strong>事件順序</strong>：病人先有明確的 vagal trigger（嘔吐 Valsalva + 蹲姿 + 頭轉右側），<em>接著</em>失去意識、跌倒。跌倒是 syncope 的後果而非原因；opioid toxicity 通常呈現漸進性的呼吸抑制與意識下降，與本案的急性無脈搏不符。`
+    },
+    teach: {
+      label: `Syncope vs Falling vs Opioid toxicity — 三者與心跳停止的關係`,
+      text: `
+        本案的核心鑑別在於：<strong>意識喪失與心跳停止，哪個先發生？</strong>三種機轉的臨床表現截然不同。
+        <br><br>
+        <b>1. Syncope → cardiac arrest（血管迷走神經反射型）</b>
+        <ul>
+          <li><b>順序</b>：明確 trigger → 前驅症狀（蒼白、噁心、出汗、暈眩）→ 意識喪失 → 心搏過緩 / asystole → 跌倒</li>
+          <li><b>誘因</b>：Valsalva（嘔吐、用力、咳嗽）、姿勢改變、頸動脈竇壓迫、疼痛、強烈情緒</li>
+          <li><b>表現</b>：bradycardia + 血壓下降，瞳孔正常，恢復快（通常 &lt; 1 分鐘自行恢復，重者需 CPR）</li>
+          <li><b>鑑別線索</b>：意識喪失 <em>先於</em> 跌倒；事件前有明確 vagal trigger</li>
+        </ul>
+        <b>2. Fall → 頭部外傷 → cardiac arrest</b>
+        <ul>
+          <li><b>順序</b>：跌倒 → 頭部撞擊 → 顱內出血 / 腦幹損傷 → 意識喪失 → 後續可能心跳停止</li>
+          <li><b>表現</b>：跌倒是 <em>原因</em> 而非結果；通常有外力誘因、外傷明顯、瞳孔可不對稱</li>
+          <li><b>鑑別線索</b>：意識喪失發生於跌倒 <em>之後</em>；本案則相反</li>
+        </ul>
+        <b>3. Opioid toxicity → cardiac arrest</b>
+        <ul>
+          <li><b>順序</b>：opioid 用藥（30–60 min peak）→ 嗜睡 / 意識漸進下降 → 呼吸抑制（RR &lt; 8）→ 低氧 → 心跳停止</li>
+          <li><b>典型三聯徵</b>：意識下降 + 呼吸抑制 + <em>針狀瞳孔（pinpoint pupils）</em></li>
+          <li><b>鑑別線索</b>：時間軸與 opioid 用藥相符；瞳孔縮小；通常為呼吸停止先於心跳停止</li>
+        </ul>
+        本案：vagal trigger 明確（嘔吐 + 蹲 + 頭轉右）+ 意識喪失先於跌倒 + 嗎啡使用後 2 小時（已過 peak）+ ROSC 後迅速回復 → 最符合 vasovagal cardiac arrest。
+      `,
+      refs: [
+        `McCabe Z, Schwartz A, Shetty S. <em>Vasovagal syncope with asystole during repeated emesis in the emergency department</em>. Am J Emerg Med. 2021;45:687.e3-687.e4.`,
+        `Liu SS, Paul GE, Carpenter RL, Stephenson C, Wu R. <em>Vasovagal cardiac arrest during the insertion of an epidural catheter and before the administration of epidural medication</em>. Anesth Analg. 1998;86(6):1209-1210.`,
+        `Shimoda H, Yamauchi K, Takahashi T. <em>Transient asystole associated with vasovagal reflex in an oral surgery patient: A case report</em>. SAGE Open Med Case Rep. 2023;11:2050313X221146019.`,
+        `Boyer EW. <em>Management of opioid analgesic overdose</em>. N Engl J Med. 2012;367(2):146-155.`,
+        `Brignole M, et al. <em>2018 ESC Guidelines for the diagnosis and management of syncope</em>. Eur Heart J. 2018;39(21):1883-1948.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 6 -------------------- */
+  {
+    num: `Scene 06`,
+    stamp: `住院第 7 天 · 凌晨 00:52`,
+    title: `「是嗎啡中毒嗎？」`,
+    sub: `Naloxone（納洛酮）的適應症與劑量`,
+    body: `
+      <p>ROSC 後 25 分鐘，病人意識回復至 E3V4M6，<strong>血壓穩定</strong>，但仍主訴噁心。醫師到場評估：</p>
+      <div class="quote">「病人有用 morphine、剛剛心跳停止、現在還噁心，有沒有可能是嗎啡中毒，先打 Naloxone 看看，順便安排腦部 CT。」</div>
+      <p>護理師依醫囑推注 <strong>Naloxone（納洛酮）0.2 mg IV</strong>。</p>
+    `,
+    q: `下列何者為 <strong>Naloxone（納洛酮）</strong>最主要的<u>適應症</u>？`,
+    options: [
+      { mark: `A`, text: `Acetaminophen（普拿疼）過量中毒` },
+      { mark: `B`, text: `Benzodiazepine（鎮靜安眠藥）過量` },
+      { mark: `C`, text: `鴉片類藥物所致之呼吸或意識抑制（opioid-induced respiratory / CNS depression）` },
+      { mark: `D`, text: `任何使用 opioid 後出現噁心嘔吐的病人` }
+    ],
+    correct: 2,
+    dist: { n: 124, pct: [5, 9, 78, 8] },
+    feedback: {
+      correct: `正解。Naloxone（納洛酮）的適應症，為<strong>鴉片類藥物所致之呼吸／意識抑制（opioid-induced respiratory / CNS depression）</strong>。本案病人 ROSC 後血壓穩、意識回復、剩下噁心的症狀，較不像是鴉片類藥物過量之症狀。`,
+      incorrect: `答案是 C。Naloxone（納洛酮）的適應症為<strong>鴉片類藥物所致之呼吸／意識抑制</strong>，並非「使用 opioid 後出現任何不適」就適用。本案病人 ROSC 後血壓穩、意識回復、剩下噁心的症狀，較不像是鴉片類藥物過量之症狀。`
+    },
+    teach: {
+      label: `Naloxone — when, how much`,
+      text: `
+        <b>典型鴉片類藥物中毒症候群（opioid toxidrome）</b>
+        <ul>
+          <li><b>典型三聯徵</b>：意識下降 + 呼吸抑制（RR &lt; 8–12） + <em>針狀瞳孔（pinpoint pupils）</em></li>
+          <li><b>呼吸抑制細節</b>：除了 RR 下降，常伴隨 <em>tidal volume 下降</em> 與 <em>CO₂ 滯留（CO₂ retention）</em>，可從 EtCO₂ 升高或 ABG 觀察到</li>
+          <li><b>其他可見表現</b>：嗜睡、肌張力下降、低血壓、低體溫、皮膚濕冷、腸蠕動減少、肺水腫（non-cardiogenic pulmonary edema，較少見但可致命）</li>
+          <li><b>峰值時間</b>：morphine SC/IM 約 30–60 分鐘、IV 約 5–10 分鐘</li>
+        </ul>
+        <b>Naloxone</b>
+        <ul>
+          <li><b>作用時間</b>：IV 1–2 分鐘、IM/SC 2–5 分鐘、IN（鼻噴）2–5 分鐘</li>
+          <li><b>半衰期（half-life）</b>：約 30–90 分鐘</li>
+        </ul>
+        <b>劑型與給藥（奇美醫院劑型：0.4 mg/vial）</b>
+        <ul>
+          <li><b>給藥途徑</b>：可經靜脈注射（IV）、肌肉注射（IM）或皮下注射（SC）</li>
+          <li><b>緊急狀況</b>：靜脈注射（IV）作用最為快速</li>
+          <li><b>成人起始劑量</b>：0.4–2.0 mg。若無效，可每 2–3 分鐘重複一次，總劑量一般不超過 3 mg</li>
+          <li><b>稀釋方式</b>：可用生理食鹽水（normal saline）或 5% 右旋葡萄糖液（D5W）稀釋</li>
+        </ul>
+        <b>呼吸抑制（saving the breath, not waking the patient）</b>
+        <ul>
+          <li>0.04–0.4 mg IV，每 2–3 分鐘可重複，直至 RR ≥ 12</li>
+          <li><u>目標不是叫醒病人</u>，而是恢復呼吸驅動（respiratory drive）</li>
+          <li>慢慢 titrate 可以減少疼痛 rebound、戒斷症狀、交感神經爆發引發的肺水腫與心律不整風險</li>
+        </ul>
+        <b>心跳停止（懷疑 opioid 過量機轉）</b>
+        <ul>
+          <li>0.4 mg IM/IV，必要時可重複</li>
+          <li>但若已開始 ACLS 流程，naloxone 並非首要治療，<em>standard ACLS 仍優先</em></li>
+        </ul>
+      `,
+      refs: [
+        `Kim HK, Nelson LS. <em>Reversal of Opioid-Induced Ventilatory Depression Using Low-Dose Naloxone (0.04 mg): a Case Series</em>. J Med Toxicol. 2016;12(1):107-110.`,
+        `Boyer EW. <em>Management of opioid analgesic overdose</em>. N Engl J Med. 2012;367(2):146-155.`,
+        `Dahan A, Aarts L, Smith TW. <em>Incidence, reversal, and prevention of opioid-induced respiratory depression</em>. Anesthesiology. 2010;112(1):226-238.`,
+        `Rzasa Lynn R, Galinkin JL. <em>Naloxone dosage for opioid reversal: current evidence and clinical implications</em>. Ther Adv Drug Saf. 2018;9(1):63-88.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 7 -------------------- */
+  {
+    num: `Scene 07`,
+    stamp: `住院第 7 天 · 凌晨 01:15`,
+    title: `Naloxone 給完後，病人開始喊痛`,
+    sub: `Post-naloxone care · 疼痛 rebound 與再麻醉化的監測`,
+    body: `
+      <p>Naloxone 0.2 mg IV 推注後約 20 分鐘，病人意識更清楚，但開始<strong>主訴右頸劇痛 NRS 9/10</strong>，表情痛苦、冒汗、呼吸略喘。值班醫師到場再次評估：生命徵象血壓 158/92 mmHg、心跳 105/min、SpO₂ 96%、RR 22/min。</p>
+      <div class="quote">「打了 naloxone 之後，剛剛還好好的，怎麼現在又喊痛？」</div>
+      <p>此時最重要的，是回到 <strong>疼痛照護的本質</strong>：病人的痛沒有消失，只是被 morphine 短暫壓下；naloxone 把鎮痛效果一起逆轉了。</p>
+    `,
+    q: `對於這位剛接受 naloxone 0.2 mg IV、現在主訴劇痛的病人，<u>最合適</u>的下一步是？`,
+    options: [
+      { mark: `A`, text: `再給一劑相同劑量的 morphine（5 mg SC），快速壓制疼痛` },
+      { mark: `B`, text: `加快點滴速度以「稀釋」剩餘 naloxone 的作用` },
+      { mark: `C`, text: `以 short-acting opioid 小劑量逐步 titrate（例如 morphine 2–3 mg SC 或低劑量 IV），同時 <u>持續監測呼吸、意識、瞳孔至少 2 小時</u>，因為 naloxone 半衰期短於 morphine，仍有 <em>再麻醉化（re-narcotization）</em> 風險` },
+      { mark: `D`, text: `先觀察等待，疼痛應會在 naloxone 退掉後自行緩解` }
+    ],
+    correct: 2,
+    dist: { n: 116, pct: [21, 8, 64, 7] },
+    feedback: {
+      correct: `正解。本題的兩個關鍵學習點：<strong>(1) Naloxone 會逆轉鎮痛效果，因此使用 morphine 控制疼痛的病人，給予 naloxone 後常出現劇烈 rebound pain</strong>；<strong>(2) Naloxone 半衰期短於 morphine，存在再麻醉化（re-narcotization）風險</strong>，給藥後需持續監測 ≥ 2 小時。<br><br>關於選項 B「加快點滴稀釋」：這是臨床上偶爾會聽到的說法，但 <em>不成立</em>。Naloxone 是純粹的 μ-opioid receptor 競爭性拮抗劑（pure μ-opioid receptor antagonist），IV 推注後在中樞 μ 受體競爭性結合，療效取決於 <em>受體上是否有 opioid</em> 與 <em>naloxone 的相對濃度</em>，與點滴速度幾乎無關。`,
+      incorrect: `答案是 C。本題的兩個關鍵學習點：<strong>(1) Naloxone 會逆轉鎮痛效果，使用 morphine 止痛的病人接受 naloxone 後常出現 rebound pain</strong>；<strong>(2) Naloxone 半衰期（30–90 min）短於 morphine（2–4 h），有 re-narcotization 風險</strong>，給藥後須持續監測 ≥ 2 小時。<br><br>選項 A 直接給原劑量會有 over-shoot 風險；選項 B「點滴稀釋」並不成立——naloxone 競爭性結合於 μ 受體，與點滴速度無關；選項 D 等待不處理，會讓病人在無止痛之下承受不必要的疼痛。`
+    },
+    figureInTeach: {
+      label: `Figure 07 · Pharmacokinetics`,
+      caption: `Naloxone 半衰期 30–90 分鐘，<b>常短於 morphine（2–4 小時）、hydromorphone（2–3 小時），long-acting opioid 更甚</b>。陰影區域為 <b>re-narcotization window</b>——naloxone 已退場、morphine 仍在受體上，呼吸與意識可能再次抑制。臨床上 naloxone「看似效果有限」常被歸因於灌水稀釋，但實際上是因為 (1) 事件本身非 opioid toxicity（如本案），或 (2) re-narcotization 出現。`,
+      svg: `
+<svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pharmacokinetic curves of morphine and naloxone showing re-narcotization window">
+  <defs>
+    <linearGradient id="rn07" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b34020" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#b34020" stop-opacity="0.03"/>
+    </linearGradient>
+  </defs>
+  <line x1="60" y1="40" x2="60" y2="220" stroke="#7a766a" stroke-width="1"/>
+  <line x1="60" y1="220" x2="560" y2="220" stroke="#7a766a" stroke-width="1"/>
+  <text x="20" y="130" font-family="serif" font-size="11" fill="#7a766a" text-anchor="middle" transform="rotate(-90 20 130)">血中濃度 / 作用強度 (relative)</text>
+  <text x="310" y="265" font-family="serif" font-size="11" fill="#7a766a" text-anchor="middle">時間（分鐘）</text>
+  <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="#7a766a" text-anchor="middle">
+    <line x1="60" y1="220" x2="60" y2="224" stroke="#7a766a" stroke-width="1"/><text x="60" y="238">0</text>
+    <line x1="135" y1="220" x2="135" y2="224" stroke="#7a766a" stroke-width="1"/><text x="135" y="238">30</text>
+    <line x1="210" y1="220" x2="210" y2="224" stroke="#7a766a" stroke-width="1"/><text x="210" y="238">60</text>
+    <line x1="285" y1="220" x2="285" y2="224" stroke="#7a766a" stroke-width="1"/><text x="285" y="238">120</text>
+    <line x1="360" y1="220" x2="360" y2="224" stroke="#7a766a" stroke-width="1"/><text x="360" y="238">180</text>
+    <line x1="435" y1="220" x2="435" y2="224" stroke="#7a766a" stroke-width="1"/><text x="435" y="238">240</text>
+    <line x1="510" y1="220" x2="510" y2="224" stroke="#7a766a" stroke-width="1"/><text x="510" y="238">300</text>
+  </g>
+  <path d="M 210 220 L 210 90 Q 250 70 290 75 Q 340 85 400 105 Q 460 130 510 155 L 510 220 Z" fill="url(#rn07)"/>
+  <text x="365" y="178" font-family="Noto Serif TC, serif" font-size="12" fill="#7a1f0a" text-anchor="middle" font-weight="700" font-style="italic">Re-narcotization window</text>
+  <text x="365" y="194" font-family="serif" font-size="10" fill="#7a1f0a" text-anchor="middle" font-style="italic">Naloxone 已退場 · Morphine 仍在</text>
+  <path d="M 60 220 Q 100 180 135 130 Q 180 90 210 90 Q 260 75 300 80 Q 360 90 420 115 Q 480 145 540 175 L 560 185" fill="none" stroke="#1a4d4a" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="210" cy="90" r="4" fill="#1a4d4a"/>
+  <text x="220" y="75" font-family="serif" font-size="11" fill="#1a4d4a" font-weight="600">Morphine</text>
+  <text x="220" y="88" font-family="serif" font-size="9" fill="#1a4d4a" font-style="italic">t½ ≈ 2–4 h</text>
+  <path d="M 60 220 L 70 80 L 78 55 Q 90 50 110 75 Q 140 110 180 165 Q 210 200 240 215 L 280 220" fill="none" stroke="#b34020" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="78" cy="55" r="4" fill="#b34020"/>
+  <text x="92" y="48" font-family="serif" font-size="11" fill="#b34020" font-weight="600">Naloxone IV</text>
+  <text x="92" y="61" font-family="serif" font-size="9" fill="#b34020" font-style="italic">peak ≈ 2 min, t½ 30–90 min</text>
+  <text x="310" y="28" font-family="Noto Serif TC, serif" font-size="13" fill="#1a1d29" text-anchor="middle" font-weight="700">Naloxone vs Morphine 藥動學示意</text>
+</svg>
+      `
+    },
+    teach: {
+      label: `兩個關鍵學習點`,
+      text: `
+        <b>1. Rebound pain — naloxone 會逆轉鎮痛</b>
+        <ul>
+          <li>Naloxone 是 μ-opioid receptor 競爭性拮抗劑，會將 morphine 從受體上「擠下」</li>
+          <li>受體被佔據 = opioid 效果消失，<em>包括鎮痛效果</em>；因此使用 morphine 止痛的病人，給予 naloxone 後常出現劇烈 <strong>rebound pain</strong></li>
+          <li>對策：以 <em>短效 opioid 小劑量逐步 titrate</em>，必要時加上 non-opioid 藥物（acetaminophen、神經痛藥物）、神經阻斷或會診疼痛科</li>
+          <li>慢慢 titrate naloxone（0.04–0.4 mg）可以從一開始就減輕 rebound pain 與交感神經爆發</li>
+        </ul>
+        <b>2. Re-narcotization — 給完 naloxone 仍要持續監測</b>
+        <ul>
+          <li>Naloxone 半衰期 <strong>30–90 分鐘</strong>，<em>常短於</em>：
+            <ul>
+              <li>Morphine：2–4 小時</li>
+              <li>Hydromorphone：2–3 小時</li>
+              <li>Long-acting opioid（methadone、controlled-release morphine、fentanyl patch）：更長</li>
+            </ul>
+          </li>
+          <li>結果：naloxone 退場後，原本的 opioid 仍在系統內 → 病人可能 <strong>再度出現呼吸抑制、意識下降</strong> → 這就是 <strong>再麻醉化（re-narcotization）</strong></li>
+          <li>監測建議：給藥後持續觀察呼吸、意識、瞳孔 <strong>至少 2 小時</strong>；長效 opioid 或 methadone 中毒則需更久（通常 12–24 小時，considering naloxone infusion）</li>
+        </ul>
+        <b>關於「點滴稀釋 naloxone」這個說法</b>
+        <ul>
+          <li>Naloxone 是 μ-opioid receptor 競爭性拮抗劑，IV 推注後 ~2 分鐘達峰</li>
+          <li>給藥後它在受體上的競爭性結合 <em>幾乎與點滴速度無關</em></li>
+          <li>臨床上 naloxone「看似效果有限」通常代表：(1) 事件本身就不是 opioid toxicity，或 (2) re-narcotization 出現；<u>不是</u> 因為灌水稀釋</li>
+        </ul>
+      `,
+      refs: [
+        `Rzasa Lynn R, Galinkin JL. <em>Naloxone dosage for opioid reversal: current evidence and clinical implications</em>. Ther Adv Drug Saf. 2018;9(1):63-88.`,
+        `Boyer EW. <em>Management of opioid analgesic overdose</em>. N Engl J Med. 2012;367(2):146-155.`,
+        `Dahan A, Aarts L, Smith TW. <em>Incidence, reversal, and prevention of opioid-induced respiratory depression</em>. Anesthesiology. 2010;112(1):226-238.`,
+        `Wermeling DP. <em>Review of naloxone safety for opioid overdose: practical considerations for new technology and expanded public access</em>. Ther Adv Drug Saf. 2015;6(1):20-31.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 8 -------------------- */
+  {
+    num: `Scene 08`,
+    stamp: `住院第 8 天 · 上午 11:30`,
+    title: `神經內科會診揭曉真相`,
+    sub: `Differential diagnosis · Carotid sinus hypersensitivity`,
+    body: `
+      <p>住院第 8 天上午，神經內科醫師到場會診。在重新檢視病人影像及病歷後，給出判讀：</p>
+      <div class="quote">「病人右頸腫瘤壓迫，當病人用力（如蹲下、出力）或頭轉向右側時，腫瘤直接擠壓 <b>頸動脈竇</b> 與頸部大血管，誘發強烈迷走神經反射，造成血壓驟降、心跳停止等連鎖反應。」</div>
+    `,
+    q: `綜合所有資料，<u>最符合</u>本案的臨床診斷是？`,
+    options: [
+      { mark: `A`, text: `原發性心律不整（primary arrhythmia）` },
+      { mark: `B`, text: `肺栓塞（pulmonary embolism）` },
+      { mark: `C`, text: `Tumor-induced carotid sinus hypersensitivity` },
+      { mark: `D`, text: `急性腎上腺危機（adrenal crisis）` }
+    ],
+    correct: 2,
+    dist: { n: 114, pct: [6, 4, 86, 4] },
+    feedback: {
+      correct: `正解。所有線索都指向同一個解剖學解釋：5 cm 腫瘤緊鄰 carotid sinus → 特定姿勢/動作壓迫 → 強烈 vagal reflex → 心搏過緩或停止 + 血壓驟降。住院第 2 天切片時的暈厥也是同一個機轉的較小版本。`,
+      incorrect: `答案是 C。本案的關鍵線索是 <strong>解剖位置（腫瘤鄰近 carotid sinus）+ trigger（嘔吐 Valsalva + 蹲姿 + 頭轉右）+ 既往（住院第 2 天同位置誘發過 vagal episode）</strong>。這三者一起指向 tumor-induced CSH。`
+    },
+    figureInTeach: {
+      label: `Figure 08 · CSH 三型`,
+      caption: `Carotid sinus hypersensitivity 依 ESC 2018 guideline 分為三型：<b>cardio-inhibitory</b>（心律抑制）、<b>vasodepressor</b>（血壓下降）、<b>mixed</b>（混合）。本案符合 <b>mixed type</b>——既有 asystole 又有血壓驟降。`,
+      svg: `
+<svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three types of carotid sinus hypersensitivity">
+  <!-- Three panels -->
+
+  <!-- ============ Panel 1: Cardio-inhibitory ============ -->
+  <g transform="translate(0,0)">
+    <rect x="15" y="15" width="180" height="210" rx="8" fill="#f8f5ee" stroke="#d8cfb9" stroke-width="1"/>
+    <text x="105" y="38" font-family="Noto Serif TC, serif" font-size="12" fill="#1a1d29" text-anchor="middle" font-weight="700">Cardio-inhibitory</text>
+    <text x="105" y="53" font-family="serif" font-size="10" fill="#7a766a" text-anchor="middle" font-style="italic">心律抑制型</text>
+
+    <!-- ECG-like trace with long pause -->
+    <g transform="translate(30, 95)">
+      <line x1="0" y1="20" x2="150" y2="20" stroke="#d8cfb9" stroke-width="0.5"/>
+      <path d="M 0 20 L 8 20 L 10 10 L 12 30 L 14 5 L 16 20 L 24 20
+               L 32 20 L 34 10 L 36 30 L 38 5 L 40 20 L 48 20
+               L 56 20 L 58 10 L 60 30 L 62 5 L 64 20 L 72 20
+               L 80 20 L 130 20
+               L 138 20 L 140 10 L 142 30 L 144 5 L 146 20 L 150 20"
+            fill="none" stroke="#1a4d4a" stroke-width="1.6"/>
+      <!-- pause marker -->
+      <path d="M 75 38 L 75 60 L 128 60 L 128 38" fill="none" stroke="#b34020" stroke-width="1.2" stroke-dasharray="2 2"/>
+      <text x="101" y="74" font-family="JetBrains Mono, monospace" font-size="10" fill="#b34020" text-anchor="middle" font-weight="700">≥ 3 s asystole</text>
+    </g>
+
+    <text x="105" y="195" font-family="serif" font-size="10.5" fill="#1a1d29" text-anchor="middle">心搏停止 / 嚴重</text>
+    <text x="105" y="210" font-family="serif" font-size="10.5" fill="#1a1d29" text-anchor="middle">心搏過緩</text>
+  </g>
+
+  <!-- ============ Panel 2: Vasodepressor ============ -->
+  <g transform="translate(205,0)">
+    <rect x="0" y="15" width="180" height="210" rx="8" fill="#f8f5ee" stroke="#d8cfb9" stroke-width="1"/>
+    <text x="90" y="38" font-family="Noto Serif TC, serif" font-size="12" fill="#1a1d29" text-anchor="middle" font-weight="700">Vasodepressor</text>
+    <text x="90" y="53" font-family="serif" font-size="10" fill="#7a766a" text-anchor="middle" font-style="italic">血壓下降型</text>
+
+    <!-- BP curve with steep drop -->
+    <g transform="translate(20, 80)">
+      <line x1="0" y1="65" x2="140" y2="65" stroke="#7a766a" stroke-width="0.6"/>
+      <line x1="0" y1="0" x2="0" y2="65" stroke="#7a766a" stroke-width="0.6"/>
+      <text x="-4" y="6" font-family="JetBrains Mono, monospace" font-size="8" fill="#7a766a" text-anchor="end">140</text>
+      <text x="-4" y="60" font-family="JetBrains Mono, monospace" font-size="8" fill="#7a766a" text-anchor="end">60</text>
+
+      <path d="M 0 12 L 50 14 L 60 16 L 70 22 Q 80 38 90 50 L 100 56 L 140 58"
+            fill="none" stroke="#b34020" stroke-width="2"/>
+
+      <!-- drop indicator -->
+      <line x1="65" y1="15" x2="95" y2="50" stroke="#b34020" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="115" y="38" font-family="JetBrains Mono, monospace" font-size="10" fill="#b34020" font-weight="700">↓ ≥ 50</text>
+      <text x="115" y="50" font-family="JetBrains Mono, monospace" font-size="9" fill="#b34020">mmHg</text>
+    </g>
+
+    <text x="90" y="195" font-family="serif" font-size="10.5" fill="#1a1d29" text-anchor="middle">收縮壓下降</text>
+    <text x="90" y="210" font-family="serif" font-size="10.5" fill="#1a1d29" text-anchor="middle">≥ 50 mmHg</text>
+  </g>
+
+  <!-- ============ Panel 3: Mixed ============ -->
+  <g transform="translate(410,0)">
+    <rect x="0" y="15" width="180" height="210" rx="8" fill="#f4ead0" stroke="#b88a2b" stroke-width="1.5"/>
+    <text x="90" y="38" font-family="Noto Serif TC, serif" font-size="12" fill="#7a1f0a" text-anchor="middle" font-weight="700">Mixed</text>
+    <text x="90" y="53" font-family="serif" font-size="10" fill="#b88a2b" text-anchor="middle" font-style="italic">混合型（本案）</text>
+
+    <!-- Combined ECG + BP -->
+    <g transform="translate(20, 75)">
+      <!-- ECG -->
+      <path d="M 0 15 L 8 15 L 10 8 L 12 22 L 14 4 L 16 15 L 24 15 L 32 15
+               L 50 15 L 50 15 L 100 15
+               L 108 15 L 110 8 L 112 22 L 114 4 L 116 15 L 140 15"
+            fill="none" stroke="#1a4d4a" stroke-width="1.4"/>
+      <text x="-4" y="18" font-family="JetBrains Mono, monospace" font-size="8" fill="#1a4d4a" text-anchor="end">ECG</text>
+
+      <!-- BP -->
+      <line x1="0" y1="65" x2="140" y2="65" stroke="#7a766a" stroke-width="0.5"/>
+      <path d="M 0 45 L 38 47 L 48 52 Q 62 72 78 80 L 100 85 L 140 86"
+            fill="none" stroke="#b34020" stroke-width="2"/>
+      <text x="-4" y="50" font-family="JetBrains Mono, monospace" font-size="8" fill="#b34020" text-anchor="end">BP</text>
+
+      <!-- highlight -->
+      <rect x="48" y="0" width="50" height="95" fill="#b34020" opacity="0.08" rx="2"/>
+    </g>
+
+    <text x="90" y="195" font-family="serif" font-size="10.5" fill="#7a1f0a" text-anchor="middle" font-weight="600">兩者並存</text>
+    <text x="90" y="210" font-family="serif" font-size="10" fill="#7a1f0a" text-anchor="middle" font-style="italic">≥ 3s pause + ↓ BP</text>
+  </g>
+</svg>
+      `
+    },
+    teach: {
+      label: `Carotid sinus hypersensitivity (CSH) · 高 vagal 風險病人`,
+      text: `
+        <b>什麼叫「高 vagal 風險病人」？</b>
+        <br>
+        指因解剖、神經或藥物因素，<em>較容易被一般 trigger 誘發強烈迷走神經反射</em> 的族群。識別這類病人有助於提早衛教與監測。
+        <ul>
+          <li><b>頸部解剖風險</b>：頸部腫瘤（如本案）、頸部淋巴病變、頸動脈竇本身結構變異、頸部放療後或手術後（包含 endarterectomy）</li>
+          <li><b>年齡</b>：&gt; 65 歲——血管反射調節較易失衡，CSH 盛行率隨年齡上升</li>
+          <li><b>共病</b>：自律神經失調（autonomic dysfunction）、糖尿病自律神經病變、Parkinson 病、心衰竭、低血容</li>
+          <li><b>藥物</b>：β-blockers、α-blockers、降壓藥、利尿劑、phenothiazines、benzodiazepines（影響血流動力學或鎮靜）</li>
+          <li><b>既往</b>：曾有不明原因暈厥、Valsalva 後暈厥、姿勢性低血壓、跌倒史</li>
+          <li><b>當下情境</b>：脫水、空腹、長時間站立、緊張壓力、劇烈疼痛、用力動作（咳嗽、嘔吐、排便、shaving）</li>
+        </ul>
+
+        <b>Carotid sinus hypersensitivity 三型（ESC 2018）</b>
+        <ul>
+          <li><b>心律抑制型（Cardioinhibitory）</b>：心搏過緩 / 心搏停止（asystole）&gt; 3 秒</li>
+          <li><b>血壓下降型（Vasodepressor）</b>：收縮壓（systolic BP）下降 &gt; 50 mmHg</li>
+          <li><b>混合型（Mixed）</b>：兩者並存（本案）</li>
+        </ul>
+
+        <b>衛教重點（針對高 vagal 風險病人）</b>
+        <ul>
+          <li>避免：刮鬍、緊頸圈、向上看、用力轉頭、Valsalva 動作（用力解便、咳嗽）</li>
+          <li>嘔吐時 <em>採坐姿、避免蹲下或彎腰</em>，並有人陪同</li>
+          <li>起身時放慢動作（坐 → 站要分段）</li>
+          <li>保持水分與適度鹽分攝取</li>
+        </ul>
+      `,
+      refs: [
+        `Brignole M, Moya A, de Lange FJ, et al. <em>2018 ESC Guidelines for the diagnosis and management of syncope</em>. Eur Heart J. 2018;39(21):1883-1948.`,
+        `Solbiati M, Sheldon RS. <em>Carotid sinus syndrome: progress in understanding and management</em>. Glob Cardiol Sci Pract. 2014;2014(2):18.`,
+        `Krediet CT, Parry SW, Jardine DL, et al. <em>The history of diagnosing carotid sinus hypersensitivity</em>. Europace. 2011;13(1):14-22.`,
+        `Tan MP, Parry SW. <em>Vasovagal syncope in the older patient</em>. J Am Coll Cardiol. 2008;51(6):599-606.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 9 -------------------- */
+  {
+    num: `Scene 09`,
+    stamp: `Medication review`,
+    title: `被低估的藥物組合`,
+    sub: `Drug–drug interaction · 罕見但已被報告的不良反應`,
+    body: `
+      <p>事件後藥師重新檢視病人住院第 4 天起的醫囑單，發現除了 Morphine 5 mg Q6H SC 之外，還有：</p>
+    `,
+    chart: {
+      label: `Concurrent medications`,
+      rows: [
+        [`Morphine（嗎啡）`, `5 mg SC Q6H 規則`],
+        [`<a href="https://www.chimei.org.tw/main/cmh_department/55500/drugdata/monograph/13N046.htm" target="_blank" rel="noopener" style="color:var(--rust);text-decoration:underline"><b>Prochlorperazine</b></a>（Novamine<sup>®</sup>）`, `<b>5 mg IV push Q8H</b>`],
+        [`Tramadol`, `(50 mg) 1# QID PO`],
+        [`Metoclopramide`, `PRN 止吐`],
+        [`Ondansetron`, `PRN 止吐`]
+      ]
+    },
+    q: `<a href="https://www.chimei.org.tw/main/cmh_department/55500/drugdata/monograph/13N046.htm" target="_blank" rel="noopener" style="color:var(--rust);text-decoration:underline">Prochlorperazine</a>（Novamine<sup>®</sup>）與 Morphine 共用，<u>最值得注意</u>的不良反應是？`,
+    options: [
+      { mark: `A`, text: `肝毒性（hepatotoxicity）` },
+      { mark: `B`, text: `低血壓與暈厥（additive hypotension / syncope）` },
+      { mark: `C`, text: `急性腎衰竭（acute kidney injury, AKI）` },
+      { mark: `D`, text: `心跳過快（tachycardia）` }
+    ],
+    correct: 1,
+    dist: { n: 107, pct: [12, 62, 14, 12] },
+    feedback: {
+      correct: `正解。<strong>Prochlorperazine（Novamine<sup>®</sup>）</strong>屬於第一代抗精神病藥（phenothiazine），透過 α₁-adrenergic 受體拮抗作用可造成 <strong>姿位性低血壓（orthostatic hypotension）與暈厥</strong>，尤其在 IV 快速給藥時最明顯。合併 morphine（亦會造成血管擴張與血壓下降）時為加乘效應（additive effect）。對 carotid sinus hypersensitivity / 頸部腫瘤這類血流動力學脆弱的病人，這個組合值得明確監測或避免。`,
+      incorrect: `答案是 B。Prochlorperazine 是 phenothiazine 類抗精神病藥（同時作為強力止吐藥），其 α₁ 受體拮抗作用可造成低血壓與暈厥；與 morphine 的血管擴張、鎮靜作用加成。對血流動力學脆弱的病人，這個組合更值得重新考量。`
+    },
+    teach: {
+      label: `Prochlorperazine（Novamine<sup>®</sup>）— 用法、機轉與低血壓風險`,
+      text: `
+        <b>藥物簡介</b>
+        <ul>
+          <li><b>學名 / 商品名</b>：Prochlorperazine（奇美醫院商品名 Novamine<sup>®</sup>）</li>
+          <li><b>分類</b>：第一代抗精神病藥（first-generation antipsychotic），phenothiazine 衍生物</li>
+          <li><b>臨床用途</b>：嚴重噁心嘔吐、眩暈、精神症狀、急性焦慮</li>
+        </ul>
+
+        <b>機轉（受體層次）</b>
+        <ul>
+          <li><b>D₂ 拮抗</b>：在 chemoreceptor trigger zone (CTZ) 阻斷 dopamine D₂ 受體 → <em>強效止吐</em></li>
+          <li><b>α₁ 拮抗</b>：周邊血管 α₁-adrenergic 受體被阻斷 → <em>血管擴張、姿位性低血壓</em></li>
+          <li><b>M₁ 拮抗</b>：抗膽鹼作用 → 口乾、視力模糊、便秘、尿滯留</li>
+          <li><b>H₁ 拮抗</b>：抗組織胺作用 → 嗜睡、鎮靜</li>
+        </ul>
+
+        <b>低血壓 / 暈厥風險</b>
+        <ul>
+          <li>IV 快速 push 時最明顯，建議 <strong>慢速輸注（slow IV push ≥ 2 分鐘，或 dilute 後 infuse over 15 min）</strong></li>
+          <li>與 morphine、降壓藥（antihypertensives）、其他 phenothiazines、benzodiazepines、TCA 共用時為加成風險</li>
+          <li>本案病人有 carotid sinus hypersensitivity → 對血壓變化更為敏感，這個組合值得 explicit 重新評估</li>
+        </ul>
+
+        <b>其他需注意的副作用</b>
+        <ul>
+          <li><b>錐體外症狀（EPS, extrapyramidal symptoms）</b>：急性肌張力不全（dystonia）、靜坐不能（akathisia）、類巴金森症</li>
+          <li><b>QT 延長 / Torsades de pointes</b>：與其他 QT prolonging 藥物共用時風險加成</li>
+          <li><b>Neuroleptic malignant syndrome (NMS)</b>：罕見但致命</li>
+          <li><b>長期使用</b>：tardive dyskinesia</li>
+        </ul>
+
+        <b>臨床決策啟示</b>
+        <ul>
+          <li>對 <em>血流動力學脆弱的病人</em>（年長、頸部腫瘤、CSH、低血容、自律神經失調），止吐藥的選擇需考慮血壓影響</li>
+          <li>較安全的替代選擇：<em>ondansetron</em>（5-HT₃ antagonist，較少血壓影響）、<em>metoclopramide</em>（D₂ antagonist，較低 α₁ 活性）</li>
+          <li>用藥 cross-check 是 RCA 改善方案的重要一環</li>
+        </ul>
+      `,
+      refs: [
+        `奇美醫院藥品資訊：<a href="https://www.chimei.org.tw/main/cmh_department/55500/drugdata/monograph/13N046.htm" target="_blank" rel="noopener">Prochlorperazine（Novamine<sup>®</sup>）藥品說明</a>。`,
+        `Glare P, Miller J, Nikolova T, Tickoo R. <em>Treating nausea and vomiting in palliative care: a review</em>. Clin Interv Aging. 2011;6:243-259.`,
+        `Lohr L. <em>Chemotherapy-induced nausea and vomiting</em>. Cancer J. 2008;14(2):85-93.`,
+        `Smith HS, Smith JM, Seidner P. <em>Opioid-induced nausea and vomiting</em>. Ann Palliat Med. 2012;1(2):121-129.`
+      ]
+    }
+  },
+
+  /* -------------------- SCENE 10 -------------------- */
+  {
+    num: `Scene 10`,
+    stamp: `System debrief`,
+    title: `回到系統面：什麼樣的改善最有槓桿？`,
+    sub: `Just Culture · 從個案到系統`,
+    body: `
+      <p>整理完整個事件後，RCA 小組要決定改善方案。讓我們暫時跳出個案，<strong>用 Just Culture 與 Safety II 的角度</strong>來思考：什麼樣的改善方向，不是只處理「下一個 morphine 病人」，而是能涵蓋「下一個出現多重線索、需要在壓力下做決策」的情境？</p>
+    `,
+    q: `從系統面看，<u>最能讓我們都能學習到如何照護好下一位病人</u>的方案是？`,
+    options: [
+      { mark: `A`, text: `針對當晚的照護團隊進行檢討，並要求提出改善方案` },
+      { mark: `B`, text: `全院禁用 morphine 在頸部腫瘤病人身上` },
+      { mark: `C`, text: `建立「頸部腫瘤 / 高 vagal 風險病人」之 care bundle，並進行教育訓練：疾病標記及交班、衛教（嘔吐姿勢、避免 Valsalva、起身速度）、跌倒/暈厥風險升級、用藥 cross-check` },
+      { mark: `D`, text: `安排一對一的護理照護人力` }
+    ],
+    correct: 2,
+    dist: { n: 102, pct: [11, 13, 68, 8] },
+    feedback: {
+      correct: `正解。讓我們先肯定一件事：<strong>這個團隊接住了一位心跳停止的病人</strong>——快速辨識、立即 CPR、ROSC、後續完整評估與會診，每一個環節都做對了。本案能成為一個學習案例，正是因為團隊把病人救回來、把資料記下來、願意一起檢討。<br><br>從系統面看四個選項：<br><br>
+        <b>A. 針對團隊檢討要求改善</b>——雖然出發點良善，但若只停在「某一晚某個團隊」，學習就被限制在那個時空。Just Culture 提醒我們：在追究團隊之前，先問「系統是否讓這個決定在當下看起來合理？」<br><br>
+        <b>B. 全院禁用 morphine</b>——會影響大多數本該得到 morphine 病人的權益，是過度反應。<br><br>
+        <b>C. 建立 care bundle + 教育訓練</b>（正解）——把這次的學習轉換為 <em>系統的預設值</em>，下一次任何單位遇到類似病人時，都能直接套用。這是 Safety II 的精神：把「平常做對的事」變成可以複製的能力。<br><br>
+        <b>D. 一對一護理人力</b>——對少數高風險病人有用，但成本高、不可大規模持續，且無法解決決策層面的學習問題。`,
+      incorrect: `選項 C 較貼近 Just Culture 與 Safety II 的精神。<br><br>讓我們先肯定一件事：<strong>這個團隊接住了一位心跳停止的病人</strong>——快速辨識、立即 CPR、ROSC、後續完整評估與會診，每一個環節都做對了。<br><br>
+        <b>選項 A</b> 只停在「某一晚某個團隊」，學習被限制在那個時空；<b>選項 B</b> 是過度反應，會影響大多數本該得到 morphine 病人的權益；<b>選項 D</b> 一對一人力對少數病人有用，但成本高、不可大規模持續。<br><br>
+        <b>選項 C</b> 才是高槓桿改善：把這次的學習轉換為 <em>系統的預設值</em>——care bundle、教育訓練、用藥 cross-check 都是讓「對的反應」變成全院、全時段的能力，這正是 Safety II 的精神。`
+    },
+    figureInTeach: {
+      label: `Figure 10 · Just Culture matrix`,
+      caption: `Marx 與 Reason 的 Just Culture 架構：三種行為類型對應 <b>三種不同回應</b>。系統重新設計 + 關懷支持（human error）、教育引導 + 系統提示（at-risk）、紀律性處分（reckless）——分類本身是工具，目的是<b>讓系統能持續學習、而不是把責任推給個人</b>。`,
+      svg: `
+<svg viewBox="0 0 600 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Just Culture three-behavior matrix">
+
+  <text x="300" y="22" font-family="Noto Serif TC, serif" font-size="13" fill="#1a1d29" text-anchor="middle" font-weight="700">Just Culture · 三種行為，三種回應</text>
+
+  <!-- ============ Column 1: Human Error ============ -->
+  <g transform="translate(15, 45)">
+    <rect x="0" y="0" width="180" height="210" rx="10" fill="#e9ecdb" stroke="#5d6f3a" stroke-width="1.5"/>
+    <text x="90" y="28" font-family="Noto Serif TC, serif" font-size="12" fill="#3d4d24" text-anchor="middle" font-weight="700">Human Error</text>
+    <text x="90" y="42" font-family="Noto Serif TC, serif" font-size="10" fill="#5d6f3a" text-anchor="middle" font-style="italic">人因失誤</text>
+    <text x="90" y="44" font-family="serif" font-size="10" fill="#5d6f3a" text-anchor="middle" font-style="italic">人因失誤</text>
+
+    <line x1="20" y1="58" x2="160" y2="58" stroke="#5d6f3a" stroke-width="0.6" opacity="0.5"/>
+
+    <text x="14" y="80" font-family="serif" font-size="10" fill="#3d4d24" font-weight="600">特徵</text>
+    <text x="14" y="96" font-family="Noto Serif TC, serif" font-size="10.5" fill="#1a1d29">無意識的失誤、</text>
+    <text x="14" y="110" font-family="Noto Serif TC, serif" font-size="10.5" fill="#1a1d29">滑差、遺漏</text>
+
+    <text x="14" y="138" font-family="serif" font-size="10" fill="#3d4d24" font-weight="600">回應</text>
+    <text x="14" y="156" font-family="Noto Serif TC, serif" font-size="11" fill="#3d4d24" font-weight="700">→ 系統重新設計</text>
+    <text x="14" y="172" font-family="Noto Serif TC, serif" font-size="10" fill="#1a1d29">+ 關懷 / 支持</text>
+    <text x="14" y="186" font-family="serif" font-size="9.5" fill="#7a766a" font-style="italic">"console, not blame"</text>
+  </g>
+
+  <!-- ============ Column 2: At-Risk Behavior ============ -->
+  <g transform="translate(210, 45)">
+    <rect x="0" y="0" width="180" height="210" rx="10" fill="#f4ead0" stroke="#b88a2b" stroke-width="2"/>
+    <text x="90" y="28" font-family="Noto Serif TC, serif" font-size="12" fill="#7a5d12" text-anchor="middle" font-weight="700">At-Risk Behavior</text>
+    <text x="90" y="44" font-family="serif" font-size="10" fill="#b88a2b" text-anchor="middle" font-style="italic">高風險行為</text>
+
+    <line x1="20" y1="58" x2="160" y2="58" stroke="#b88a2b" stroke-width="0.6" opacity="0.5"/>
+
+    <text x="14" y="80" font-family="serif" font-size="10" fill="#7a5d12" font-weight="600">特徵</text>
+    <text x="14" y="96" font-family="Noto Serif TC, serif" font-size="10.5" fill="#1a1d29">常見推理路徑、</text>
+    <text x="14" y="110" font-family="Noto Serif TC, serif" font-size="10.5" fill="#1a1d29">誤以為風險被合理化</text>
+
+    <text x="14" y="138" font-family="serif" font-size="10" fill="#7a5d12" font-weight="600">回應</text>
+    <text x="14" y="156" font-family="Noto Serif TC, serif" font-size="11" fill="#7a5d12" font-weight="700">→ 教育 + 引導</text>
+    <text x="14" y="172" font-family="Noto Serif TC, serif" font-size="10" fill="#1a1d29">+ 系統提示設計</text>
+    <text x="14" y="186" font-family="serif" font-size="9.5" fill="#7a766a" font-style="italic">"coach, design out risk"</text>
+
+    <!-- highlight (this case) -->
+    
+  </g>
+
+  <!-- ============ Column 3: Reckless ============ -->
+  <g transform="translate(405, 45)">
+    <rect x="0" y="0" width="180" height="210" rx="10" fill="#f8e5dc" stroke="#b34020" stroke-width="1.5"/>
+    <text x="90" y="28" font-family="Noto Serif TC, serif" font-size="12" fill="#7a1f0a" text-anchor="middle" font-weight="700">Reckless</text>
+    <text x="90" y="44" font-family="serif" font-size="10" fill="#b34020" text-anchor="middle" font-style="italic">輕忽 / 蓄意違規</text>
+
+    <line x1="20" y1="58" x2="160" y2="58" stroke="#b34020" stroke-width="0.6" opacity="0.5"/>
+
+    <text x="14" y="80" font-family="serif" font-size="10" fill="#7a1f0a" font-weight="600">特徵</text>
+    <text x="14" y="96" font-family="Noto Serif TC, serif" font-size="10.5" fill="#1a1d29">明知風險、</text>
+    <text x="14" y="110" font-family="Noto Serif TC, serif" font-size="10.5" fill="#1a1d29">仍蓄意違反</text>
+
+    <text x="14" y="138" font-family="serif" font-size="10" fill="#7a1f0a" font-weight="600">回應</text>
+    <text x="14" y="156" font-family="Noto Serif TC, serif" font-size="11" fill="#7a1f0a" font-weight="700">→ 紀律性處分</text>
+    <text x="14" y="172" font-family="Noto Serif TC, serif" font-size="10" fill="#1a1d29">+ 制度性後果</text>
+    <text x="14" y="186" font-family="serif" font-size="9.5" fill="#7a766a" font-style="italic">"discipline accordingly"</text>
+  </g>
+</svg>
+      `
+    },
+    teach: {
+      label: `Just Culture & Safety II — 從學習出發的病安文化`,
+      text: `
+        <b>先說一件最重要的事</b>
+        <br>
+        這個團隊在凌晨的高壓情境下，<strong>快速辨識、立即 CPR、成功 ROSC、後續完整會診</strong>。每一個動作都做對了，病人才能活下來。本案能成為一個教學案例，<em>是團隊集體成就的結果</em>，不是任何個人的問題。<br><br>
+
+        <b>什麼是 Just Culture？</b>
+        <br>
+        Just Culture（公正文化）由 David Marx 與 James Reason 提出，核心觀念是：<em>大多數錯誤源自系統設計，而非個人因素</em>。它把人為行為分為三類，每一類有不同的合適回應：
+        <ul>
+          <li><b>Human Error（人因失誤）</b>——無意識的失誤、滑差、遺漏。<br>回應：<em>系統重新設計 + 關懷與支持</em>（"console, not blame"）</li>
+          <li><b>At-Risk Behavior（高風險行為）</b>——常見推理路徑、誤以為風險被合理化。<br>回應：<em>教育與引導 + 系統提示設計</em>（"coach, design out risk"）</li>
+          <li><b>Reckless Conduct（蓄意違規）</b>——明知風險仍刻意違反。<br>回應：<em>紀律性處分</em>（discipline accordingly）</li>
+        </ul>
+        分類的目的不是究責，而是 <em>對症下藥</em>。對人因失誤施加紀律 = 打擊團隊士氣、抑制未來通報；對蓄意違規只給教育 = 系統失去保護力。
+
+        <br><br>
+        <b>什麼是 Safety II？</b>
+        <br>
+        Erik Hollnagel 提出的 Safety II 是相對於 Safety I 的進化：
+        <ul>
+          <li><b>Safety I</b>：研究「為什麼事情會出錯」——focus on errors</li>
+          <li><b>Safety II</b>：研究「為什麼事情平常會做對」——focus on what works</li>
+        </ul>
+        本案的學習角度：團隊大部分時間都在做對——按時用藥、按時巡視、紅鈴一響就到、立刻啟動 999、CPR 動作標準、團隊配合無縫。<em>這些「做對」的能力，是醫院最重要的資產</em>。Safety II 的工作是：把這些日常的「對」識別出來、保存下來、讓它能被傳承。
+
+        <br><br>
+        <b>本案 → 系統學習的轉化</b>
+        <ul>
+          <li><b>識別高 vagal 風險病人</b> → 入院時 structured screening、護理交班自動標記</li>
+          <li><b>家屬與病人衛教</b> → 嘔吐姿勢、避免 Valsalva、起身速度、暈厥前兆識別</li>
+          <li><b>跌倒/暈厥風險升級</b> → 病房環境（床欄、夜燈、嘔吐袋位置）、陪伴人員須知</li>
+          <li><b>用藥 cross-check</b> → 高風險病人避免 IV bolus 強效血管擴張藥物</li>
+          <li><b>決策支援</b> → ROSC 後機轉不明確時，再次確認 naloxone indication；考慮 re-narcotization 監測</li>
+        </ul>
+
+        <br>
+        <b>感謝</b>：因為這個團隊在凌晨把病人接住，後續才有這個案例可以讓全院一起學習。從個案到系統，是醫療品質工作最有力的循環。
+      `,
+      refs: [
+        `Marx D. <em>Patient Safety and the "Just Culture": A Primer for Health Care Executives</em>. New York: Trustees of Columbia University; 2001.`,
+        `Reason J. <em>Human error: models and management</em>. BMJ. 2000;320(7237):768-770.`,
+        `Hollnagel E, Wears RL, Braithwaite J. <em>From Safety-I to Safety-II: A White Paper</em>. The Resilient Health Care Net; 2015.`,
+        `ISMP. <em>The Differences Between Human Error, At-Risk Behavior, and Reckless Behavior Are Key to a Just Culture</em>. ISMP Medication Safety Alert! Acute Care. 2020;25(12).`,
+        `Dekker S. <em>Just Culture: Restoring Trust and Accountability in Your Organization</em>. 3rd ed. Boca Raton: CRC Press; 2016.`
+      ]
+    }
+  }
+];
+
+/* ============================================================
+   Build & navigate
+   ============================================================ */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const state = {
+  current: -1,
+  answers: new Array(SCENES.length).fill(null),
+  locked:  new Array(SCENES.length).fill(false)
+};
+
+function buildScenes(){
+  const root = $('#scenes');
+  SCENES.forEach((sc, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'scene';
+    sec.dataset.idx = i;
+    sec.innerHTML = renderScene(sc, i);
+    root.appendChild(sec);
+  });
+  $$('.opt').forEach(o => o.addEventListener('click', onOptClick));
+  $$('.nav-btn[data-action]').forEach(b => b.addEventListener('click', onNav));
+}
+
+function renderScene(sc, i){
+  let html = `
+    <div class="scene-head">
+      <span class="scene-num">${sc.num}</span>
+      <span class="scene-stamp">${sc.stamp}</span>
+    </div>
+    <h2 class="scene-title">${sc.title}</h2>
+    <p class="scene-sub">${sc.sub}</p>
+    <div class="narrative">${sc.body}</div>
+  `;
+
+  if (sc.chart) {
+    html += `
+      <div class="chart">
+        <div class="chart-label">${sc.chart.label}</div>
+        <dl>
+          ${sc.chart.rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}
+        </dl>
+      </div>
+    `;
+  }
+
+  if (sc.figure) {
+    html += `
+      <div class="figure">
+        <div class="figure-label">${sc.figure.label}</div>
+        ${sc.figure.svg}
+        ${sc.figure.caption ? `<div class="figure-caption">${sc.figure.caption}</div>` : ''}
+      </div>
+    `;
+  }
+
+  if (sc.timeline) {
+    html += `<div class="timeline">`;
+    sc.timeline.forEach(t => {
+      html += `
+        <div class="timeline-item ${t.type}">
+          <div class="timeline-time">${t.time}</div>
+          <div class="timeline-text">${t.text}</div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+
+  html += `
+    <div class="q-block">
+      <div class="q-label">Question ${String(i + 1).padStart(2, '0')}</div>
+      <p class="q-text">${sc.q}</p>
+      <div class="options" data-scene="${i}">
+        ${sc.options.map((o, oi) => `
+          <button class="opt" type="button" data-scene="${i}" data-idx="${oi}">
+            <span class="opt-marker">${o.mark}</span>
+            <span class="opt-text">${o.text}</span>
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="peer-block" id="peer-${i}">
+        <div class="peer-head">
+          <div class="peer-title">同儕作答分布 <span>· How peers answered</span></div>
+          <div class="peer-n">n = <b>${sc.dist.n}</b> 位曾作答此題</div>
+        </div>
+        <div class="peer-bars" id="peer-bars-${i}"></div>
+        <div class="peer-tags">
+          <span class="peer-tag"><i></i> 正解</span>
+          <span class="peer-tag mine"><i></i> 你的選擇</span>
+        </div>
+        <div class="peer-note">資料為模擬同儕分布，作為案例討論引導之用。</div>
+      </div>
+
+      <div class="feedback" id="fb-${i}">
+        <div class="feedback-verdict">
+          <span class="verdict-icon"></span>
+          <span class="verdict-text"></span>
+        </div>
+        <div class="feedback-body">
+          <p class="feedback-explain"></p>
+          <div class="teach">
+            <div class="teach-label">${sc.teach.label}</div>
+            <div class="teach-text">${sc.teach.text}</div>
+            ${sc.figureInTeach ? `
+              <div class="figure figure-in-teach">
+                <div class="figure-label">${sc.figureInTeach.label}</div>
+                ${sc.figureInTeach.svg}
+                ${sc.figureInTeach.caption ? `<div class="figure-caption">${sc.figureInTeach.caption}</div>` : ''}
+              </div>
+            ` : ''}
+            ${sc.teach.refs && sc.teach.refs.length ? `
+              <div class="teach-refs">
+                <div class="teach-refs-label">參考文獻 · References</div>
+                <ol class="teach-refs-list">
+                  ${sc.teach.refs.map(r => `<li>${r}</li>`).join('')}
+                </ol>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="nav-btn" type="button" data-action="prev" data-scene="${i}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        上一頁
+      </button>
+      <button class="nav-btn primary" type="button" data-action="next" data-scene="${i}" disabled>
+        ${i === SCENES.length - 1 ? '結束案例' : '下一頁'}
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  `;
+
+  return html;
+}
+
+function renderPeerBars(si, userChoice){
+  const sc = SCENES[si];
+  const wrap = $(`#peer-bars-${si}`);
+  wrap.innerHTML = '';
+  sc.dist.pct.forEach((pct, oi) => {
+    const isCorrect = oi === sc.correct;
+    const isMine    = oi === userChoice;
+    const row = document.createElement('div');
+    row.className = 'peer-row' + (isCorrect ? ' is-correct' : '') + (isMine ? ' is-mine' : '');
+    row.innerHTML = `
+      <div class="peer-mark">${sc.options[oi].mark}</div>
+      <div class="peer-bar-wrap"><div class="peer-bar" style="width:0%"></div></div>
+      <div class="peer-pct">${pct}%</div>
+    `;
+    wrap.appendChild(row);
+    // animate width after a tick
+    requestAnimationFrame(() => {
+      row.querySelector('.peer-bar').style.width = Math.max(pct, 2) + '%';
+    });
+  });
+  $(`#peer-${si}`).classList.add('show');
+}
+
+function onOptClick(e){
+  const btn = e.currentTarget;
+  const si  = +btn.dataset.scene;
+  const oi  = +btn.dataset.idx;
+  if (state.locked[si]) return;
+
+  state.answers[si] = oi;
+  state.locked[si]  = true;
+
+  const sc = SCENES[si];
+  const opts = $$(`.opt[data-scene="${si}"]`);
+  opts.forEach((o, idx) => {
+    o.classList.add('locked');
+    if (idx === sc.correct) {
+      o.classList.add('correct');
+      const ic = document.createElement('span');
+      ic.className = 'opt-icon';
+      ic.textContent = '正解 ✓';
+      o.appendChild(ic);
+    }
+    if (idx === oi && oi !== sc.correct) {
+      o.classList.add('incorrect');
+      const ic = document.createElement('span');
+      ic.className = 'opt-icon';
+      ic.textContent = '你的選擇';
+      o.appendChild(ic);
+    }
+  });
+
+  renderPeerBars(si, oi);
+
+  const fb = $(`#fb-${si}`);
+  const isCorrect = oi === sc.correct;
+  fb.classList.add('show');
+  fb.classList.add(isCorrect ? 'correct' : 'incorrect');
+  fb.querySelector('.verdict-icon').textContent = isCorrect ? '✓' : '✕';
+  fb.querySelector('.verdict-text').textContent = isCorrect ? '答對了' : '可以再看看——這題還有值得細究的地方';
+  fb.querySelector('.feedback-explain').innerHTML = isCorrect ? sc.feedback.correct : sc.feedback.incorrect;
+
+  const next = $(`.nav-btn[data-action="next"][data-scene="${si}"]`);
+  if (next) next.disabled = false;
+
+  setTimeout(() => {
+    fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
+}
+
+function onNav(e){
+  const btn = e.currentTarget;
+  const action = btn.dataset.action;
+  const si = +btn.dataset.scene;
+  if (action === 'next') {
+    if (si === SCENES.length - 1) {
+      showSummary();
+    } else {
+      go(si + 1);
+    }
+  } else if (action === 'prev') {
+    if (si === 0) showCover();
+    else go(si - 1);
+  }
+}
+
+function showCover(){
+  $$('.scene').forEach(s => s.classList.remove('active'));
+  $('#cover').style.display = '';
+  $('#progressRail').style.display = 'none';
+  state.current = -1;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function go(i){
+  $('#cover').style.display = 'none';
+  $('#summary').classList.remove('active');
+  $$('.scene').forEach(s => s.classList.remove('active'));
+  const target = $$(`#scenes .scene`)[i];
+  if (target) {
+    target.classList.add('active');
+    state.current = i;
+    updateProgress(i + 1);
+    $('#progressRail').style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function updateProgress(n){
+  $('#progressNum').textContent = n;
+  $('#progressBar').style.width = (n / SCENES.length * 100) + '%';
+}
+
+function showSummary(){
+  $('#cover').style.display = 'none';
+  $$('.scene').forEach(s => s.classList.remove('active'));
+  $('#summary').classList.add('active');
+  updateProgress(SCENES.length);
+  let score = 0;
+  state.answers.forEach((a, i) => { if (a === SCENES[i].correct) score++; });
+  $('#finalScore').textContent = score;
+  const display = document.querySelector('.score-display');
+  if (display) {
+    if (score >= 7) display.classList.remove('fail');
+    else display.classList.add('fail');
+  }
+  let msg = '';
+  if (score === 10)    msg = '完美。您已具備在類似案例做出細緻臨床推理的能力。';
+  else if (score >= 8) msg = '通過。把答錯的題目回去再看一次，可以更穩。';
+  else if (score === 7) msg = '通過。建議重點複習答錯題目對應的教學重點。';
+  else if (score >= 5) msg = '尚未通過。建議再走一遍，本案的關鍵在「事件順序與機轉」。';
+  else                 msg = '尚未通過。請重新讀一次案例，思考每個決策背後的依據。';
+  $('#scoreMsg').textContent = msg;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart(){
+  state.current = -1;
+  state.answers = new Array(SCENES.length).fill(null);
+  state.locked  = new Array(SCENES.length).fill(false);
+  $$('.opt').forEach(o => {
+    o.classList.remove('locked', 'correct', 'incorrect', 'selected');
+    const ic = o.querySelector('.opt-icon');
+    if (ic) ic.remove();
+  });
+  $$('.feedback').forEach(f => f.classList.remove('show', 'correct', 'incorrect'));
+  $$('.peer-block').forEach(p => p.classList.remove('show'));
+  $$(`.nav-btn[data-action='next']`).forEach(b => b.disabled = true);
+  showCover();
+}
+
+/* init */
+buildScenes();
+const startBtn = document.getElementById('startBtn');
+if (startBtn) {
+  startBtn.addEventListener('click', () => go(0));
+}
+</script>
+
+</body>
+</html>
