@@ -535,6 +535,10 @@
     background:#fff;
   }
   .figure-image.pcm-image{
+    display:block;
+    width:min(100%, 420px);
+    max-height:220px;
+    margin:0 auto;
     background:#fff;
   }
   .figure-caption{
@@ -558,10 +562,17 @@
     margin:18px 0 0;
     background:#fafaf3;
     border-color:var(--rule-soft);
+    padding:20px 16px 14px;
   }
   .figure-in-teach .figure-label{
     background:#fafaf3;
     color:var(--ochre);
+  }
+  .figure-in-teach .figure-caption{
+    max-width:620px;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:12px;
   }
 
   /* ---------- references (inside teach box) ---------- */
