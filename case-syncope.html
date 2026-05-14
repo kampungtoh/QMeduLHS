@@ -1217,7 +1217,7 @@
     </div>
 
     <div class="cover-note" style="background:var(--rust-soft);border-left-color:var(--rust);margin-top:12px">
-      本案改編自實際 RCA 案例。
+      本案改編自實際 RCA 案例。總學習人次：<b id="totalLearningAttempts">--</b> 人次（累計所有 attempt）。
     </div>
 
     <div class="cover-footer" aria-label="製作資訊">
@@ -2207,14 +2207,14 @@ function renderScene(sc, i){
       <div class="peer-block" id="peer-${i}">
         <div class="peer-head">
           <div class="peer-title">同儕作答分布 <span>· How peers answered</span></div>
-          <div class="peer-n">n = <b>${sc.dist.n}</b> 位曾作答此題</div>
+          <div class="peer-n">n = <b>${sc.dist.n}</b> 位 · 依第一次作答統計</div>
         </div>
         <div class="peer-bars" id="peer-bars-${i}"></div>
         <div class="peer-tags">
           <span class="peer-tag"><i></i> 正解</span>
           <span class="peer-tag mine"><i></i> 你的選擇</span>
         </div>
-        <div class="peer-note">資料為模擬同儕分布，作為案例討論引導之用。</div>
+        <div class="peer-note">資料為模擬同儕分布；正式資料採每位學員第一次作答，作為案例討論引導之用。</div>
       </div>
 
       <div class="feedback" id="fb-${i}">
