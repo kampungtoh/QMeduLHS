@@ -534,6 +534,9 @@
   .figure-image.anatomy-image{
     background:#fff;
   }
+  .figure-image.pcm-image{
+    background:#fff;
+  }
   .figure-caption{
     margin-top:12px;
     padding-top:10px;
@@ -1391,7 +1394,7 @@ const SCENES = [
       text: `
         病安學裡有一個關鍵概念：<strong>「成功避免的事件就是預警」</strong>。住院第 2 天的 episode 雖然 minor，但具備所有後續事件的元素（誘因 / trigger + 解剖風險 / anatomical predisposition + 反射 / reflex）。回顧時，這應該觸發：護理交班標註、家屬衛教、PRN 用藥/止吐方式重新評估。
         <br><br>
-        <b>預防 vasovagal reflex 的常見策略（Aydin 2010）</b>：
+        <b>預防 vasovagal / orthostatic symptoms 的常見策略（Aydin 2010；Dani 2021）</b>：
         <ul>
           <li><b>誘因識別與避免（trigger avoidance）</b>：脫水（dehydration）、悶熱環境、長時間站立（prolonged standing）、強烈情緒、Valsalva 動作、特定姿勢（蹲姿、頭轉向腫瘤側）</li>
           <li><b>足量水分與鹽分補充（adequate hydration / salt intake）</b>：每日水分 ≥ 2 L、適度鹽分</li>
@@ -1403,9 +1406,19 @@ const SCENES = [
       `,
       refs: [
         `Aydin MA, Salukhe TV, Wilke I, Willems S. <em>Management and therapy of vasovagal syncope: A review</em>. World J Cardiol. 2010;2(10):308–315.`,
+        `Dani M, Dirksen A, Taraborrelli P, Panagopolous D, Torocastro M, Sutton R, Lim PB. <em>Orthostatic hypotension in older people: considerations, diagnosis and management</em>. Clin Med (Lond). 2021;21(3):e275–e282. doi:10.7861/clinmed.2020-1044.`,
         `Brignole M, Moya A, de Lange FJ, et al. <em>2018 ESC Guidelines for the diagnosis and management of syncope</em>. Eur Heart J. 2018;39(21):1883–1948.`,
         `Reason J. <em>Human error: models and management</em>. BMJ. 2000;320(7237):768–770.`
       ]
+    },
+    figureInTeach: {
+      label: `Figure · Physical counter-pressure manoeuvres`,
+      image: {
+        src: `assets/physical-counter-pressure-manoeuvres.jpg`,
+        alt: `Physical counter-pressure manoeuvres demonstrated in five panels`,
+        className: `pcm-image`
+      },
+      caption: `Physical counter-pressure manoeuvres 圖示。圖片來源：Dani M, Dirksen A, Taraborrelli P, et al. <em>Orthostatic hypotension in older people: considerations, diagnosis and management</em>. Clin Med (Lond). 2021;21(3):e275–e282. Fig. 3. doi:10.7861/clinmed.2020-1044.`
     }
   },
 
