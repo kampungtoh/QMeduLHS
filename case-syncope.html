@@ -1441,13 +1441,13 @@ const SCENES = [
     },
     q: `看完這張片子與病史，以下哪一個是病人<u>可能發生</u>的併發症？`,
     options: [
-      { mark: `A`, text: `夜間睡眠時呼吸道阻塞（airway compromise）` },
-      { mark: `B`, text: `頸動脈竇反射 (Vasovagal reflex)` },
+      { mark: `A`, text: `頸動脈竇反射 (Vasovagal reflex)` },
+      { mark: `B`, text: `夜間睡眠時呼吸道阻塞（airway compromise）` },
       { mark: `C`, text: `睡眠中突然大出血（spontaneous bleeding）` },
       { mark: `D`, text: `腦部轉移` }
     ],
-    correct: 1,
-    dist: { n: 142, pct: [21, 64, 9, 6] },
+    correct: 0,
+    dist: { n: 142, pct: [64, 21, 9, 6] },
     figure: {
       label: `Figure 01 · 電腦斷層`,
       image: {
@@ -1459,7 +1459,7 @@ const SCENES = [
     },
     feedback: {
       correct: `正解。5 cm 腫瘤已經 <strong>侵犯右側 IJV</strong>，這個位置與 carotid sinus、迷走神經、頸動脈竇都緊鄰。任何「擠壓 + Valsalva」的動作（用力、蹲下、嘔吐、頭轉向右側）都可能誘發強烈 vagal reflex，導致心搏過緩、暈厥，嚴重時無脈搏。`,
-      incorrect: `選項 B 是這個案例的關鍵風險。<strong>5 cm 腫瘤侵犯右 IJV</strong> 意味著它就在 carotid sinus 旁邊。雖然氣道阻塞與出血也是需要監測的風險，但影像中仍未有氣道及動脈之侵犯。<strong>頸部腫瘤遠端轉移最常見的部位為肺部（~50–66%）、骨頭（~19–24%）與肝臟（~10–24%）</strong>，腦部轉移較少見。`
+      incorrect: `選項 A 是這個案例的關鍵風險。<strong>5 cm 腫瘤侵犯右 IJV</strong> 意味著它就在 carotid sinus 旁邊。雖然氣道阻塞與出血也是需要監測的風險，但影像中仍未有氣道及動脈之侵犯。<strong>頸部腫瘤遠端轉移最常見的部位為肺部（~50–66%）、骨頭（~19–24%）與肝臟（~10–24%）</strong>，腦部轉移較少見。`
     },
     teach: {
       label: `Anatomy → Clinical pearl`,
@@ -1561,15 +1561,15 @@ const SCENES = [
     q: `對於一位 <u>opioid-naïve（未曾規律使用鴉片類藥物）</u>的病人，醫師開立「<b>Morphine 5 mg Q6H SC</b>」這個處方，有哪些建議？`,
     options: [
       { mark: `A`, text: `沒有問題，opioid-naïve 病人可以直接從規則劑量開始` },
-      { mark: `B`, text: `建議先以 PRN 短效劑量試水溫並逐步調整劑量（titrate），觀察反應與副作用後，再決定是否轉成規則劑量；若已決定規則，也應考慮 從較低起始劑量（如 morphine 2.5 mg）開始，並開立適當的突破性疼痛（breakthrough）PRN 劑量` },
-      { mark: `C`, text: `應該直接從靜脈病人自控止痛（IV PCA, patient-controlled analgesia）開始` },
+      { mark: `B`, text: `應該直接從靜脈病人自控止痛（IV PCA, patient-controlled analgesia）開始` },
+      { mark: `C`, text: `建議先以 PRN 短效劑量試水溫並逐步調整劑量（titrate），觀察反應與副作用後，再決定是否轉成規則劑量；若已決定規則，也應考慮 從較低起始劑量（如 morphine 2.5 mg）開始，並開立適當的突破性疼痛（breakthrough）PRN 劑量` },
       { mark: `D`, text: `應該用 fentanyl（吩坦尼）貼片` }
     ],
-    correct: 1,
-    dist: { n: 134, pct: [29, 57, 9, 5] },
+    correct: 2,
+    dist: { n: 134, pct: [29, 9, 57, 5] },
     feedback: {
       correct: `正解。Opioid-naïve 病人的安全做法是 <strong>start low, titrate slow（從低劑量起始、緩慢調整）</strong>：先以 PRN 劑量觀察反應、副作用（尤其是嗜睡、呼吸抑制、低血壓、噁心嘔吐），再決定是否規則化。本案直接給 5 mg Q6H 規則，後續若出現副作用，較難釐清是否與 morphine 相關。`,
-      incorrect: `選項 B 才是 best practice（最佳實務）。<strong>Start low, titrate slow（從低劑量起始、緩慢調整）</strong>是 opioid-naïve 病人的黃金原則。直接開規則劑量會讓後續若出現副作用時，很難判斷是否與 opioid 相關（如本案）。`
+      incorrect: `選項 C 才是 best practice（最佳實務）。<strong>Start low, titrate slow（從低劑量起始、緩慢調整）</strong>是 opioid-naïve 病人的黃金原則。直接開規則劑量會讓後續若出現副作用時，很難判斷是否與 opioid 相關（如本案）。`
     },
     teach: {
       label: `Opioid titration principle`,
@@ -1604,14 +1604,14 @@ const SCENES = [
     options: [
       { mark: `A`, text: `只要加重止吐劑量就好` },
       { mark: `B`, text: `加開更強的 opioid，比如 IV morphine 一次推 10 mg` },
-      { mark: `C`, text: `會診疼痛科 / 安寧緩和團隊，重新評估 pain syndrome、評估神經痛/侵犯性疼痛、調整止痛策略` },
-      { mark: `D`, text: `等開刀後就會好` }
+      { mark: `C`, text: `等開刀後就會好` },
+      { mark: `D`, text: `會診疼痛科 / 安寧緩和團隊，重新評估 pain syndrome、評估神經痛/侵犯性疼痛、調整止痛策略` }
     ],
-    correct: 2,
-    dist: { n: 129, pct: [12, 7, 76, 5] },
+    correct: 3,
+    dist: { n: 129, pct: [12, 7, 5, 76] },
     feedback: {
       correct: `正解。<strong>「痛到噁心嘔吐」並不常見</strong>，通常代表這是一個 <em>難治型疼痛（complex pain）</em>，可能含有 neuropathic、infiltrative 或 visceral 成分。靠單純 opioid 加量不僅效果有限，還會增加副作用。疼痛科會診的價值在於 multimodal 策略：抗痙攣藥、類固醇、神經阻斷、心理介入等。`,
-      incorrect: `選項 C 較貼近本案。<strong>痛到噁心嘔吐是需要重新評估的訊號</strong>——多數情形下這代表單純 opioid 已經不夠用，需要 multimodal 策略。光是「加止吐」或「加 opioid」可能不容易掌握介入時機。`
+      incorrect: `選項 D 較貼近本案。<strong>痛到噁心嘔吐是需要重新評估的訊號</strong>——多數情形下這代表單純 opioid 已經不夠用，需要 multimodal 策略。光是「加止吐」或「加 opioid」可能不容易掌握介入時機。`
     },
     teach: {
       label: `Pain that triggers vomiting`,
@@ -1641,16 +1641,16 @@ const SCENES = [
     ],
     q: `病人發生心跳停止（cardiac arrest）<u>最可能</u>的機轉是？`,
     options: [
-      { mark: `A`, text: `嗎啡過量 / 鴉片類藥物中毒（morphine overdose / opioid toxicity）` },
-      { mark: `B`, text: `跌倒造成頭部外傷（fall with head injury）` },
-      { mark: `C`, text: `肺栓塞（pulmonary embolism, PE）` },
-      { mark: `D`, text: `頸動脈竇反射 / 血管迷走神經暈厥（carotid sinus reflex / vasovagal episode）` }
+      { mark: `A`, text: `頸動脈竇反射 / 血管迷走神經暈厥（carotid sinus reflex / vasovagal episode）` },
+      { mark: `B`, text: `嗎啡過量 / 鴉片類藥物中毒（morphine overdose / opioid toxicity）` },
+      { mark: `C`, text: `跌倒造成頭部外傷（fall with head injury）` },
+      { mark: `D`, text: `肺栓塞（pulmonary embolism, PE）` }
     ],
-    correct: 3,
-    dist: { n: 126, pct: [33, 6, 4, 57] },
+    correct: 0,
+    dist: { n: 126, pct: [57, 33, 6, 4] },
     feedback: {
       correct: `正解。仔細看時間序：事件發生在嗎啡施打約 2 小時後，誘發點非常清楚——<strong>蹲姿 + 嘔吐 Valsalva + 頭轉向右側</strong>。意識喪失發生在 <em>無脈搏之前</em>，跌倒是 syncope 的「結果」而非「原因」。Opioid toxicity 通常是漸進性的呼吸抑制 + 意識下降，本案的急性無脈搏較不符合。`,
-      incorrect: `答案是 D。本案的關鍵在於 <strong>事件順序</strong>：病人先有明確的 vagal trigger（嘔吐 Valsalva + 蹲姿 + 頭轉右側），<em>接著</em>失去意識、跌倒。跌倒是 syncope 的後果而非原因；opioid toxicity 通常呈現漸進性的呼吸抑制與意識下降，與本案的急性無脈搏不符。`
+      incorrect: `答案是 A。本案的關鍵在於 <strong>事件順序</strong>：病人先有明確的 vagal trigger（嘔吐 Valsalva + 蹲姿 + 頭轉右側），<em>接著</em>失去意識、跌倒。跌倒是 syncope 的後果而非原因；opioid toxicity 通常呈現漸進性的呼吸抑制與意識下降，與本案的急性無脈搏不符。`
     },
     teach: {
       label: `Syncope vs Falling vs Opioid toxicity — 三者與心跳停止的關係`,
@@ -1769,14 +1769,14 @@ const SCENES = [
     options: [
       { mark: `A`, text: `再給一劑相同劑量的 morphine（5 mg SC），快速壓制疼痛` },
       { mark: `B`, text: `加快點滴速度以「稀釋」剩餘 naloxone 的作用` },
-      { mark: `C`, text: `以 short-acting opioid 小劑量逐步 titrate（例如 morphine 2–3 mg SC 或低劑量 IV），同時 <u>持續監測呼吸、意識、瞳孔至少 2 小時</u>，因為 naloxone 半衰期短於 morphine，仍有 <em>再麻醉化（re-narcotization）</em> 風險` },
-      { mark: `D`, text: `先觀察等待，疼痛應會在 naloxone 退掉後自行緩解` }
+      { mark: `C`, text: `先觀察等待，疼痛應會在 naloxone 退掉後自行緩解` },
+      { mark: `D`, text: `以 short-acting opioid 小劑量逐步 titrate（例如 morphine 2–3 mg SC 或低劑量 IV），同時 <u>持續監測呼吸、意識、瞳孔至少 2 小時</u>，因為 naloxone 半衰期短於 morphine，仍有 <em>再麻醉化（re-narcotization）</em> 風險` }
     ],
-    correct: 2,
-    dist: { n: 116, pct: [21, 8, 64, 7] },
+    correct: 3,
+    dist: { n: 116, pct: [21, 8, 7, 64] },
     feedback: {
       correct: `正解。本題的兩個關鍵學習點：<strong>(1) Naloxone 會逆轉鎮痛效果，因此使用 morphine 控制疼痛的病人，給予 naloxone 後常出現劇烈 rebound pain</strong>；<strong>(2) Naloxone 半衰期短於 morphine，存在再麻醉化（re-narcotization）風險</strong>，給藥後需持續監測 ≥ 2 小時。<br><br>關於選項 B「加快點滴稀釋」：這是臨床上偶爾會聽到的說法，但 <em>不成立</em>。Naloxone 是純粹的 μ-opioid receptor 競爭性拮抗劑（pure μ-opioid receptor antagonist），IV 推注後在中樞 μ 受體競爭性結合，療效取決於 <em>受體上是否有 opioid</em> 與 <em>naloxone 的相對濃度</em>，與點滴速度幾乎無關。`,
-      incorrect: `答案是 C。本題的兩個關鍵學習點：<strong>(1) Naloxone 會逆轉鎮痛效果，使用 morphine 止痛的病人接受 naloxone 後常出現 rebound pain</strong>；<strong>(2) Naloxone 半衰期（30–90 min）短於 morphine（2–4 h），有 re-narcotization 風險</strong>，給藥後須持續監測 ≥ 2 小時。<br><br>選項 A 直接給原劑量會有 over-shoot 風險；選項 B「點滴稀釋」並不成立——naloxone 競爭性結合於 μ 受體，與點滴速度無關；選項 D 等待不處理，會讓病人在無止痛之下承受不必要的疼痛。`
+      incorrect: `答案是 D。本題的兩個關鍵學習點：<strong>(1) Naloxone 會逆轉鎮痛效果，使用 morphine 止痛的病人接受 naloxone 後常出現 rebound pain</strong>；<strong>(2) Naloxone 半衰期（30–90 min）短於 morphine（2–4 h），有 re-narcotization 風險</strong>，給藥後須持續監測 ≥ 2 小時。<br><br>選項 A 直接給原劑量會有 over-shoot 風險；選項 B「點滴稀釋」並不成立——naloxone 競爭性結合於 μ 受體，與點滴速度無關；選項 C 等待不處理，會讓病人在無止痛之下承受不必要的疼痛。`
     },
     figureInTeach: {
       label: `Figure 07 · Pharmacokinetics`,
@@ -1868,15 +1868,15 @@ const SCENES = [
     q: `綜合所有資料，<u>最符合</u>本案的臨床診斷是？`,
     options: [
       { mark: `A`, text: `原發性心律不整（primary arrhythmia）` },
-      { mark: `B`, text: `肺栓塞（pulmonary embolism）` },
-      { mark: `C`, text: `Tumor-induced carotid sinus hypersensitivity` },
+      { mark: `B`, text: `Tumor-induced carotid sinus hypersensitivity` },
+      { mark: `C`, text: `肺栓塞（pulmonary embolism）` },
       { mark: `D`, text: `急性腎上腺危機（adrenal crisis）` }
     ],
-    correct: 2,
-    dist: { n: 114, pct: [6, 4, 86, 4] },
+    correct: 1,
+    dist: { n: 114, pct: [6, 86, 4, 4] },
     feedback: {
       correct: `正解。所有線索都指向同一個解剖學解釋：5 cm 腫瘤緊鄰 carotid sinus → 特定姿勢/動作壓迫 → 強烈 vagal reflex → 心搏過緩或停止 + 血壓驟降。住院第 2 天切片時的暈厥也是同一個機轉的較小版本。`,
-      incorrect: `答案是 C。本案的關鍵線索是 <strong>解剖位置（腫瘤鄰近 carotid sinus）+ trigger（嘔吐 Valsalva + 蹲姿 + 頭轉右）+ 既往（住院第 2 天同位置誘發過 vagal episode）</strong>。這三者一起指向 tumor-induced CSH。`
+      incorrect: `答案是 B。本案的關鍵線索是 <strong>解剖位置（腫瘤鄰近 carotid sinus）+ trigger（嘔吐 Valsalva + 蹲姿 + 頭轉右）+ 既往（住院第 2 天同位置誘發過 vagal episode）</strong>。這三者一起指向 tumor-induced CSH。`
     },
     figureInTeach: {
       label: `Figure 08 · CSH 三型`,
@@ -2094,22 +2094,22 @@ const SCENES = [
     `,
     q: `從系統面看，<u>最能讓我們都能學習到如何照護好下一位病人</u>的方案是？`,
     options: [
-      { mark: `A`, text: `針對當晚的照護團隊進行檢討，並要求提出改善方案` },
-      { mark: `B`, text: `全院禁用 morphine 在頸部腫瘤病人身上` },
-      { mark: `C`, text: `建立「頸部腫瘤 / 高 vagal 風險病人」之 care bundle，並進行教育訓練：疾病標記及交班、衛教（嘔吐姿勢、避免 Valsalva、起身速度）、跌倒/暈厥風險升級、用藥 cross-check` },
+      { mark: `A`, text: `建立「頸部腫瘤 / 高 vagal 風險病人」之 care bundle，並進行教育訓練：疾病標記及交班、衛教（嘔吐姿勢、避免 Valsalva、起身速度）、跌倒/暈厥風險升級、用藥 cross-check` },
+      { mark: `B`, text: `針對當晚的照護團隊進行檢討，並要求提出改善方案` },
+      { mark: `C`, text: `全院禁用 morphine 在頸部腫瘤病人身上` },
       { mark: `D`, text: `安排一對一的護理照護人力` }
     ],
-    correct: 2,
-    dist: { n: 102, pct: [11, 13, 68, 8] },
+    correct: 0,
+    dist: { n: 102, pct: [68, 11, 13, 8] },
     feedback: {
       correct: `正解。讓我們先肯定一件事：<strong>這個團隊接住了一位心跳停止的病人</strong>——快速辨識、立即 CPR、ROSC、後續完整評估與會診，每一個環節都做對了。本案能成為一個學習案例，正是因為團隊把病人救回來、把資料記下來、願意一起檢討。<br><br>從系統面看四個選項：<br><br>
-        <b>A. 針對團隊檢討要求改善</b>——雖然出發點良善，但若只停在「某一晚某個團隊」，學習就被限制在那個時空。Just Culture 提醒我們：在追究團隊之前，先問「系統是否讓這個決定在當下看起來合理？」<br><br>
-        <b>B. 全院禁用 morphine</b>——會影響大多數本該得到 morphine 病人的權益，是過度反應。<br><br>
-        <b>C. 建立 care bundle + 教育訓練</b>（正解）——把這次的學習轉換為 <em>系統的預設值</em>，下一次任何單位遇到類似病人時，都能直接套用。這是 Safety II 的精神：把「平常做對的事」變成可以複製的能力。<br><br>
+        <b>A. 建立 care bundle + 教育訓練</b>（正解）——把這次的學習轉換為 <em>系統的預設值</em>，下一次任何單位遇到類似病人時，都能直接套用。這是 Safety II 的精神：把「平常做對的事」變成可以複製的能力。<br><br>
+        <b>B. 針對團隊檢討要求改善</b>——雖然出發點良善，但若只停在「某一晚某個團隊」，學習就被限制在那個時空。Just Culture 提醒我們：在追究團隊之前，先問「系統是否讓這個決定在當下看起來合理？」<br><br>
+        <b>C. 全院禁用 morphine</b>——會影響大多數本該得到 morphine 病人的權益，是過度反應。<br><br>
         <b>D. 一對一護理人力</b>——對少數高風險病人有用，但成本高、不可大規模持續，且無法解決決策層面的學習問題。`,
-      incorrect: `選項 C 較貼近 Just Culture 與 Safety II 的精神。<br><br>讓我們先肯定一件事：<strong>這個團隊接住了一位心跳停止的病人</strong>——快速辨識、立即 CPR、ROSC、後續完整評估與會診，每一個環節都做對了。<br><br>
-        <b>選項 A</b> 只停在「某一晚某個團隊」，學習被限制在那個時空；<b>選項 B</b> 是過度反應，會影響大多數本該得到 morphine 病人的權益；<b>選項 D</b> 一對一人力對少數病人有用，但成本高、不可大規模持續。<br><br>
-        <b>選項 C</b> 才是高槓桿改善：把這次的學習轉換為 <em>系統的預設值</em>——care bundle、教育訓練、用藥 cross-check 都是讓「對的反應」變成全院、全時段的能力，這正是 Safety II 的精神。`
+      incorrect: `選項 A 較貼近 Just Culture 與 Safety II 的精神。<br><br>讓我們先肯定一件事：<strong>這個團隊接住了一位心跳停止的病人</strong>——快速辨識、立即 CPR、ROSC、後續完整評估與會診，每一個環節都做對了。<br><br>
+        <b>選項 B</b> 只停在「某一晚某個團隊」，學習被限制在那個時空；<b>選項 C</b> 是過度反應，會影響大多數本該得到 morphine 病人的權益；<b>選項 D</b> 一對一人力對少數病人有用，但成本高、不可大規模持續。<br><br>
+        <b>選項 A</b> 才是高槓桿改善：把這次的學習轉換為 <em>系統的預設值</em>——care bundle、教育訓練、用藥 cross-check 都是讓「對的反應」變成全院、全時段的能力，這正是 Safety II 的精神。`
     },
     figureInTeach: {
       label: `Figure 10 · Just Culture matrix`,
