@@ -1051,6 +1051,94 @@
     margin-top:14px;
     font-style:italic;
   }
+  .credit-panel{
+    display:block;
+    max-width:480px;
+    margin:-12px auto 36px;
+    padding:22px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    text-align:left;
+  }
+  .credit-panel[hidden]{
+    display:none;
+  }
+  .credit-kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:8px;
+    font-weight:600;
+  }
+  .credit-panel h3{
+    margin:0 0 8px;
+    font-family:var(--serif);
+    font-size:22px;
+    color:var(--ink);
+  }
+  .credit-panel p{
+    margin:0 0 16px;
+    color:var(--muted);
+    line-height:1.65;
+    font-size:14px;
+  }
+  .credit-field{
+    display:grid;
+    gap:8px;
+  }
+  .credit-field label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .credit-input-row{
+    display:flex;
+    gap:10px;
+  }
+  .credit-field input{
+    flex:1;
+    min-width:0;
+    height:44px;
+    padding:0 12px;
+    border:1px solid var(--rule);
+    border-radius:var(--radius-sm);
+    background:#fffdf7;
+    color:var(--ink);
+    font-family:var(--mono);
+    font-size:18px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .credit-field input:focus{
+    outline:2px solid rgba(26,77,74,.2);
+    border-color:var(--teal);
+  }
+  .credit-field input.is-invalid{
+    border-color:var(--rust);
+    outline-color:rgba(179,64,32,.18);
+  }
+  .credit-field .nav-btn{
+    min-height:44px;
+    white-space:nowrap;
+  }
+  .credit-help,
+  .credit-status{
+    font-family:var(--serif);
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .credit-status{
+    margin-top:12px;
+  }
+  .credit-status.success{color:var(--teal)}
+  .credit-status.error{color:var(--rust)}
 
   .takeaways{
     text-align:left;
@@ -1147,6 +1235,9 @@
     .opt{font-size:14px;padding:13px 14px}
     .nav-btn{padding:9px 14px;font-size:13px}
     .peer-row{grid-template-columns:16px 1fr 48px;gap:8px}
+    .credit-panel{padding:18px}
+    .credit-input-row{flex-direction:column}
+    .credit-field .nav-btn{width:100%;justify-content:center}
   }
 
   .ornament{
@@ -1252,6 +1343,21 @@
         <div class="score-label">Correct answers</div>
         <div class="score-msg" id="scoreMsg"></div>
       </div>
+
+      <form class="credit-panel" id="creditPanel" hidden novalidate>
+        <div class="credit-kicker">Credit record</div>
+        <h3>通過學分登錄</h3>
+        <p>請輸入人事號完成通過紀錄；同一人通過學分採計一次。</p>
+        <div class="credit-field">
+          <label for="staffIdInput">人事號</label>
+          <div class="credit-input-row">
+            <input id="staffIdInput" name="staffId" type="text" inputmode="text" autocomplete="off" maxlength="6" pattern="[A-Za-z0-9]{6}" placeholder="A12345" aria-describedby="staffIdHelp creditStatus">
+            <button class="nav-btn primary" id="creditSubmit" type="submit">送出紀錄</button>
+          </div>
+          <div class="credit-help" id="staffIdHelp">限 6 碼英文字母或數字。</div>
+          <div class="credit-status" id="creditStatus" role="status" aria-live="polite"></div>
+        </div>
+      </form>
 
       <div class="takeaways">
         <h3>關鍵學習點 (Key Takeaways)</h3>
@@ -2133,7 +2239,8 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const state = {
   current: -1,
   answers: new Array(SCENES.length).fill(null),
-  locked:  new Array(SCENES.length).fill(false)
+  locked:  new Array(SCENES.length).fill(false),
+  creditSaved: false
 };
 
 function buildScenes(){
@@ -2386,6 +2493,98 @@ function updateProgress(n){
   $('#progressBar').style.width = (n / SCENES.length * 100) + '%';
 }
 
+function setCreditStatus(message, type = ''){
+  const status = $('#creditStatus');
+  if (!status) return;
+  status.textContent = message;
+  status.className = `credit-status${type ? ' ' + type : ''}`;
+}
+
+function updateCreditPanel(score){
+  const panel = $('#creditPanel');
+  if (!panel) return;
+  const passed = score >= 7;
+  panel.hidden = !passed;
+  panel.dataset.score = String(score);
+  panel.dataset.total = String(SCENES.length);
+  if (!passed) {
+    setCreditStatus('');
+    return;
+  }
+  const input = $('#staffIdInput');
+  const submit = $('#creditSubmit');
+  if (!state.creditSaved) {
+    if (input) {
+      input.disabled = false;
+      input.classList.remove('is-invalid');
+    }
+    if (submit) submit.disabled = false;
+    setCreditStatus('');
+  }
+}
+
+async function onCreditSubmit(e){
+  e.preventDefault();
+  const panel = $('#creditPanel');
+  const input = $('#staffIdInput');
+  const submit = $('#creditSubmit');
+  if (!panel || !input || !submit) return;
+
+  const staffId = input.value.trim().toUpperCase();
+  input.value = staffId;
+  input.classList.remove('is-invalid');
+
+  if (!/^[A-Z0-9]{6}$/.test(staffId)) {
+    input.classList.add('is-invalid');
+    input.focus();
+    setCreditStatus('人事號需為 6 碼英文字母或數字。', 'error');
+    return;
+  }
+
+  const score = Number(panel.dataset.score || 0);
+  const totalQuestions = Number(panel.dataset.total || SCENES.length);
+  if (score < 7) {
+    setCreditStatus('尚未通過，無法登錄學分。', 'error');
+    return;
+  }
+
+  submit.disabled = true;
+  input.disabled = true;
+  setCreditStatus('紀錄送出中...', '');
+
+  const payload = {
+    staffId,
+    score,
+    totalQuestions,
+    percentage: Math.round(score / totalQuestions * 100),
+    completionTime: new Date().toISOString(),
+    courseId: 'case-syncope'
+  };
+
+  try {
+    const res = await fetch('save_record.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const text = await res.text();
+    let data = null;
+    try { data = JSON.parse(text); } catch (_) {}
+    if (!res.ok) throw new Error(data?.message || text || '紀錄送出失敗');
+    if (!data || !['saved', 'duplicate'].includes(data.status)) {
+      throw new Error('紀錄服務未回傳有效結果');
+    }
+
+    state.creditSaved = true;
+    const message = data?.message || (data?.status === 'duplicate' ? '此人事號已完成通過紀錄，本次不重複登錄學分。' : '通過紀錄已完成。');
+    setCreditStatus(message, 'success');
+  } catch (err) {
+    submit.disabled = false;
+    input.disabled = false;
+    setCreditStatus('未能寫入紀錄，請確認頁面已部署於可執行 PHP 的院內伺服器後再試。', 'error');
+  }
+}
+
 function showSummary(){
   $('#cover').style.display = 'none';
   $$('.scene').forEach(s => s.classList.remove('active'));
@@ -2406,6 +2605,7 @@ function showSummary(){
   else if (score >= 5) msg = '尚未通過。建議再走一遍，本案的關鍵在「事件順序與機轉」。';
   else                 msg = '尚未通過。請重新讀一次案例，思考每個決策背後的依據。';
   $('#scoreMsg').textContent = msg;
+  updateCreditPanel(score);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2413,6 +2613,7 @@ function restart(){
   state.current = -1;
   state.answers = new Array(SCENES.length).fill(null);
   state.locked  = new Array(SCENES.length).fill(false);
+  state.creditSaved = false;
   $$('.opt').forEach(o => {
     o.classList.remove('locked', 'correct', 'incorrect', 'selected');
     const ic = o.querySelector('.opt-icon');
@@ -2421,6 +2622,17 @@ function restart(){
   $$('.feedback').forEach(f => f.classList.remove('show', 'correct', 'incorrect'));
   $$('.peer-block').forEach(p => p.classList.remove('show'));
   $$(`.nav-btn[data-action='next']`).forEach(b => b.disabled = true);
+  const creditPanel = $('#creditPanel');
+  const staffInput = $('#staffIdInput');
+  const creditSubmit = $('#creditSubmit');
+  if (creditPanel) creditPanel.hidden = true;
+  if (staffInput) {
+    staffInput.value = '';
+    staffInput.disabled = false;
+    staffInput.classList.remove('is-invalid');
+  }
+  if (creditSubmit) creditSubmit.disabled = false;
+  setCreditStatus('');
   showCover();
 }
 
@@ -2429,6 +2641,10 @@ buildScenes();
 const startBtn = document.getElementById('startBtn');
 if (startBtn) {
   startBtn.addEventListener('click', () => go(0));
+}
+const creditPanel = document.getElementById('creditPanel');
+if (creditPanel) {
+  creditPanel.addEventListener('submit', onCreditSubmit);
 }
 </script>
 
