@@ -361,6 +361,48 @@
     overflow-wrap:anywhere;
   }
 
+  /* cover live stats trio */
+  .cover-stats{
+    max-width:720px;
+    margin:14px 0 18px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    background:rgba(247,243,234,.08);
+    border:1px solid rgba(247,243,234,.22);
+    border-radius:var(--radius);
+    padding:14px 10px;
+    backdrop-filter:blur(2px);
+    -webkit-backdrop-filter:blur(2px);
+  }
+  .cover-stat{
+    text-align:center;
+    padding:2px 4px;
+    border-left:1px solid rgba(247,243,234,.14);
+  }
+  .cover-stat:first-child{border-left:0}
+  .cover-stat-num{
+    font-family:var(--serif-en);
+    font-size:28px;
+    font-weight:700;
+    line-height:1;
+    color:#fffaf1;
+    letter-spacing:-.02em;
+  }
+  .cover-stat-num.pass{color:#b7d49e}
+  .cover-stat-label{
+    font-family:var(--sans);
+    font-size:11px;
+    color:rgba(247,243,234,.68);
+    margin-top:5px;
+    letter-spacing:.04em;
+  }
+  @media (max-width:560px){
+    .cover-stats{padding:12px 6px;gap:6px}
+    .cover-stat-num{font-size:22px}
+    .cover-stat-label{font-size:10.5px}
+  }
+
   /* ---------- scenes ---------- */
   .scene{
     display:none;
@@ -1319,12 +1361,27 @@
     </div>
 
     <div class="cover-note" style="background:var(--rust-soft);border-left-color:var(--rust);margin-top:12px">
-      本案改編自實際 RCA 案例。總學習人次：<b id="totalLearningAttempts">--</b> 人次。
+      本案改編自實際 RCA 案例。
+    </div>
+
+    <div class="cover-stats" role="group" aria-label="學習紀錄">
+      <div class="cover-stat">
+        <div class="cover-stat-num" id="statCompleted">--</div>
+        <div class="cover-stat-label">總答題次數</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num pass" id="statPassed">--</div>
+        <div class="cover-stat-label">已通過人數</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num" id="statPassRate">--</div>
+        <div class="cover-stat-label">通過率</div>
+      </div>
     </div>
 
     <div class="cover-footer" aria-label="製作資訊">
       <span>奇美醫院品質管理部醫療安全科製作</span>
-      <span>最後更新日期：<time datetime="2026-05-14">2026-05-14</time></span>
+      <span>最後更新日期：<time datetime="2026-10-28">2026-10-28</time></span>
     </div>
   </section>
 
@@ -1423,7 +1480,7 @@
      - 寫入會失敗 (使用者會看到連線錯誤訊息)
    網頁本身仍可正常使用。
    ============================================================ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbw__xss6Cj-94kIaJ47omyKSQHUSXwPcfYa9IuOpwBTh_u9Fxvjkqf2pAl0OMvY543K6g/exec';
+const GAS_URL = 'https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec';
 const CASE_SLUG = 'syncope';
 
 /* ============================================================
@@ -2556,18 +2613,25 @@ async function gasPost(payload){
     console.warn('[sync] GAS_URL not configured — skipping POST.');
     return { ok: false, reason: 'no-backend' };
   }
+  console.log('[sync] POST →', GAS_URL, payload);
   try {
     const res = await fetch(GAS_URL, {
       method: 'POST',
       // Use text/plain to avoid CORS preflight that GAS Web Apps don't handle.
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      redirect: 'follow'
     });
+    console.log('[sync] POST status:', res.status, res.statusText);
     const text = await res.text();
+    console.log('[sync] POST body:', text.slice(0, 500));
+    if (!res.ok) {
+      return { ok: false, reason: 'http-' + res.status, text: text };
+    }
     try { return JSON.parse(text); } catch (_) { return { ok: false, reason: 'bad-json', text: text }; }
   } catch (err) {
     console.error('[sync] POST failed:', err);
-    return { ok: false, reason: 'network' };
+    return { ok: false, reason: 'network', error: String(err) };
   }
 }
 
@@ -2582,13 +2646,11 @@ async function sendCompletionStats(score){
     duration_sec: state.startedAt ? Math.round((Date.now() - state.startedAt) / 1000) : 0
   };
   const resp = await gasPost(payload);
-  // If backend returns updated per-question distribution, refresh SCENES[i].dist
+  // If backend returns fresh stats, refresh cover + distributions
   if (resp && Array.isArray(resp.question_distributions)) {
     applyLiveDistributions(resp.question_distributions);
   }
-  if (resp && typeof resp.total_attempts === 'number') {
-    paintTotalAttempts(resp.total_attempts);
-  }
+  paintCoverStats(resp);
 }
 
 async function fetchCoverStats(){
@@ -2598,29 +2660,48 @@ async function fetchCoverStats(){
     const res = await fetch(url);
     const data = await res.json();
     if (!data) return;
-    if (typeof data.total_attempts === 'number') paintTotalAttempts(data.total_attempts);
+    paintCoverStats(data);
     if (Array.isArray(data.question_distributions)) applyLiveDistributions(data.question_distributions);
   } catch (err) {
     console.error('[sync] stats fetch failed:', err);
   }
 }
 
-function paintTotalAttempts(n){
-  const el = document.getElementById('totalLearningAttempts');
-  if (el) el.textContent = n.toLocaleString();
+function paintCoverStats(data){
+  if (!data) return;
+  const setStat = (id, val) => {
+    const el = document.getElementById(id);
+    if (!el || typeof val !== 'number') return;
+    el.textContent = val.toLocaleString();
+  };
+  setStat('statCompleted', data.total_attempts);
+  setStat('statPassed',    data.unique_pass_count);
+  // Pass rate = unique_pass_count / total_attempts (rough proxy; since completions
+  // is anonymous, we can't compute per-person conversion precisely)
+  if (typeof data.total_attempts === 'number' && typeof data.unique_pass_count === 'number') {
+    const el = document.getElementById('statPassRate');
+    if (el) {
+      if (data.total_attempts === 0) {
+        el.textContent = '—';
+      } else {
+        const rate = Math.round((data.unique_pass_count / data.total_attempts) * 100);
+        el.textContent = rate + '%';
+      }
+    }
+  }
 }
 
 /**
- * Replace SCENES[i].dist with live counts.
- * Expected format from backend: question_distributions = [[a,b,c,d], ...]
- * where each inner array is COUNT per option (not pct).
- * We only replace when total >= 10, otherwise keep the seed numbers.
+ * Replace SCENES[i].dist with live counts whenever any real data exists.
+ * Expected format: question_distributions = [[a,b,c,d], ...] (COUNT per option, not pct).
+ * As soon as total >= 1, we use real data (even if small sample) so admins
+ * see the true picture after deployment, not the mock seed.
  */
 function applyLiveDistributions(dists){
   dists.forEach((counts, i) => {
     if (!SCENES[i] || !Array.isArray(counts) || counts.length !== 4) return;
     const total = counts.reduce((a, b) => a + b, 0);
-    if (total < 10) return;
+    if (total < 1) return; // keep seed only when nobody has answered yet
     const pct = counts.map(c => Math.round((c / total) * 100));
     const diff = 100 - pct.reduce((a, b) => a + b, 0);
     if (diff !== 0) {
@@ -2679,11 +2760,21 @@ async function onCreditSubmit(e){
   }
 
   const data = await gasPost(payload);
+  console.log('[credit] response:', data);
 
-  if (!data || !['saved', 'duplicate'].includes(data.status)) {
+  if (!data || data.status === undefined || !['saved', 'duplicate'].includes(data.status)) {
     submit.disabled = false;
     input.disabled = false;
-    setCreditStatus('未能寫入紀錄，請稍後再試或聯絡品質管理部。', 'error');
+    // Surface the actual reason so Gary can diagnose from the UI without opening DevTools
+    let reason = '未能寫入紀錄';
+    if (!data) reason += ' (無回應)';
+    else if (data.reason === 'network') reason += ' (網路連線失敗)';
+    else if (data.reason === 'no-backend') reason += ' (後端未設定)';
+    else if (data.reason === 'bad-json') reason += ' (後端回傳格式錯誤，可能是 Apps Script 未部署或權限錯)';
+    else if (data.error) reason += ' (' + data.error + ')';
+    else if (data.message) reason += ' (' + data.message + ')';
+    else if (data.status) reason += ' (status: ' + data.status + ')';
+    setCreditStatus(reason + '。請打開 F12 Console 查看詳細錯誤，或聯絡品管部。', 'error');
     return;
   }
 
